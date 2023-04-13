@@ -32,6 +32,8 @@ A aplicação é desenvolvida em Node JS e faz uso de typescript e do framework 
 - [ ] Autentica usuário, encriptografando a sua senha e gerando token 
 - [ ] Lista usuários que estão cadastrados no banco de dados
 - [ ] Cadastra um novo usuário
+- [ ] Atualiza informações de usuário
+- [ ] Delete um usuário
 
 ### 🛠 Tecnologias
 
