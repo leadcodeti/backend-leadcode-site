@@ -23,6 +23,8 @@ model Site {
   formSection    FormSection?    @relation(fields: [formSectionId], references: [id])
   topFooter      TopFooter?      @relation(fields: [topFooterId], references: [id])
   bottomFooter   BottomFooter?   @relation(fields: [bottomFooterId], references: [id])
+
+  @@map("sites")
 }
 
 model Home {
@@ -37,6 +39,8 @@ model Home {
   createdAt     DateTime
 
   header Header @relation(fields: [headerId], references: [id])
+
+  @@map("homes")
 }
 
 model Header {
@@ -46,6 +50,8 @@ model Header {
   headerLinks HeaderLink[]
   homes       Home[]
   createdAt   DateTime
+
+  @@map("headers")
 }
 
 model HeaderLink {
@@ -57,6 +63,8 @@ model HeaderLink {
   headerId   String
 
   header Header @relation(fields: [headerId], references: [id])
+
+  @@map("header_links")
 }
 
 model TechCarousel {
@@ -68,6 +76,8 @@ model TechCarousel {
   homeId     String
 
   home Home @relation(fields: [homeId], references: [id])
+
+  @@map("techs_carousel")
 }
 
 model ServiceSection {
@@ -77,6 +87,8 @@ model ServiceSection {
   sites        Site[]
   serviceCards ServiceCard[]
   createdAt    DateTime
+
+  @@map("services_sections")
 }
 
 model ServiceCard {
@@ -89,6 +101,8 @@ model ServiceCard {
   serviceSectionId String
 
   ServiceSection ServiceSection @relation(fields: [serviceSectionId], references: [id])
+
+  @@map("service_cards")
 }
 
 model ProjectSection {
@@ -100,6 +114,8 @@ model ProjectSection {
   createdAt      DateTime
 
   projectCards ProjectCard[]
+
+  @@map("projects_sections")
 }
 
 model ProjectCard {
@@ -112,6 +128,8 @@ model ProjectCard {
   projectSectionId String
 
   projectSection ProjectSection @relation(fields: [projectSectionId], references: [id])
+
+  @@map("project_cards")
 }
 
 model TestemonialSection {
@@ -119,6 +137,8 @@ model TestemonialSection {
   title       String
   Testemonial Testemonial[]
   createdAt   DateTime
+
+  @@map("testemonials_sections")
 }
 
 model Testemonial {
@@ -132,6 +152,8 @@ model Testemonial {
   testemonialSectionId String
 
   testemonialSection TestemonialSection @relation(fields: [testemonialSectionId], references: [id])
+
+  @@map("testemonials")
 }
 
 model FormSection {
@@ -142,6 +164,8 @@ model FormSection {
 
   sites     Site[]
   registers FormRegister[]
+
+  @@map("form_sections")
 }
 
 model FormRegister {
@@ -154,6 +178,8 @@ model FormRegister {
   formSectionId      String
 
   FormSection FormSection @relation(fields: [formSectionId], references: [id])
+
+  @@map("form_registers")
 }
 
 model TopFooter {
@@ -162,6 +188,8 @@ model TopFooter {
 
   sites   Site[]
   columns TopFooterColumn[]
+
+  @@map("top_footers")
 }
 
 model TopFooterColumn {
@@ -173,6 +201,8 @@ model TopFooterColumn {
 
   TopFooter TopFooter       @relation(fields: [topFooterId], references: [id])
   links     TopFooterLink[]
+
+  @@map("top_footer_columns")
 }
 
 model TopFooterLink {
@@ -184,6 +214,8 @@ model TopFooterLink {
   topFooterColumnId String
 
   TopFooterColumn TopFooterColumn @relation(fields: [topFooterColumnId], references: [id])
+
+  @@map("top_footer_links")
 }
 
 model BottomFooter {
@@ -194,6 +226,8 @@ model BottomFooter {
 
   sites             Site[]
   socialNetworkings SocialMedia[]
+
+  @@map("bottom_footers")
 }
 
 model SocialMedia {
@@ -205,4 +239,6 @@ model SocialMedia {
   bottomFooterId String
 
   BottomFooter BottomFooter @relation(fields: [bottomFooterId], references: [id])
+
+  @@map("social_medias")
 }
