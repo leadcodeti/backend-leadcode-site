@@ -1,70 +1,47 @@
-import { Injectable } from '@nestjs/common';
-import { CreateHeaderDTO } from './CreateHeader.dto';
-import { PrismaService } from 'src/database/prisma.service';
+import { Inject, Injectable } from '@nestjs/common';
 import { Header } from '@prisma/client';
-import { UpdateHeaderDTO } from './UpdateHeader.dto';
+import { HeaderRepository } from './repositories/header.repository';
+import { CreateHeaderDTO } from './dtos/CreateHeader.dto';
+import { UpdateHeaderDTO } from './dtos/UpdateHeader.dto';
 
 @Injectable()
 export class HeaderService {
-  constructor(private readonly prismaClient: PrismaService) {}
+  constructor(
+    @Inject('HeaderRepository')
+    private readonly headerRepository: HeaderRepository,
+  ) {}
 
   async create(data: CreateHeaderDTO): Promise<Header> {
-    const headerExists = await this.prismaClient.header.findFirst({
-      where: {
-        logo: data.logo,
-      },
-    });
+    const headerExists = await this.headerRepository.findByLogo(data.logo);
 
     if (headerExists) {
       throw new Error('This header already exists.');
     }
 
-    data.createdAt = new Date();
-    const createdHeader = await this.prismaClient.header.create({
-      data,
-    });
-
-    return createdHeader;
+    return this.headerRepository.create(data);
   }
 
   async list() {
-    return await this.prismaClient.header.findMany();
+    return await this.headerRepository.list();
   }
 
   async update(id: string, data: UpdateHeaderDTO) {
-    const headerExists = await this.prismaClient.header.findUnique({
-      where: {
-        id,
-      },
-    });
+    const headerExists = await this.headerRepository.findById(id);
 
     if (!headerExists) {
       throw new Error('This header does not exist.');
     }
 
-    return await this.prismaClient.header.update({
-      data,
-      where: {
-        id,
-      },
-    });
+    return await this.headerRepository.update(id, data);
   }
 
   async delete(id: string) {
-    const headerExists = await this.prismaClient.header.findUnique({
-      where: {
-        id,
-      },
-    });
+    const headerExists = await this.headerRepository.findById(id);
 
     if (!headerExists) {
       throw new Error('This header does not exist.');
     }
 
-    return await this.prismaClient.header.delete({
-      where: {
-        id,
-      },
-    });
+    return this.headerRepository.delete(id);
   }
 }

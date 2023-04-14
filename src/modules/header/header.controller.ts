@@ -7,9 +7,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateHeaderDTO } from './CreateHeader.dto';
 import { HeaderService } from './header.service';
-import { UpdateHeaderDTO } from './UpdateHeader.dto';
+import { CreateHeaderDTO } from './dtos/CreateHeader.dto';
+import { UpdateHeaderDTO } from './dtos/UpdateHeader.dto';
 
 @Controller('/headers')
 export class HeaderController {
