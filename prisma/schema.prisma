@@ -62,7 +62,7 @@ model HeaderLink {
   createdAt  DateTime
   headerId   String
 
-  header Header @relation(fields: [headerId], references: [id])
+  header Header @relation(fields: [headerId], references: [id], onDelete: Cascade)
 
   @@map("header_links")
 }

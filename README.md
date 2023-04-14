@@ -41,7 +41,7 @@ A aplicação é desenvolvida em Node JS e faz uso de typescript e do framework 
 - [Yarn](https://yarnpkg.com/)
 - [NestJs](https://nestjs.com/)
  	- class-validator, class-transformer
-	
+- [Docker](https://www.docker.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
