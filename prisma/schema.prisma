@@ -1,0 +1,211 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Site {
+  id               String   @id @default(uuid())
+  createdAt        DateTime @default(now())
+  homeId           String
+  serviceSectionId String?
+  projectSectionId String?
+  formSectionId    String?
+  topFooterId      String?
+  bottomFooterId   String?
+
+  home           Home            @relation(fields: [homeId], references: [id])
+  serviceSection ServiceSection? @relation(fields: [serviceSectionId], references: [id])
+  projectSection ProjectSection? @relation(fields: [projectSectionId], references: [id])
+  formSection    FormSection?    @relation(fields: [formSectionId], references: [id])
+  topFooter      TopFooter?      @relation(fields: [topFooterId], references: [id])
+  bottomFooter   BottomFooter?   @relation(fields: [bottomFooterId], references: [id])
+}
+
+model Home {
+  id            String         @id @default(uuid())
+  image         String?
+  headline      String
+  subheadline   String
+  ctaButtonText String
+  headerId      String
+  sites         Site[]
+  techsCarousel TechCarousel[]
+  createdAt     DateTime
+
+  header Header @relation(fields: [headerId], references: [id])
+}
+
+model Header {
+  id          String       @id @default(uuid())
+  logo        String
+  buttonText  String?
+  headerLinks HeaderLink[]
+  homes       Home[]
+  createdAt   DateTime
+}
+
+model HeaderLink {
+  id         String   @id @default(uuid())
+  name       String
+  link       String
+  isSelected Boolean
+  createdAt  DateTime
+  headerId   String
+
+  header Header @relation(fields: [headerId], references: [id])
+}
+
+model TechCarousel {
+  id         String   @id @default(uuid())
+  icon       String
+  name       String
+  isSelected Boolean
+  createdAt  DateTime
+  homeId     String
+
+  home Home @relation(fields: [homeId], references: [id])
+}
+
+model ServiceSection {
+  id           String        @id @default(uuid())
+  title        String
+  description  String
+  sites        Site[]
+  serviceCards ServiceCard[]
+  createdAt    DateTime
+}
+
+model ServiceCard {
+  id               String   @id @default(uuid())
+  image            String
+  title            String
+  content          String
+  isSelected       Boolean
+  createdAt        DateTime
+  serviceSectionId String
+
+  ServiceSection ServiceSection @relation(fields: [serviceSectionId], references: [id])
+}
+
+model ProjectSection {
+  id             String   @id @default(uuid())
+  title          String
+  description    String
+  moreButtonText String
+  sites          Site[]
+  createdAt      DateTime
+
+  projectCards ProjectCard[]
+}
+
+model ProjectCard {
+  id               String   @id @default(uuid())
+  image            String
+  name             String
+  description      String
+  isSelected       Boolean
+  createdAt        DateTime
+  projectSectionId String
+
+  projectSection ProjectSection @relation(fields: [projectSectionId], references: [id])
+}
+
+model TestemonialSection {
+  id          String        @id @default(uuid())
+  title       String
+  Testemonial Testemonial[]
+  createdAt   DateTime
+}
+
+model Testemonial {
+  id                   String   @id @default(uuid())
+  content              String
+  clientAvatar         String
+  clientName           String
+  jobPosition          String?
+  isSelected           Boolean
+  createdAt            DateTime
+  testemonialSectionId String
+
+  testemonialSection TestemonialSection @relation(fields: [testemonialSectionId], references: [id])
+}
+
+model FormSection {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  createdAt   DateTime
+
+  sites     Site[]
+  registers FormRegister[]
+}
+
+model FormRegister {
+  id                 String   @id @default(uuid())
+  userName           String
+  userEmail          String
+  userPhone          String
+  projectDescription String
+  createdAt          DateTime
+  formSectionId      String
+
+  FormSection FormSection @relation(fields: [formSectionId], references: [id])
+}
+
+model TopFooter {
+  id        String   @id @default(uuid())
+  createdAt DateTime
+
+  sites   Site[]
+  columns TopFooterColumn[]
+}
+
+model TopFooterColumn {
+  id          String   @id @default(uuid())
+  title       String
+  isSelected  Boolean
+  createdAt   DateTime
+  topFooterId String
+
+  TopFooter TopFooter       @relation(fields: [topFooterId], references: [id])
+  links     TopFooterLink[]
+}
+
+model TopFooterLink {
+  id                String   @id @default(uuid())
+  icon              String
+  name              String
+  isSelected        Boolean
+  createdAt         DateTime
+  topFooterColumnId String
+
+  TopFooterColumn TopFooterColumn @relation(fields: [topFooterColumnId], references: [id])
+}
+
+model BottomFooter {
+  id         String   @id @default(uuid())
+  endTextOne String?
+  endTextTwo String?
+  createdAt  DateTime
+
+  sites             Site[]
+  socialNetworkings SocialMedia[]
+}
+
+model SocialMedia {
+  id             String   @id @default(uuid())
+  icon           String
+  link           String
+  isSelected     Boolean
+  createdAt      DateTime
+  bottomFooterId String
+
+  BottomFooter BottomFooter @relation(fields: [bottomFooterId], references: [id])
+}
