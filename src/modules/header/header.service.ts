@@ -22,7 +22,7 @@ export class HeaderService {
   }
 
   async list() {
-    return await this.headerRepository.list();
+    return await this.headerRepository.findAll();
   }
 
   async update(id: string, data: UpdateHeaderDTO) {

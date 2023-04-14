@@ -1,28 +1,30 @@
-import { Injectable } from '@nestjs/common';
-import { CreateHeaderLinkDTO } from './CreateHeaderLink.dto';
-import { PrismaService } from 'src/database/prisma.service';
+import { Inject, Injectable } from '@nestjs/common';
 import { HeaderLink } from '@prisma/client';
+import { CreateHeaderLinkDTO } from './dtos/CreateHeaderLink.dto';
+import { HeaderLinkRepository } from './repositories/headerLink.repository';
 
 @Injectable()
 export class HeaderLinkService {
-  constructor(private prismaClient: PrismaService) {}
+  constructor(
+    @Inject('HeaderLinkRepository')
+    private headerLinkRepository: HeaderLinkRepository,
+  ) {}
 
   async create(data: CreateHeaderLinkDTO): Promise<HeaderLink> {
-    const headerLinkExists = await this.prismaClient.headerLink.findFirst({
-      where: {
-        name: data.name,
-      },
-    });
+    const headerLinkExists = await this.headerLinkRepository.findByName(
+      data.name,
+    );
 
     if (headerLinkExists) {
       throw new Error('This link already exists.');
     }
 
-    data.createdAt = new Date();
-    const headerLink = await this.prismaClient.headerLink.create({
-      data,
-    });
+    const headerLink = await this.headerLinkRepository.create(data);
 
     return headerLink;
+  }
+
+  async list() {
+    return await this.headerLinkRepository.findAll();
   }
 }

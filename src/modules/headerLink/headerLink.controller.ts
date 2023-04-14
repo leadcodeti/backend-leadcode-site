@@ -1,6 +1,6 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { HeaderLinkService } from './headerLink.service';
-import { CreateHeaderLinkDTO } from './CreateHeaderLink.dto';
+import { CreateHeaderLinkDTO } from './dtos/CreateHeaderLink.dto';
 
 @Controller('/header_links')
 export class HeaderLinkController {
@@ -8,6 +8,11 @@ export class HeaderLinkController {
 
   @Post()
   async create(@Body() data: CreateHeaderLinkDTO) {
-    return this.headerLinkService.create(data);
+    return await this.headerLinkService.create(data);
+  }
+
+  @Get()
+  async list() {
+    return await this.headerLinkService.list();
   }
 }

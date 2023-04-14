@@ -4,7 +4,7 @@ import { UpdateHeaderDTO } from '../dtos/UpdateHeader.dto';
 
 export interface HeaderRepository {
   create(data: CreateHeaderDTO): Promise<Header>;
-  list(): Promise<Header[]>;
+  findAll(): Promise<Header[]>;
   update(id: string, data: UpdateHeaderDTO): Promise<Header>;
   delete(id: string): Promise<void>;
   findByLogo(logo: string): Promise<Header>;

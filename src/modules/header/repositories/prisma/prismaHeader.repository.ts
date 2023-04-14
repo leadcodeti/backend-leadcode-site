@@ -21,7 +21,7 @@ export class PrismaHeaderRepository implements HeaderRepository {
     return createdHeader;
   }
 
-  async list(): Promise<Header[]> {
+  async findAll(): Promise<Header[]> {
     return await this.prismaClient.header.findMany();
   }
 
