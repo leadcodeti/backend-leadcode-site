@@ -13,7 +13,7 @@ export class PrismaFormSectionRepository implements FormSectionRepository {
     title,
     description,
   }: CreateFormSectionDTO): Promise<FormSection> {
-    return this.prismaService.formSection.create({
+    return await this.prismaService.formSection.create({
       data: {
         title,
         description,
@@ -23,11 +23,11 @@ export class PrismaFormSectionRepository implements FormSectionRepository {
   }
 
   async findAll(): Promise<FormSection[]> {
-    return this.prismaService.formSection.findMany();
+    return await this.prismaService.formSection.findMany();
   }
 
   async update(id: string, data: UpdateFormSectionDTO): Promise<FormSection> {
-    return this.prismaService.formSection.update({
+    return await this.prismaService.formSection.update({
       data: {
         title: data.title,
         description: data.description,
@@ -39,7 +39,7 @@ export class PrismaFormSectionRepository implements FormSectionRepository {
   }
 
   async delete(id: string): Promise<void> {
-    this.prismaService.formSection.delete({
+    await this.prismaService.formSection.delete({
       where: {
         id,
       },

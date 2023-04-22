@@ -15,7 +15,7 @@ export class PrismaTechCarouselRepository implements TechCarouselRepository {
     is_selected,
     home_id,
   }: CreateTechCarouselDTO): Promise<TechCarousel> {
-    const createTechCarousel = this.prismaService.techCarousel.create({
+    const createTechCarousel = await this.prismaService.techCarousel.create({
       data: {
         icon,
         name,
@@ -28,7 +28,7 @@ export class PrismaTechCarouselRepository implements TechCarouselRepository {
   }
 
   async findAll(): Promise<TechCarousel[]> {
-    return this.prismaService.techCarousel.findMany();
+    return await this.prismaService.techCarousel.findMany();
   }
 
   async update(id: string, data: UpdateTechCarouselDTO): Promise<TechCarousel> {
@@ -43,6 +43,7 @@ export class PrismaTechCarouselRepository implements TechCarouselRepository {
       },
     });
   }
+
   async delete(id: string): Promise<void> {
     await this.prismaService.techCarousel.delete({
       where: {
@@ -55,7 +56,7 @@ export class PrismaTechCarouselRepository implements TechCarouselRepository {
   }
 
   async findByName(name: string): Promise<TechCarousel> {
-    const techCarouselExists = this.prismaService.techCarousel.findFirst({
+    const techCarouselExists = await this.prismaService.techCarousel.findFirst({
       where: {
         name,
       },
