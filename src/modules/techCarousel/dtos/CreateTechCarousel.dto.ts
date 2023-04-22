@@ -2,7 +2,7 @@ export type CreateTechCarouselDTO = {
   id?: string;
   icon: string;
   name: string;
-  isSelected: boolean;
+  is_selected: boolean;
   created_at: Date;
-  homeId: string;
+  home_id: string;
 };

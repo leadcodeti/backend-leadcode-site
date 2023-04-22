@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { TechCarouselRepository } from './techCarousel.repository';
 import { CreateTechCarouselDTO } from '../dtos/CreateTechCarousel.dto';
 import { TechCarousel } from '@prisma/client';
+import { UpdateTechCarouselDTO } from '../dtos/UpdateTechCarousel.dto';
 
 @Injectable()
 export class TechCarouselService {
@@ -22,5 +23,17 @@ export class TechCarouselService {
     const techCarousel = await this.techCarouselRepository.create(data);
 
     return techCarousel;
+  }
+
+  async list(): Promise<TechCarousel[]> {
+    return await this.techCarouselRepository.findAll();
+  }
+
+  async update(id: string, data: UpdateTechCarouselDTO): Promise<TechCarousel> {
+    return await this.techCarouselRepository.update(id, data);
+  }
+
+  async delete(id: string): Promise<void> {
+    return await this.techCarouselRepository.delete(id);
   }
 }

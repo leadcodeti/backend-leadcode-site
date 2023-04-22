@@ -1,6 +1,16 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CreateTechCarouselDTO } from './dtos/CreateTechCarousel.dto';
 import { TechCarouselService } from './repositories/techCarousel.service';
+import { TechCarousel } from '@prisma/client';
+import { UpdateTechCarouselDTO } from './dtos/UpdateTechCarousel.dto';
 
 @Controller('/tech_carousels')
 export class TechCarouselController {
@@ -8,5 +18,23 @@ export class TechCarouselController {
   @Post()
   async create(@Body() data: CreateTechCarouselDTO) {
     return await this.techCarouselService.create(data);
+  }
+
+  @Get()
+  async list(): Promise<TechCarousel[]> {
+    return await this.techCarouselService.list();
+  }
+
+  @Put('/:id')
+  async update(
+    @Param('id') id: string,
+    @Body() data: UpdateTechCarouselDTO,
+  ): Promise<TechCarousel> {
+    return await this.techCarouselService.update(id, data);
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id') id: string): Promise<void> {
+    return await this.techCarouselService.delete(id);
   }
 }
