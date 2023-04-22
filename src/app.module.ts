@@ -5,6 +5,7 @@ import { HeaderModule } from './modules/header/header.module';
 import { HeaderLinkModule } from './modules/headerLink/headerLink.module';
 import { TechCarouselModule } from './modules/techCarousel/techCarousel.module';
 import { HomeModule } from './modules/home/home.module';
+import { FormSectionModule } from './modules/formSection/formSection.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { HomeModule } from './modules/home/home.module';
     HeaderLinkModule,
     TechCarouselModule,
     HomeModule,
+    FormSectionModule,
   ],
 })
 export class AppModule {}
