@@ -1,11 +1,12 @@
-import { PrismaClient, TechCarousel } from '@prisma/client';
+import { TechCarousel } from '@prisma/client';
 import { CreateTechCarouselDTO } from '../../dtos/CreateTechCarousel.dto';
 import { TechCarouselRepository } from '../techCarousel.repository';
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/database/prisma.service';
 
 @Injectable()
 export class PrismaTechCarouselRepository implements TechCarouselRepository {
-  constructor(private prismaClient: PrismaClient) {}
+  constructor(private prismaService: PrismaService) {}
 
   async create({
     icon,
@@ -13,7 +14,7 @@ export class PrismaTechCarouselRepository implements TechCarouselRepository {
     isSelected,
     homeId,
   }: CreateTechCarouselDTO): Promise<TechCarousel> {
-    const createTechCarousel = this.prismaClient.techCarousel.create({
+    const createTechCarousel = this.prismaService.techCarousel.create({
       data: {
         icon,
         name,
@@ -26,7 +27,7 @@ export class PrismaTechCarouselRepository implements TechCarouselRepository {
   }
 
   async findByName(name: string): Promise<TechCarousel> {
-    const techCarouselExists = this.prismaClient.techCarousel.findFirst({
+    const techCarouselExists = this.prismaService.techCarousel.findFirst({
       where: {
         name,
       },

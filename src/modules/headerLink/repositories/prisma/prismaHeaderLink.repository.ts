@@ -7,7 +7,7 @@ import { UpdateHeaderLinkDTO } from '../../dtos/UpdateHeaderLink.dto';
 
 @Injectable()
 export class PrismaHeaderLinkRepository implements HeaderLinkRepository {
-  constructor(private prismaClient: PrismaService) {}
+  constructor(private prismaService: PrismaService) {}
 
   async create({
     name,
@@ -15,7 +15,7 @@ export class PrismaHeaderLinkRepository implements HeaderLinkRepository {
     isSelected,
     headerId,
   }: CreateHeaderLinkDTO): Promise<HeaderLink> {
-    const createdHeaderLink = await this.prismaClient.headerLink.create({
+    const createdHeaderLink = await this.prismaService.headerLink.create({
       data: {
         name,
         link,
@@ -29,11 +29,11 @@ export class PrismaHeaderLinkRepository implements HeaderLinkRepository {
   }
 
   async findAll(): Promise<HeaderLink[]> {
-    return await this.prismaClient.headerLink.findMany();
+    return await this.prismaService.headerLink.findMany();
   }
 
   async update(id: string, data: UpdateHeaderLinkDTO): Promise<HeaderLink> {
-    return await this.prismaClient.headerLink.update({
+    return await this.prismaService.headerLink.update({
       data,
       where: {
         id,
@@ -42,7 +42,7 @@ export class PrismaHeaderLinkRepository implements HeaderLinkRepository {
   }
 
   async delete(id: string): Promise<void> {
-    await this.prismaClient.headerLink.delete({
+    await this.prismaService.headerLink.delete({
       where: {
         id,
       },
@@ -50,7 +50,7 @@ export class PrismaHeaderLinkRepository implements HeaderLinkRepository {
   }
 
   async findByName(name: string): Promise<HeaderLink> {
-    const headerExists = await this.prismaClient.headerLink.findFirst({
+    const headerExists = await this.prismaService.headerLink.findFirst({
       where: {
         name,
       },
@@ -60,7 +60,7 @@ export class PrismaHeaderLinkRepository implements HeaderLinkRepository {
   }
 
   async findById(id: string): Promise<HeaderLink> {
-    const headerExists = await this.prismaClient.headerLink.findUnique({
+    const headerExists = await this.prismaService.headerLink.findUnique({
       where: {
         id,
       },

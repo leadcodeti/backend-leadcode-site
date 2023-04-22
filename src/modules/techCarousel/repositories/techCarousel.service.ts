@@ -7,7 +7,7 @@ import { TechCarousel } from '@prisma/client';
 export class TechCarouselService {
   constructor(
     @Inject('TechCarouselRepository')
-    private techCarouselRepository: TechCarouselRepository,
+    private readonly techCarouselRepository: TechCarouselRepository,
   ) {}
 
   async create(data: CreateTechCarouselDTO): Promise<TechCarousel> {

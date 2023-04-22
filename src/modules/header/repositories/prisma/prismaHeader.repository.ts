@@ -1,4 +1,4 @@
-import { Header, PrismaClient } from '@prisma/client';
+import { Header } from '@prisma/client';
 import { HeaderRepository } from '../header.repository';
 import { CreateHeaderDTO } from '../../dtos/CreateHeader.dto';
 import { UpdateHeaderDTO } from '../../dtos/UpdateHeader.dto';
@@ -7,13 +7,13 @@ import { PrismaService } from 'src/database/prisma.service';
 
 @Injectable()
 export class PrismaHeaderRepository implements HeaderRepository {
-  constructor(private prismaClient: PrismaService) {}
+  constructor(private prismaService: PrismaService) {}
 
-  async create({ logo, buttonText }: CreateHeaderDTO): Promise<Header> {
-    const createdHeader = await this.prismaClient.header.create({
+  async create({ logo, button_text }: CreateHeaderDTO): Promise<Header> {
+    const createdHeader = await this.prismaService.header.create({
       data: {
         logo,
-        buttonText,
+        buttonText: button_text,
         createdAt: new Date(),
       },
     });
@@ -22,11 +22,11 @@ export class PrismaHeaderRepository implements HeaderRepository {
   }
 
   async findAll(): Promise<Header[]> {
-    return await this.prismaClient.header.findMany();
+    return await this.prismaService.header.findMany();
   }
 
   async update(id: string, data: UpdateHeaderDTO): Promise<Header> {
-    return await this.prismaClient.header.update({
+    return await this.prismaService.header.update({
       data,
       where: {
         id,
@@ -35,7 +35,7 @@ export class PrismaHeaderRepository implements HeaderRepository {
   }
 
   async delete(id: string): Promise<void> {
-    await this.prismaClient.header.delete({
+    await this.prismaService.header.delete({
       where: {
         id,
       },
@@ -43,7 +43,7 @@ export class PrismaHeaderRepository implements HeaderRepository {
   }
 
   async findByLogo(logo: string): Promise<Header> {
-    const headerExists = await this.prismaClient.header.findFirst({
+    const headerExists = await this.prismaService.header.findFirst({
       where: {
         logo,
       },
@@ -53,7 +53,7 @@ export class PrismaHeaderRepository implements HeaderRepository {
   }
 
   async findById(id: string): Promise<Header> {
-    const headerExists = await this.prismaClient.header.findUnique({
+    const headerExists = await this.prismaService.header.findUnique({
       where: {
         id,
       },
