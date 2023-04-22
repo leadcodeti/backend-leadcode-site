@@ -1,6 +1,15 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { HeaderLinkService } from './headerLink.service';
 import { CreateHeaderLinkDTO } from './dtos/CreateHeaderLink.dto';
+import { UpdateHeaderLinkDTO } from './dtos/UpdateHeaderLink.dto';
 
 @Controller('/header_links')
 export class HeaderLinkController {
@@ -14,5 +23,15 @@ export class HeaderLinkController {
   @Get()
   async list() {
     return await this.headerLinkService.list();
+  }
+
+  @Put('/:id')
+  async update(@Param('id') id: string, @Body() data: UpdateHeaderLinkDTO) {
+    return await this.headerLinkService.update(id, data);
+  }
+
+  @Delete('/:id')
+  async delete(@Param('id') id: string) {
+    return await this.headerLinkService.delete(id);
   }
 }

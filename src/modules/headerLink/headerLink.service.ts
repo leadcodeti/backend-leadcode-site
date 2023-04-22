@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { HeaderLink } from '@prisma/client';
 import { CreateHeaderLinkDTO } from './dtos/CreateHeaderLink.dto';
 import { HeaderLinkRepository } from './repositories/headerLink.repository';
+import { UpdateHeaderLinkDTO } from './dtos/UpdateHeaderLink.dto';
 
 @Injectable()
 export class HeaderLinkService {
@@ -26,5 +27,25 @@ export class HeaderLinkService {
 
   async list() {
     return await this.headerLinkRepository.findAll();
+  }
+
+  async update(id: string, data: UpdateHeaderLinkDTO) {
+    const headerLinkExists = await this.headerLinkRepository.findById(id);
+
+    if (!headerLinkExists) {
+      throw new Error('This header does not exist.');
+    }
+
+    return await this.headerLinkRepository.update(id, data);
+  }
+
+  async delete(id: string) {
+    const headerLinkExists = await this.headerLinkRepository.findById(id);
+
+    if (!headerLinkExists) {
+      throw new Error('This header does not exist.');
+    }
+
+    return this.headerLinkRepository.delete(id);
   }
 }

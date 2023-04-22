@@ -3,8 +3,15 @@ import { UserModule } from './modules/user/user.module';
 import { SiteModule } from './modules/site/site.module';
 import { HeaderModule } from './modules/header/header.module';
 import { HeaderLinkModule } from './modules/headerLink/headerLink.module';
+import { TechCarouselModule } from './modules/techCarousel/techCarousel.module';
 
 @Module({
-  imports: [UserModule, SiteModule, HeaderModule, HeaderLinkModule],
+  imports: [
+    UserModule,
+    SiteModule,
+    HeaderModule,
+    HeaderLinkModule,
+    TechCarouselModule,
+  ],
 })
 export class AppModule {}
