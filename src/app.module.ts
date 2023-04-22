@@ -7,6 +7,9 @@ import { TechCarouselModule } from './modules/techCarousel/techCarousel.module';
 import { HomeModule } from './modules/home/home.module';
 import { FormSectionModule } from './modules/formSection/formSection.module';
 import { FormRegisternModule } from './modules/formRegister/formRegister.module';
+import { ServiceSectionController } from './modules/serviceSection/serviceSection.controller';
+import { ServiceSectionModule } from './modules/serviceSection/serviceSection.module';
+import { ServiceCardModule } from './modules/serviceCards/serviceCard.module';
 
 @Module({
   imports: [
@@ -18,6 +21,8 @@ import { FormRegisternModule } from './modules/formRegister/formRegister.module'
     HomeModule,
     FormSectionModule,
     FormRegisternModule,
+    ServiceSectionModule,
+    ServiceCardModule,
   ],
 })
 export class AppModule {}
