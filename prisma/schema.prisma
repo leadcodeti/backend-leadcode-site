@@ -185,6 +185,7 @@ model FormRegister {
 
 model TopFooter {
   id        String   @id @default(uuid())
+  logo      String?
   createdAt DateTime
 
   sites          Site[]

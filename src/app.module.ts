@@ -13,6 +13,8 @@ import { TestemonialSectionModule } from './modules/testemonialSection/testemoni
 import { TestemonialModule } from './modules/testemonial/testemonial.module';
 import { ProjectSectionModule } from './modules/projectSection/projectSection.module';
 import { ProjectCardModule } from './modules/projectCard/projectCard.module';
+import { TopFooterModule } from './modules/topFooter/topFooter.module';
+import { TopFooterLinkModule } from './modules/topFooterLink/topFooterLink.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { ProjectCardModule } from './modules/projectCard/projectCard.module';
     TestemonialModule,
     ProjectSectionModule,
     ProjectCardModule,
+    TopFooterModule,
+    TopFooterLinkModule,
   ],
 })
 export class AppModule {}
