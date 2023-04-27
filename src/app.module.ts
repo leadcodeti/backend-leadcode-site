@@ -10,6 +10,7 @@ import { FormRegisternModule } from './modules/formRegister/formRegister.module'
 import { ServiceSectionController } from './modules/serviceSection/serviceSection.controller';
 import { ServiceSectionModule } from './modules/serviceSection/serviceSection.module';
 import { ServiceCardModule } from './modules/serviceCards/serviceCard.module';
+import { TestemonialSectionModule } from './modules/testemonialSection/testemonialSection.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ServiceCardModule } from './modules/serviceCards/serviceCard.module';
     FormRegisternModule,
     ServiceSectionModule,
     ServiceCardModule,
+    TestemonialSectionModule,
   ],
 })
 export class AppModule {}
