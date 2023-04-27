@@ -8,21 +8,23 @@ datasource db {
 }
 
 model Site {
-  id               String   @id @default(uuid())
-  createdAt        DateTime @default(now())
-  homeId           String
-  serviceSectionId String?
-  projectSectionId String?
-  formSectionId    String?
-  topFooterId      String?
-  bottomFooterId   String?
+  id                   String   @id @default(uuid())
+  createdAt            DateTime @default(now())
+  homeId               String
+  serviceSectionId     String?
+  projectSectionId     String?
+  testemonialSectionId String?
+  formSectionId        String?
+  topFooterId          String?
+  bottomFooterId       String?
 
-  home           Home            @relation(fields: [homeId], references: [id])
-  serviceSection ServiceSection? @relation(fields: [serviceSectionId], references: [id])
-  projectSection ProjectSection? @relation(fields: [projectSectionId], references: [id])
-  formSection    FormSection?    @relation(fields: [formSectionId], references: [id])
-  topFooter      TopFooter?      @relation(fields: [topFooterId], references: [id])
-  bottomFooter   BottomFooter?   @relation(fields: [bottomFooterId], references: [id])
+  home               Home                @relation(fields: [homeId], references: [id])
+  serviceSection     ServiceSection?     @relation(fields: [serviceSectionId], references: [id])
+  projectSection     ProjectSection?     @relation(fields: [projectSectionId], references: [id])
+  TestemonialSection TestemonialSection? @relation(fields: [testemonialSectionId], references: [id])
+  formSection        FormSection?        @relation(fields: [formSectionId], references: [id])
+  topFooter          TopFooter?          @relation(fields: [topFooterId], references: [id])
+  bottomFooter       BottomFooter?       @relation(fields: [bottomFooterId], references: [id])
 
   @@map("sites")
 }
@@ -137,6 +139,8 @@ model TestemonialSection {
   title       String
   Testemonial Testemonial[]
   createdAt   DateTime
+
+  Site Site[]
 
   @@map("testemonials_sections")
 }
