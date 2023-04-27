@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { TechCarouselRepository } from './techCarousel.repository';
-import { CreateTechCarouselDTO } from '../dtos/CreateTechCarousel.dto';
 import { TechCarousel } from '@prisma/client';
-import { UpdateTechCarouselDTO } from '../dtos/UpdateTechCarousel.dto';
+import { TechCarouselRepository } from './repositories/techCarousel.repository';
+import { CreateTechCarouselDTO } from './dtos/CreateTechCarousel.dto';
+import { UpdateTechCarouselDTO } from './dtos/UpdateTechCarousel.dto';
 
 @Injectable()
 export class TechCarouselService {

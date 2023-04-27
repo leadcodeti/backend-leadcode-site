@@ -7,10 +7,12 @@ import { TechCarouselModule } from './modules/techCarousel/techCarousel.module';
 import { HomeModule } from './modules/home/home.module';
 import { FormSectionModule } from './modules/formSection/formSection.module';
 import { FormRegisternModule } from './modules/formRegister/formRegister.module';
-import { ServiceSectionController } from './modules/serviceSection/serviceSection.controller';
 import { ServiceSectionModule } from './modules/serviceSection/serviceSection.module';
-import { ServiceCardModule } from './modules/serviceCards/serviceCard.module';
+import { ServiceCardModule } from './modules/serviceCard/serviceCard.module';
 import { TestemonialSectionModule } from './modules/testemonialSection/testemonialSection.module';
+import { TestemonialModule } from './modules/testemonial/testemonial.module';
+import { ProjectSectionModule } from './modules/projectSection/projectSection.module';
+import { ProjectCardModule } from './modules/projectCard/projectCard.module';
 
 @Module({
   imports: [
@@ -25,6 +27,9 @@ import { TestemonialSectionModule } from './modules/testemonialSection/testemoni
     ServiceSectionModule,
     ServiceCardModule,
     TestemonialSectionModule,
+    TestemonialModule,
+    ProjectSectionModule,
+    ProjectCardModule,
   ],
 })
 export class AppModule {}

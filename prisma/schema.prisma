@@ -187,46 +187,34 @@ model TopFooter {
   id        String   @id @default(uuid())
   createdAt DateTime
 
-  sites   Site[]
-  columns TopFooterColumn[]
+  sites          Site[]
+  topFooterLinks TopFooterLink[]
 
   @@map("top_footers")
 }
 
-model TopFooterColumn {
+model TopFooterLink {
   id          String   @id @default(uuid())
-  title       String
+  icon        String?
+  name        String
   isSelected  Boolean
   createdAt   DateTime
   topFooterId String
 
-  TopFooter TopFooter       @relation(fields: [topFooterId], references: [id])
-  links     TopFooterLink[]
-
-  @@map("top_footer_columns")
-}
-
-model TopFooterLink {
-  id                String   @id @default(uuid())
-  icon              String
-  name              String
-  isSelected        Boolean
-  createdAt         DateTime
-  topFooterColumnId String
-
-  TopFooterColumn TopFooterColumn @relation(fields: [topFooterColumnId], references: [id])
+  TopFooter TopFooter @relation(fields: [topFooterId], references: [id])
 
   @@map("top_footer_links")
 }
 
 model BottomFooter {
-  id         String   @id @default(uuid())
-  endTextOne String?
-  endTextTwo String?
-  createdAt  DateTime
+  id            String   @id @default(uuid())
+  logo          String?
+  privacyPolicy String?
+  yarnLogoText  String?
+  createdAt     DateTime
 
-  sites             Site[]
-  socialNetworkings SocialMedia[]
+  sites        Site[]
+  socialMedias SocialMedia[]
 
   @@map("bottom_footers")
 }
@@ -236,8 +224,8 @@ model SocialMedia {
   icon           String
   link           String
   isSelected     Boolean
-  createdAt      DateTime
   bottomFooterId String
+  createdAt      DateTime
 
   BottomFooter BottomFooter @relation(fields: [bottomFooterId], references: [id])
 

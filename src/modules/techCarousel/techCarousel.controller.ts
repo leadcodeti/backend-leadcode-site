@@ -8,9 +8,9 @@ import {
   Put,
 } from '@nestjs/common';
 import { CreateTechCarouselDTO } from './dtos/CreateTechCarousel.dto';
-import { TechCarouselService } from './repositories/techCarousel.service';
 import { TechCarousel } from '@prisma/client';
 import { UpdateTechCarouselDTO } from './dtos/UpdateTechCarousel.dto';
+import { TechCarouselService } from './techCarousel.service';
 
 @Controller('/tech_carousels')
 export class TechCarouselController {
