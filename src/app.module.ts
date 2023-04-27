@@ -15,6 +15,8 @@ import { ProjectSectionModule } from './modules/projectSection/projectSection.mo
 import { ProjectCardModule } from './modules/projectCard/projectCard.module';
 import { TopFooterModule } from './modules/topFooter/topFooter.module';
 import { TopFooterLinkModule } from './modules/topFooterLink/topFooterLink.module';
+import { BottomFooterModule } from './modules/bottomFooter/bottomFooter.module';
+import { SocialMediaModule } from './modules/socialMedia/socialMedia.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { TopFooterLinkModule } from './modules/topFooterLink/topFooterLink.modul
     ProjectCardModule,
     TopFooterModule,
     TopFooterLinkModule,
+    BottomFooterModule,
+    SocialMediaModule,
   ],
 })
 export class AppModule {}
