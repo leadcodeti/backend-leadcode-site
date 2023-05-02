@@ -12,31 +12,27 @@ jobs:
   build:
     runs-on: self-hosted
 
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_DB: ${{ secrets.LEADCODEPOSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.LEADCODEPOSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.LEADCODEPOSTGRES_PASSWORD}}
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5444:5432
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Install Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+
+      - name: Start Postgres
+        run: |
+          docker run -d --name postgres -p 5444:5432 -e POSTGRES_DB=${{ secrets.LEADCODEPOSTGRES_DB }} -e POSTGRES_USER=${{ secrets.LEADCODEPOSTGRES_USER }} -e POSTGRES_PASSWORD=${{ secrets.LEADCODEPOSTGRES_PASSWORD }} postgres:latest
+
+      - name: Wait for Postgres
+        run: |
+          while ! docker exec postgres pg_isready -U ${{ secrets.LEADCODEPOSTGRES_USER }} -d ${{ secrets.LEADCODEPOSTGRES_DB }} -h localhost -p 5432 -t 1 > /dev/null 2>&1; do
+            echo "Waiting for Postgres to start..."
+            sleep 1
+          done
+
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18.x
           cache: "npm"
 
       - name: Install dependencies
