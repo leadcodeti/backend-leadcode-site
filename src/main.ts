@@ -13,6 +13,6 @@ async function bootstrap() {
     }),
   );
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
-  await app.listen(3334);
+  await app.listen(3334 || process.env.PORT);
 }
 bootstrap();

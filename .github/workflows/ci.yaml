@@ -14,7 +14,21 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: ${{ secrets.LEADCODEPOSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.LEADCODEPOSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.LEADCODEPOSTGRES_PASSWORD}}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5444:5432
 
     steps:
     - uses: actions/checkout@v3
