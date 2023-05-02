@@ -2,35 +2,51 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
+    paths:
+      - "./prisma/**/*.*"
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-
     runs-on: self-hosted
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: ${{ secrets.LEADCODEPOSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.LEADCODEPOSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.LEADCODEPOSTGRES_PASSWORD}}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5444:5432
 
     strategy:
       matrix:
         node-version: [18.x]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build project
-      run: npm run build
+      - name: Build project
+        run: npm run build
 
-    - name: Stop pm2
-      run: pm2 stop leadcode_site || true
+      - name: Stop pm2
+        run: pm2 stop leadcode_site || true
 
-    - name: Start pm2
-      run: pm2 start dist/main.js --name leadcode_site
+      - name: Start pm2
+        run: pm2 start dist/main.js --name leadcode_site
