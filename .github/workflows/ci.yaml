@@ -30,8 +30,7 @@ jobs:
       run: npm run build
 
     - name: Stop pm2
-      run: pm2 stop leadcode_site
-      if: ${{failure()}}
+      run: pm2 stop leadcode_site || true
 
     - name: Start pm2
       run: pm2 start dist/main.js --name leadcode_site
