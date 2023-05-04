@@ -17,11 +17,11 @@ jobs:
         with:
           node-version: 18.x
           cache: "npm"
-          
+
       - name: Install Docker
         run: |
-          sudo apt-get update
-          sudo apt-get install -y docker.io
+          apt-get update
+          apt-get install -y docker.io
 
       - name: Start Postgres
         run: |
@@ -33,7 +33,6 @@ jobs:
             echo "Waiting for Postgres to start..."
             sleep 1
           done
-
 
       - name: Install dependencies
         run: npm install
