@@ -10,19 +10,23 @@ on:
 jobs:
   build:
     runs-on: self-hosted
+    container: docker:20.10.8-git
 
-    services:
-      postgres:
-        image: postgres:latest
+    steps:
+      - name: Install Docker
+        run: apk add docker
+
+      - name: Start PostgreSQL
+        uses: docker://postgres:latest
         env:
           POSTGRES_USER: ${{ secrets.LEADCODEPOSTGRES_USER}}
           POSTGRES_PASSWORD: ${{ secrets.LEADCODEPOSTGRES_PASSWORD}}
           POSTGRES_DB: ${{ secrets.LEADCODEPOSTGRES_DB}}
         ports:
         - 5444:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        with:
+          entrypoint: bash -c "pg_ctl start -D $$PGDATA -o '-c listen_addresses='*'' && tail -f /dev/null"
 
-    steps:
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
