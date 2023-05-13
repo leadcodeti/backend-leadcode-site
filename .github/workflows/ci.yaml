@@ -39,8 +39,16 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Run Prisma Migration
-        run: npx prisma migrate deploy
+      - name: Wait for database
+        run: |
+          until pg_isready -h postgres -p 5432
+          do
+            echo "Waiting for database to start..."
+            sleep 1
+          done
+
+            - name: Run Prisma Migration
+              run: npx prisma migrate deploy
 
   CD:
     runs-on: self-hosted
