@@ -12,8 +12,8 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Build and run containers
-        run: docker compose up -d
+      # - name: Build and run containers
+      #   run: docker compose up -d
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
@@ -27,8 +27,8 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Run Prisma Migration
-        run: npx prisma migrate deploy
+      # - name: Run Prisma Migration
+      #   run: npx prisma migrate deploy
 
   CD:
     runs-on: self-hosted
