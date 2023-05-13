@@ -5,9 +5,8 @@ on:
     branches: ["main"]
     paths:
       - "./prisma/**/*.*"
-
-  pull_request:
-    branches: ["main"]
+  workflow_dispatch:
+    branches: [main]
 
 jobs:
   CI:
