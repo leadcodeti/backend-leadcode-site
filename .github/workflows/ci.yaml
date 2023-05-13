@@ -24,11 +24,11 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Build and run containers
-        run: docker compose up -d
+      # - name: Build and run containers
+      #   run: cd ../ docker compose up -d cd /dist
 
-      - name: Run Prisma Migration
-        run: npx prisma migrate deploy
+      # - name: Run Prisma Migration
+      #   run: npx prisma migrate deploy
 
   CD:
     runs-on: self-hosted
