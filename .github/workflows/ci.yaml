@@ -26,7 +26,7 @@ jobs:
         run: npm run build
 
       - name: Build and run containers
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Run Prisma Migration
         run: npx prisma migrate deploy
