@@ -27,7 +27,7 @@ jobs:
 
       - name: Build and run containers
         run: |
-          sudo docker-compose up -d
+          docker-compose up -d
 
       - name: Run Prisma Migration
         run: npx prisma migrate deploy
@@ -41,4 +41,3 @@ jobs:
 
       - name: Start pm2
         run: pm2 start dist/main.js --name leadcode_site_backend -- start
-
