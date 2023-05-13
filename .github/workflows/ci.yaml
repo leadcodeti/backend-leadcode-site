@@ -3,6 +3,10 @@ name: Node.js CI
 on:
   push:
     branches: ["main"]
+    paths:
+      - "./prisma/**/*.*"
+  workflow_dispatch:
+    branches: [main]
 
   pull_request:
     branches: ["main"]
@@ -11,21 +15,6 @@ jobs:
   CI:
     runs-on: self-hosted
 
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: ${{ secrets.LEADCODEPOSTGRES_USER}}
-          POSTGRES_PASSWORD: ${{ secrets.LEADCODEPOSTGRES_PASSWORD}}
-          POSTGRES_DB: ${{ secrets.LEADCODEPOSTGRES_DB}}
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5444:5432
-    
     steps:
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
@@ -39,16 +28,12 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Wait for database
+      - name: Build and run containers
         run: |
-          until pg_isready -h postgres -p 5432
-          do
-            echo "Waiting for database to start..."
-            sleep 1
-          done
+          sudo docker-compose up -d
 
-            - name: Run Prisma Migration
-              run: npx prisma migrate deploy
+      - name: Run Prisma Migration
+        run: npx prisma migrate deploy
 
   CD:
     runs-on: self-hosted
