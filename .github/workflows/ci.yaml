@@ -1,10 +1,12 @@
-name: Node.js CI
+name: Leadcode backend
 
 on:
   push:
     branches: ["main"]
+
     paths:
       - "./prisma/**/*.*"
+      
   workflow_dispatch:
     branches: [main]
 
