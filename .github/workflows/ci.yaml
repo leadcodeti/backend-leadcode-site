@@ -5,8 +5,6 @@ on:
     branches: ["main"]
     paths:
       - "./prisma/**/*.*"
-  workflow_dispatch:
-    branches: [main]
 
   pull_request:
     branches: ["main"]
