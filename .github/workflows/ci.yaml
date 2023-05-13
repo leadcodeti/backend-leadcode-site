@@ -1,11 +1,8 @@
-name: Leadcode backend
+name: Leadcode backend CI/CD
 
 on:
   push:
     branches: ["main"]
-
-    paths:
-      - "./prisma/**/*.*"
       
   workflow_dispatch:
     branches: [main]
