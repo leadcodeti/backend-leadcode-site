@@ -8,25 +8,25 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  CI:
     runs-on: self-hosted
-    container: docker:20.10.8-git
 
-    steps:
-      - name: Install Docker
-        run: apk add docker
-
-      - name: Start PostgreSQL
-        uses: docker://postgres:latest
+    services:
+      postgres:
+        image: postgres:15
         env:
           POSTGRES_USER: ${{ secrets.LEADCODEPOSTGRES_USER}}
           POSTGRES_PASSWORD: ${{ secrets.LEADCODEPOSTGRES_PASSWORD}}
           POSTGRES_DB: ${{ secrets.LEADCODEPOSTGRES_DB}}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
         ports:
-        - 5444:5432
-        with:
-          entrypoint: bash -c "pg_ctl start -D $$PGDATA -o '-c listen_addresses='*'' && tail -f /dev/null"
-
+          - 5444:5432
+    
+    steps:
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
@@ -39,8 +39,16 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Run Prisma Migration
+        run: npx prisma migrate deploy
+
+  CD:
+    runs-on: self-hosted
+    needs: [CI]
+    steps:
       - name: Stop pm2
-        run: pm2 stop leadcode_site || true
+        run: pm2 stop leadcode_site_backend || true
 
       - name: Start pm2
-        run: pm2 start dist/main.js --name leadcode_site
+        run: pm2 start dist/main.js --name leadcode_site_backend -- start
+
