@@ -48,6 +48,7 @@ A aplicação é desenvolvida em Node JS e faz uso de typescript e do framework 
 - [Dotenv](https://www.npmjs.com/package/dotenv)
 - [uuid](https://www.npmjs.com/package/uuid)
 - [prisma](prisma.io)
+- [@nest/swagger](https://www.npmjs.com/package/@nestjs/swagger)
 - [bcrypt](https://www.npmjs.com/package/bcrypt)
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 - [node-random-string](https://www.npmjs.com/package/randomstring)
