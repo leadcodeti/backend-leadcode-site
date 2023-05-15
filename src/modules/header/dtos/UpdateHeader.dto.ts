@@ -1,5 +1,5 @@
-export type UpdateHeaderDTO = {
+export class UpdateHeaderDTO {
   id: string;
   logo: string;
   buttonText?: string;
-};
+}

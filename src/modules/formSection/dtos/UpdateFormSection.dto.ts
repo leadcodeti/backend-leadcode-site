@@ -1,5 +1,5 @@
-export type UpdateFormSectionDTO = {
+export class UpdateFormSectionDTO {
   id: string;
   title: string;
   description: string;
-};
+}

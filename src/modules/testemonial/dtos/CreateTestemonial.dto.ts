@@ -1,4 +1,4 @@
-export type CreateTestemonialDTO = {
+export class CreateTestemonialDTO {
   id?: string;
   content: string;
   client_avatar: string;
@@ -6,4 +6,4 @@ export type CreateTestemonialDTO = {
   job_position: string;
   is_selected: boolean;
   testemonial_section_id: string;
-};
+}

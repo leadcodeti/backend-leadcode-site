@@ -1,4 +1,4 @@
-export type UpdateSiteDTO = {
+export class UpdateSiteDTO {
   id: string;
   home_id: string;
   service_section_id?: string;
@@ -7,4 +7,4 @@ export type UpdateSiteDTO = {
   form_section_id?: string;
   top_footer_id?: string;
   bottom_footer_id?: string;
-};
+}

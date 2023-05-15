@@ -1,4 +1,4 @@
-export type CreateTestemonialSectionDTO = {
+export class CreateTestemonialSectionDTO {
   id?: string;
   title: string;
-};
+}

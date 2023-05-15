@@ -1,4 +1,4 @@
-export type UpdateTopFooterDTO = {
+export class UpdateTopFooterDTO {
   id: string;
   logo: string;
-};
+}
