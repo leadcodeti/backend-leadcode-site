@@ -3,15 +3,23 @@ import { FormRegisterRepository } from './repositories/formRegister.repository';
 import { CreateFormRegisterDTO } from './dtos/CreateFormRegister.dto';
 import { FormRegister } from '@prisma/client';
 import { UpdateFormRegisterDTO } from './dtos/UpdateFormRegister.dto';
+import { MyMailerService } from '../myMailer/myMailer.service';
 
 @Injectable()
 export class FormRegisterService {
   constructor(
     @Inject('FormRegisterRepository')
     private readonly formRegisterRepository: FormRegisterRepository,
+    private readonly myMailerService: MyMailerService,
   ) {}
 
   async create(data: CreateFormRegisterDTO): Promise<FormRegister> {
+    this.myMailerService.sendMail(
+      data.user_email,
+      data.project_description,
+      data.user_name,
+      data.user_phone,
+    );
     return await this.formRegisterRepository.create(data);
   }
 

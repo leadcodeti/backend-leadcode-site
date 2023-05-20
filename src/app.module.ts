@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './modules/user/user.module';
 import { SiteModule } from './modules/site/site.module';
 import { HeaderModule } from './modules/header/header.module';
@@ -6,7 +7,7 @@ import { HeaderLinkModule } from './modules/headerLink/headerLink.module';
 import { TechCarouselModule } from './modules/techCarousel/techCarousel.module';
 import { HomeModule } from './modules/home/home.module';
 import { FormSectionModule } from './modules/formSection/formSection.module';
-import { FormRegisternModule } from './modules/formRegister/formRegister.module';
+import { FormRegisterModule } from './modules/formRegister/formRegister.module';
 import { ServiceSectionModule } from './modules/serviceSection/serviceSection.module';
 import { ServiceCardModule } from './modules/serviceCard/serviceCard.module';
 import { TestemonialSectionModule } from './modules/testemonialSection/testemonialSection.module';
@@ -17,9 +18,14 @@ import { TopFooterModule } from './modules/topFooter/topFooter.module';
 import { TopFooterLinkModule } from './modules/topFooterLink/topFooterLink.module';
 import { BottomFooterModule } from './modules/bottomFooter/bottomFooter.module';
 import { SocialMediaModule } from './modules/socialMedia/socialMedia.module';
+import config from '../config/gmailConfiguration';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [config],
+    }),
     UserModule,
     SiteModule,
     HomeModule,
@@ -33,7 +39,7 @@ import { SocialMediaModule } from './modules/socialMedia/socialMedia.module';
     TestemonialSectionModule,
     TestemonialModule,
     FormSectionModule,
-    FormRegisternModule,
+    FormRegisterModule,
     TopFooterModule,
     TopFooterLinkModule,
     BottomFooterModule,
