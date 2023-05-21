@@ -43,4 +43,4 @@ jobs:
         run: pm2 stop leadcode_site_backend || true
 
       - name: Start pm2
-        run: pm2 start dist/main.js --name leadcode_site_backend -- start
+        run: pm2 start dist/src/main.js --name leadcode_site_backend -- start
