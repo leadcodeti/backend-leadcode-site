@@ -1,5 +1,4 @@
 export class CreateHeaderLinkDTO {
-  id?: string;
   name: string;
   link: string;
   isSelected: boolean;

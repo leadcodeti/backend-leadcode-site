@@ -1,5 +1,4 @@
 export class CreateTestemonialDTO {
-  id?: string;
   content: string;
   client_avatar: string;
   client_name: string;

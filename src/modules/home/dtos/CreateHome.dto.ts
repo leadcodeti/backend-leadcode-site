@@ -1,5 +1,4 @@
 export class CreateHomeDTO {
-  id?: string;
   image?: string;
   headline: string;
   subheadline: string;

@@ -1,5 +1,4 @@
 export class CreateSocialMediaDTO {
-  id?: string;
   icon: string;
   link: string;
   is_selected: boolean;

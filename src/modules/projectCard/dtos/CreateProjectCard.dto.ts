@@ -1,5 +1,4 @@
 export class CreateProjectCardDTO {
-  id?: string;
   image: string;
   name: string;
   description: string;

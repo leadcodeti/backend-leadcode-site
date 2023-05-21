@@ -1,5 +1,4 @@
 export class CreateSiteDTO {
-  id?: string;
   home_id: string;
   service_section_id?: string;
   project_section_id?: string;
