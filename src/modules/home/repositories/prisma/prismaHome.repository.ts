@@ -9,7 +9,6 @@ import { CreateHomeDTO } from '../../dtos/CreateHome.dto';
 export class PrismaHomeRepository implements HomeRepository {
   constructor(private prismaService: PrismaService) {}
   async create({
-    image,
     headline,
     subheadline,
     cta_button_text,
@@ -17,7 +16,6 @@ export class PrismaHomeRepository implements HomeRepository {
   }: CreateHomeDTO): Promise<Home> {
     const createHome = await this.prismaService.home.create({
       data: {
-        image,
         headline,
         subheadline,
         ctaButtonText: cta_button_text,
@@ -36,7 +34,6 @@ export class PrismaHomeRepository implements HomeRepository {
   async update(id: string, data: UpdateHomeDTO): Promise<Home> {
     return await this.prismaService.home.update({
       data: {
-        image: data.image,
         headline: data.headline,
         subheadline: data.subheadline,
         ctaButtonText: data.cta_button_text,

@@ -31,7 +31,6 @@ model Site {
 
 model Home {
   id            String         @id @default(uuid())
-  image         String?
   headline      String
   subheadline   String
   ctaButtonText String
@@ -41,8 +40,22 @@ model Home {
   createdAt     DateTime
 
   header Header @relation(fields: [headerId], references: [id])
+  hero   Hero?
 
   @@map("homes")
+}
+
+model Hero {
+  homeId    String   @id
+  key       String
+  name      String
+  url       String
+  size      Int
+  createdAt DateTime
+
+  home Home @relation(fields: [homeId], references: [id])
+
+  @@map("heros")
 }
 
 model Header {
@@ -129,9 +142,31 @@ model ProjectCard {
   createdAt        DateTime
   projectSectionId String
 
-  projectSection ProjectSection @relation(fields: [projectSectionId], references: [id])
+  projectSection    ProjectSection      @relation(fields: [projectSectionId], references: [id])
+  appliedTechnology AppliedTechnology[]
+  functionality     Functionality[]
 
   @@map("project_cards")
+}
+
+model AppliedTechnology {
+  id            String @id @default(uuid())
+  name          String
+  projectCardId String
+
+  projectCard ProjectCard @relation(fields: [projectCardId], references: [id])
+
+  @@map("applied_technologies")
+}
+
+model Functionality {
+  id            String @id @default(uuid())
+  description   String
+  projectCardId String
+
+  projectCard ProjectCard @relation(fields: [projectCardId], references: [id])
+
+  @@map("functionalities")
 }
 
 model TestemonialSection {
@@ -140,7 +175,7 @@ model TestemonialSection {
   Testemonial Testemonial[]
   createdAt   DateTime
 
-  Site Site[]
+  site Site[]
 
   @@map("testemonials_sections")
 }
@@ -182,7 +217,7 @@ model FormRegister {
   createdAt          DateTime
   formSectionId      String
 
-  FormSection FormSection @relation(fields: [formSectionId], references: [id])
+  formSection FormSection @relation(fields: [formSectionId], references: [id])
 
   @@map("form_registers")
 }
@@ -206,7 +241,7 @@ model TopFooterLink {
   createdAt   DateTime
   topFooterId String
 
-  TopFooter TopFooter @relation(fields: [topFooterId], references: [id])
+  topFooter TopFooter @relation(fields: [topFooterId], references: [id])
 
   @@map("top_footer_links")
 }
@@ -232,7 +267,7 @@ model SocialMedia {
   bottomFooterId String
   createdAt      DateTime
 
-  BottomFooter BottomFooter @relation(fields: [bottomFooterId], references: [id])
+  bottomFooter BottomFooter @relation(fields: [bottomFooterId], references: [id])
 
   @@map("social_medias")
 }

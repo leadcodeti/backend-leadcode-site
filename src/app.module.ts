@@ -19,6 +19,7 @@ import { TopFooterLinkModule } from './modules/topFooterLink/topFooterLink.modul
 import { BottomFooterModule } from './modules/bottomFooter/bottomFooter.module';
 import { SocialMediaModule } from './modules/socialMedia/socialMedia.module';
 import config from '../config/gmailConfiguration';
+import { HeroModule } from './modules/hero/hero.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import config from '../config/gmailConfiguration';
     UserModule,
     SiteModule,
     HomeModule,
+    HeroModule,
     HeaderModule,
     HeaderLinkModule,
     TechCarouselModule,
