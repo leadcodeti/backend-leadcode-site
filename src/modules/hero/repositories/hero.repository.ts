@@ -5,7 +5,7 @@ import { UpdateHeroDTO } from '../dtos/UpdateHero.dto';
 export interface HeroRepository {
   create(data: CreateHeroDTO): Promise<Hero>;
   findAll(): Promise<Hero[]>;
-  update(id: string, data: UpdateHeroDTO): Promise<Hero>;
-  delete(id: string): Promise<void>;
-  findById(id: string): Promise<Hero>;
+  update(key: string, data: UpdateHeroDTO): Promise<Hero>;
+  delete(key: string): Promise<void>;
+  findById(key: string): Promise<Hero>;
 }

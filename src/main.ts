@@ -29,6 +29,12 @@ async function bootstrap() {
   app.useStaticAssets('tmp/heros', {
     prefix: '/heros',
   });
+  app.useStaticAssets('tmp/topFooterLogos', {
+    prefix: '/top_footer_logos',
+  });
+  app.useStaticAssets('tmp/socialMediaIcons', {
+    prefix: '/social_media_icons',
+  });
 
   await app.listen(3334 || process.env.PORT);
 }

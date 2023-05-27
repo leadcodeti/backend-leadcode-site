@@ -27,7 +27,7 @@ export class PrismaHeroRepository implements HeroRepository {
     return await this.prismaService.hero.findMany();
   }
 
-  async update(id: string, data: UpdateHeroDTO): Promise<Hero> {
+  async update(key: string, data: UpdateHeroDTO): Promise<Hero> {
     return await this.prismaService.hero.update({
       data: {
         key: data.key,
@@ -36,23 +36,23 @@ export class PrismaHeroRepository implements HeroRepository {
         size: data.size,
       },
       where: {
-        homeId: id,
+        key,
       },
     });
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(key: string): Promise<void> {
     await this.prismaService.hero.delete({
       where: {
-        homeId: id,
+        key,
       },
     });
   }
 
-  async findById(id: string): Promise<Hero> {
+  async findById(key: string): Promise<Hero> {
     const heroExists = await this.prismaService.hero.findUnique({
       where: {
-        homeId: id,
+        key,
       },
     });
 

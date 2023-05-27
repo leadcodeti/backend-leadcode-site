@@ -9,14 +9,14 @@ datasource db {
 
 model Site {
   id                   String   @id @default(uuid())
-  createdAt            DateTime @default(now())
-  homeId               String
-  serviceSectionId     String?
-  projectSectionId     String?
-  testemonialSectionId String?
-  formSectionId        String?
-  topFooterId          String?
-  bottomFooterId       String?
+  createdAt            DateTime @default(now()) @map("created_at")
+  homeId               String   @map("home_id")
+  serviceSectionId     String?  @map("service_section_id")
+  projectSectionId     String?  @map("project_section_id")
+  testemonialSectionId String?  @map("testemonial_section_id")
+  formSectionId        String?  @map("form_section_id")
+  topFooterId          String?  @map("top_footer_id")
+  bottomFooterId       String?  @map("bottom_footer_id")
 
   home               Home                @relation(fields: [homeId], references: [id])
   serviceSection     ServiceSection?     @relation(fields: [serviceSectionId], references: [id])
@@ -33,25 +33,25 @@ model Home {
   id            String         @id @default(uuid())
   headline      String
   subheadline   String
-  ctaButtonText String
-  headerId      String
+  ctaButtonText String         @map("cta_button_text")
+  headerId      String         @map("header_id")
   sites         Site[]
   techsCarousel TechCarousel[]
-  createdAt     DateTime
+  createdAt     DateTime       @map("created_at")
 
   header Header @relation(fields: [headerId], references: [id])
-  hero   Hero?
+  hero   Hero[]
 
   @@map("homes")
 }
 
 model Hero {
-  homeId    String   @id
-  key       String
+  key       String   @id
   name      String
   url       String
   size      Int
-  createdAt DateTime
+  homeId    String   @map("home_id")
+  createdAt DateTime @map("created_at")
 
   home Home @relation(fields: [homeId], references: [id])
 
@@ -61,10 +61,10 @@ model Hero {
 model Header {
   id          String       @id @default(uuid())
   logo        String
-  buttonText  String?
+  buttonText  String?      @map("button_text")
   headerLinks HeaderLink[]
   homes       Home[]
-  createdAt   DateTime
+  createdAt   DateTime     @map("created_at")
 
   @@map("headers")
 }
@@ -73,9 +73,9 @@ model HeaderLink {
   id         String   @id @default(uuid())
   name       String
   link       String
-  isSelected Boolean
-  createdAt  DateTime
-  headerId   String
+  isSelected Boolean  @map("is_selected")
+  createdAt  DateTime @map("created_at")
+  headerId   String   @map("header_id")
 
   header Header @relation(fields: [headerId], references: [id], onDelete: Cascade)
 
@@ -86,9 +86,9 @@ model TechCarousel {
   id         String   @id @default(uuid())
   icon       String
   name       String
-  isSelected Boolean
-  createdAt  DateTime
-  homeId     String
+  isSelected Boolean  @map("is_selected")
+  createdAt  DateTime @map("created_at")
+  homeId     String   @map("home_id")
 
   home Home @relation(fields: [homeId], references: [id])
 
@@ -101,7 +101,7 @@ model ServiceSection {
   description  String
   sites        Site[]
   serviceCards ServiceCard[]
-  createdAt    DateTime
+  createdAt    DateTime      @map("created_at")
 
   @@map("services_sections")
 }
@@ -111,9 +111,9 @@ model ServiceCard {
   image            String
   title            String
   content          String
-  isSelected       Boolean
-  createdAt        DateTime
-  serviceSectionId String
+  isSelected       Boolean  @map("is_selected")
+  createdAt        DateTime @map("created_at")
+  serviceSectionId String   @map("service_section_id")
 
   ServiceSection ServiceSection @relation(fields: [serviceSectionId], references: [id])
 
@@ -124,9 +124,9 @@ model ProjectSection {
   id             String   @id @default(uuid())
   title          String
   description    String
-  moreButtonText String
+  moreButtonText String   @map("more_button_text")
   sites          Site[]
-  createdAt      DateTime
+  createdAt      DateTime @map("created_at")
 
   projectCards ProjectCard[]
 
@@ -138,9 +138,9 @@ model ProjectCard {
   image            String
   name             String
   description      String
-  isSelected       Boolean
-  createdAt        DateTime
-  projectSectionId String
+  isSelected       Boolean  @map("is_selected")
+  createdAt        DateTime @map("created_at")
+  projectSectionId String   @map("project_section_id")
 
   projectSection    ProjectSection      @relation(fields: [projectSectionId], references: [id])
   appliedTechnology AppliedTechnology[]
@@ -152,7 +152,7 @@ model ProjectCard {
 model AppliedTechnology {
   id            String @id @default(uuid())
   name          String
-  projectCardId String
+  projectCardId String @map("project_card_id")
 
   projectCard ProjectCard @relation(fields: [projectCardId], references: [id])
 
@@ -162,7 +162,7 @@ model AppliedTechnology {
 model Functionality {
   id            String @id @default(uuid())
   description   String
-  projectCardId String
+  projectCardId String @map("project_card_id")
 
   projectCard ProjectCard @relation(fields: [projectCardId], references: [id])
 
@@ -173,7 +173,7 @@ model TestemonialSection {
   id          String        @id @default(uuid())
   title       String
   Testemonial Testemonial[]
-  createdAt   DateTime
+  createdAt   DateTime      @map("created_at")
 
   site Site[]
 
@@ -183,12 +183,12 @@ model TestemonialSection {
 model Testemonial {
   id                   String   @id @default(uuid())
   content              String
-  clientAvatar         String
-  clientName           String
-  jobPosition          String?
-  isSelected           Boolean
-  createdAt            DateTime
-  testemonialSectionId String
+  clientAvatar         String   @map("client_avatar")
+  clientName           String   @map("client_name")
+  jobPosition          String?  @map("job_position")
+  isSelected           Boolean  @map("is_selected")
+  createdAt            DateTime @map("created_at")
+  testemonialSectionId String   @map("testemonial_section_id")
 
   testemonialSection TestemonialSection @relation(fields: [testemonialSectionId], references: [id])
 
@@ -199,7 +199,7 @@ model FormSection {
   id          String   @id @default(uuid())
   title       String
   description String
-  createdAt   DateTime
+  createdAt   DateTime @map("created_at")
 
   sites     Site[]
   registers FormRegister[]
@@ -209,13 +209,13 @@ model FormSection {
 
 model FormRegister {
   id                 String   @id @default(uuid())
-  userName           String
-  userEmail          String
-  userPhone          String
-  projectDescription String
-  areTermsAccepted   Boolean
-  createdAt          DateTime
-  formSectionId      String
+  userName           String   @map("user_name")
+  userEmail          String   @map("user_email")
+  userPhone          String   @map("user_phone")
+  projectDescription String   @map("project_description")
+  areTermsAccepted   Boolean  @map("are_terms_accepted")
+  createdAt          DateTime @map("created_at")
+  formSectionId      String   @map("form_section_id")
 
   formSection FormSection @relation(fields: [formSectionId], references: [id])
 
@@ -225,21 +225,35 @@ model FormRegister {
 model TopFooter {
   id        String   @id @default(uuid())
   logo      String?
-  createdAt DateTime
+  createdAt DateTime @map("created_at")
 
   sites          Site[]
   topFooterLinks TopFooterLink[]
+  topFooterLogo  TopFooterLogo[]
 
   @@map("top_footers")
+}
+
+model TopFooterLogo {
+  key         String   @id
+  name        String
+  url         String
+  size        Int
+  topFooterId String   @map("top_footer_id")
+  createdAt   DateTime @map("created_at")
+
+  topFooter TopFooter @relation(fields: [topFooterId], references: [id])
+
+  @@map("top_footer_logos")
 }
 
 model TopFooterLink {
   id          String   @id @default(uuid())
   icon        String?
   name        String
-  isSelected  Boolean
-  createdAt   DateTime
-  topFooterId String
+  isSelected  Boolean  @map("is_selected")
+  createdAt   DateTime @map("created_at")
+  topFooterId String   @map("top_footer_id")
 
   topFooter TopFooter @relation(fields: [topFooterId], references: [id])
 
@@ -249,9 +263,9 @@ model TopFooterLink {
 model BottomFooter {
   id            String   @id @default(uuid())
   logo          String?
-  privacyPolicy String?
-  yarnLogoText  String?
-  createdAt     DateTime
+  privacyPolicy String?  @map("privacy_policy")
+  yarnLogoText  String?  @map("yarn_logo_text")
+  createdAt     DateTime @map("created_at")
 
   sites        Site[]
   socialMedias SocialMedia[]
@@ -263,11 +277,25 @@ model SocialMedia {
   id             String   @id @default(uuid())
   icon           String
   link           String
-  isSelected     Boolean
-  bottomFooterId String
-  createdAt      DateTime
+  isSelected     Boolean  @map("is_selected")
+  bottomFooterId String   @map("bottom_footer_id")
+  createdAt      DateTime @map("created_at")
 
-  bottomFooter BottomFooter @relation(fields: [bottomFooterId], references: [id])
+  bottomFooter    BottomFooter      @relation(fields: [bottomFooterId], references: [id])
+  SocialMediaIcon SocialMediaIcon[]
 
   @@map("social_medias")
+}
+
+model SocialMediaIcon {
+  key           String   @id
+  name          String
+  url           String
+  size          Int
+  socialMediaId String   @map("social_media_id")
+  createdAt     DateTime @map("created_at")
+
+  socialMedia SocialMedia @relation(fields: [socialMediaId], references: [id])
+
+  @@map("social_media_icons")
 }
