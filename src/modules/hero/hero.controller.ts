@@ -46,8 +46,10 @@ export class HeroController {
             Date.now() + '-' + Math.round(Math.random() * 1e9);
           const ext = extname(file.originalname);
           const filename = `${file.originalname}-${uniqueSuffix}${ext}`;
-
-          callback(null, filename);
+          const filenameWithNoSpacesToLower = filename
+            .replace(/[^a-zA-Z0-9-_.]/g, '-')
+            .toLowerCase();
+          callback(null, filenameWithNoSpacesToLower);
         },
       }),
     }),
