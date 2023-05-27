@@ -3,16 +3,24 @@ import { CreateHeroDTO } from './dtos/CreateHero.dto';
 import { HeroRepository } from './repositories/hero.repository';
 import { Hero } from '@prisma/client';
 import { UpdateHeroDTO } from './dtos/UpdateHero.dto';
+import { FileService } from 'src/utils/file';
 
 @Injectable()
 export class HeroService {
   constructor(
     @Inject('HeroRepository')
     private readonly heroRepository: HeroRepository,
+    private readonly fileService: FileService,
   ) {}
 
   async create(data: CreateHeroDTO): Promise<Hero> {
-    data.name = data.name.replace('}', '');
+    const hero = await this.heroRepository.findById(data.homeId);
+
+    if (hero) {
+      await this.fileService.deleteFile(`./tmp/heros/${hero.key}`);
+      await this.heroRepository.delete(data.homeId);
+    }
+
     data.url = `${process.env.HERO_URL}/${data.key}`;
     return await this.heroRepository.create(data);
   }
