@@ -38,6 +38,9 @@ async function bootstrap() {
   app.useStaticAssets('tmp/projectCardImages', {
     prefix: '/project_card_images',
   });
+  app.useStaticAssets('tmp/serviceCardImages', {
+    prefix: '/service_card_images',
+  });
 
   await app.listen(3334 || process.env.PORT);
 }

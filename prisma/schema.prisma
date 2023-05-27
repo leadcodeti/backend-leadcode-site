@@ -115,9 +115,23 @@ model ServiceCard {
   createdAt        DateTime @map("created_at")
   serviceSectionId String   @map("service_section_id")
 
-  ServiceSection ServiceSection @relation(fields: [serviceSectionId], references: [id])
+  ServiceSection   ServiceSection     @relation(fields: [serviceSectionId], references: [id])
+  ServiceCardImage ServiceCardImage[]
 
   @@map("service_cards")
+}
+
+model ServiceCardImage {
+  key           String   @id
+  name          String
+  url           String
+  size          Int
+  serviceCardId String   @map("service_card_id")
+  createdAt     DateTime @map("created_at")
+
+  serviceCard ServiceCard @relation(fields: [serviceCardId], references: [id])
+
+  @@map("service_card_images")
 }
 
 model ProjectSection {

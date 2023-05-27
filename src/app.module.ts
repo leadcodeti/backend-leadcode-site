@@ -23,6 +23,7 @@ import { HeroModule } from './modules/hero/hero.module';
 import { TopFooterLogoModule } from './modules/topFooterLogo/topFooterLogo.module';
 import { SocialMediaIconModule } from './modules/socialMediaIcon/socialMediaIcon.module';
 import { ProjectCardImageModule } from './modules/projectCardImage/projectCardImage.module';
+import { ServiceCardImageModule } from './modules/serviceCardImage/serviceCardImage.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { ProjectCardImageModule } from './modules/projectCardImage/projectCardIm
     TechCarouselModule,
     ServiceSectionModule,
     ServiceCardModule,
+    ServiceCardImageModule,
     ProjectSectionModule,
     ProjectCardModule,
     ProjectCardImageModule,
