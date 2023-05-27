@@ -19,7 +19,9 @@ export class SocialMediaIconService {
     );
 
     if (socialMediaIcon) {
-      await this.fileService.deleteFile(`./tmp/heros/${socialMediaIcon.key}`);
+      await this.fileService.deleteFile(
+        `./tmp/socialMediaIcons/${socialMediaIcon.key}`,
+      );
       await this.socialMediaIconRepository.delete(data.key);
     }
 

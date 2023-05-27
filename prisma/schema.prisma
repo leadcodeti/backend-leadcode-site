@@ -145,8 +145,22 @@ model ProjectCard {
   projectSection    ProjectSection      @relation(fields: [projectSectionId], references: [id])
   appliedTechnology AppliedTechnology[]
   functionality     Functionality[]
+  ProjectCardImage  ProjectCardImage[]
 
   @@map("project_cards")
+}
+
+model ProjectCardImage {
+  key           String   @id
+  name          String
+  url           String
+  size          Int
+  projectCardId String   @map("project_card_id")
+  createdAt     DateTime @map("created_at")
+
+  projectCard ProjectCard @relation(fields: [projectCardId], references: [id])
+
+  @@map("project_card_images")
 }
 
 model AppliedTechnology {

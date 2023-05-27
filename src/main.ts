@@ -35,6 +35,9 @@ async function bootstrap() {
   app.useStaticAssets('tmp/socialMediaIcons', {
     prefix: '/social_media_icons',
   });
+  app.useStaticAssets('tmp/projectCardImages', {
+    prefix: '/project_card_images',
+  });
 
   await app.listen(3334 || process.env.PORT);
 }

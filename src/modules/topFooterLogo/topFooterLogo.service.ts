@@ -19,8 +19,10 @@ export class TopFooterLogoService {
     );
 
     if (topFooterLogo) {
-      await this.fileService.deleteFile(`./tmp/heros/${topFooterLogo.key}`);
-      await this.topFooterLogoRepository.delete(data.topFooterId);
+      await this.fileService.deleteFile(
+        `./tmp/topFooterLogo/${topFooterLogo.key}`,
+      );
+      await this.topFooterLogoRepository.delete(data.key);
     }
 
     data.url = `${process.env.TOP_FOOTER_LOGO_URL}/${data.key}`;

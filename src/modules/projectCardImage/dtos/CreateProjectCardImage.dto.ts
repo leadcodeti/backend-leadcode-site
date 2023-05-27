@@ -1,0 +1,7 @@
+export class CreateProjectCardImageDTO {
+  projectCardId: string;
+  key: string;
+  name: string;
+  url: string;
+  size: number;
+}

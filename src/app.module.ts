@@ -22,6 +22,7 @@ import config from '../config/gmailConfiguration';
 import { HeroModule } from './modules/hero/hero.module';
 import { TopFooterLogoModule } from './modules/topFooterLogo/topFooterLogo.module';
 import { SocialMediaIconModule } from './modules/socialMediaIcon/socialMediaIcon.module';
+import { ProjectCardImageModule } from './modules/projectCardImage/projectCardImage.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { SocialMediaIconModule } from './modules/socialMediaIcon/socialMediaIcon
     ServiceCardModule,
     ProjectSectionModule,
     ProjectCardModule,
+    ProjectCardImageModule,
     TestemonialSectionModule,
     TestemonialModule,
     FormSectionModule,
