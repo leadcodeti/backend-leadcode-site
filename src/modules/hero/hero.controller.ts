@@ -1,18 +1,27 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
+  Put,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { HeroService } from './hero.service';
 import { HeroEntity } from './entities/hero.entity';
 import { Hero } from '@prisma/client';
+import { UpdateHeroDTO } from './dtos/UpdateHero.dto';
 
 type ParamProps = {
   home_id: string;
@@ -36,7 +45,7 @@ export class HeroController {
           const uniqueSuffix =
             Date.now() + '-' + Math.round(Math.random() * 1e9);
           const ext = extname(file.originalname);
-          const filename = `${file.originalname}-${uniqueSuffix}${ext}}`;
+          const filename = `${file.originalname}-${uniqueSuffix}${ext}`;
 
           callback(null, filename);
         },
@@ -51,7 +60,7 @@ export class HeroController {
       throw new Error('You must upload a file.');
     }
 
-    const { originalname: name, size, destination, path: url = '' } = file;
+    const { originalname: name, size, filename: key } = file;
 
     const { home_id } = params;
 
@@ -59,8 +68,8 @@ export class HeroController {
       homeId: home_id,
       name,
       size,
-      key: destination,
-      url,
+      key,
+      url: '',
     });
   }
 
@@ -72,5 +81,21 @@ export class HeroController {
   @Get()
   async list(): Promise<Hero[]> {
     return await this.heroService.list();
+  }
+
+  @Put('/:id')
+  async update(
+    @Param('id') id: string,
+    @Body() data: UpdateHeroDTO,
+  ): Promise<Hero> {
+    return await this.heroService.update(id, data);
+  }
+
+  @ApiNoContentResponse({
+    description: 'Deleção realizada com sucesso.',
+  })
+  @Delete('/:id')
+  async delete(@Param('id') id: string): Promise<void> {
+    return await this.heroService.delete(id);
   }
 }

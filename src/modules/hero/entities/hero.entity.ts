@@ -5,6 +5,6 @@ export class HeroEntity implements Hero {
   key: string;
   name: string;
   url: string;
-  size: bigint;
+  size: number;
   createdAt: Date;
 }

@@ -49,6 +49,7 @@ A aplicação é desenvolvida em Node JS e faz uso de typescript e do framework 
 - [googleapis](https://www.npmjs.com/package/googleapis)
 - [uuid](https://www.npmjs.com/package/uuid)
 - [prisma](prisma.io)
+- [@nestjs/serve-static](https://www.npmjs.com/package/@nestjs/serve-static)
 - [@nest/swagger](https://www.npmjs.com/package/@nestjs/swagger)
 - [nodemailer](https://www.npmjs.com/package/nodemailer)
 - [@nestjs-modules/mailer](https://www.npmjs.com/package/@nestjs-modules/mailer)

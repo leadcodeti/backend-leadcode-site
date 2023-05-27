@@ -12,6 +12,8 @@ export class HeroService {
   ) {}
 
   async create(data: CreateHeroDTO): Promise<Hero> {
+    data.name = data.name.replace('}', '');
+    data.url = `${process.env.HERO_URL}/${data.key}`;
     return await this.heroRepository.create(data);
   }
 

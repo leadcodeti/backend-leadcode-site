@@ -3,9 +3,10 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   const config = new DocumentBuilder()
     .setTitle('Leadcode site API')
@@ -25,6 +26,10 @@ async function bootstrap() {
   );
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   app.enableCors();
+  app.useStaticAssets('tmp/heros', {
+    prefix: '/heros',
+  });
+
   await app.listen(3334 || process.env.PORT);
 }
 bootstrap();
