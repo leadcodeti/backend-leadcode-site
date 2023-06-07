@@ -17,7 +17,7 @@ export class FunctionalityService {
     );
 
     if (functionalityExists) {
-      throw new Error('This Technology already exists.');
+      throw new Error('This Functionality already exists.');
     }
 
     return await this.functionalityRepository.create(data);
@@ -34,7 +34,7 @@ export class FunctionalityService {
     const functionalityExists = await this.functionalityRepository.findById(id);
 
     if (!functionalityExists) {
-      throw new Error('This Technology does not exists.');
+      throw new Error('This Functionality does not exists.');
     }
     return this.functionalityRepository.update(id, data);
   }
