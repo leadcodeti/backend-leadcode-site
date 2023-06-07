@@ -1,4 +1,5 @@
 export class UpdateTopFooterDTO {
-  id: string;
   logo: string;
+  phone: string;
+  email: string;
 }

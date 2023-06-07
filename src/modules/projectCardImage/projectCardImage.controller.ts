@@ -72,6 +72,7 @@ export class ProjectCardImageController {
       size,
       key,
       url: '',
+      isCover: true,
     });
   }
 

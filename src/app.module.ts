@@ -24,6 +24,8 @@ import { TopFooterLogoModule } from './modules/topFooterLogo/topFooterLogo.modul
 import { SocialMediaIconModule } from './modules/socialMediaIcon/socialMediaIcon.module';
 import { ProjectCardImageModule } from './modules/projectCardImage/projectCardImage.module';
 import { ServiceCardImageModule } from './modules/serviceCardImage/serviceCardImage.module';
+import { TechCarouselImageModule } from './modules/techCarouselImage/techCarouselImage.module';
+import { ClientAvatarModule } from './modules/clientAvatar/clientAvatar.module';
 
 @Module({
   imports: [
@@ -38,6 +40,7 @@ import { ServiceCardImageModule } from './modules/serviceCardImage/serviceCardIm
     HeaderModule,
     HeaderLinkModule,
     TechCarouselModule,
+    TechCarouselImageModule,
     ServiceSectionModule,
     ServiceCardModule,
     ServiceCardImageModule,
@@ -54,6 +57,7 @@ import { ServiceCardImageModule } from './modules/serviceCardImage/serviceCardIm
     BottomFooterModule,
     SocialMediaModule,
     SocialMediaIconModule,
+    ClientAvatarModule,
   ],
 })
 export class AppModule {}

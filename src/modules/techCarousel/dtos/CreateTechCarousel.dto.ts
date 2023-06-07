@@ -1,5 +1,5 @@
 export class CreateTechCarouselDTO {
-  icon: string;
+  image: string;
   name: string;
   is_selected: boolean;
   created_at: Date;

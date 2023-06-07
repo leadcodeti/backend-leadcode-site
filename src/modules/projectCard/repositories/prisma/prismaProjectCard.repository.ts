@@ -10,17 +10,23 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
   constructor(private prismaService: PrismaService) {}
 
   async create({
-    image,
     name,
+    slug,
+    summary_description,
     description,
+    production_url,
+    behance_url,
     is_selected,
     project_section_id,
   }: CreateProjectCardDTO): Promise<ProjectCard> {
     return await this.prismaService.projectCard.create({
       data: {
-        image,
         name,
+        slug,
+        summaryDescription: summary_description,
         description,
+        productionUrl: production_url,
+        behanceUrl: behance_url,
         isSelected: is_selected,
         projectSectionId: project_section_id,
         createdAt: new Date(),
@@ -35,9 +41,11 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
   async update(id: string, data: UpdateProjectCardDTO): Promise<ProjectCard> {
     return await this.prismaService.projectCard.update({
       data: {
-        image: data.image,
         name: data.name,
+        slug: data.slug,
         description: data.description,
+        productionUrl: data.production_url,
+        behanceUrl: data.behance_url,
         isSelected: data.is_selected,
       },
       where: {

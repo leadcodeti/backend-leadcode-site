@@ -4,4 +4,5 @@ export class UpdateProjectCardImageDTO {
   name: string;
   url: string;
   size: number;
+  isCover: boolean;
 }

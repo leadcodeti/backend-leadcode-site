@@ -10,14 +10,14 @@ export class PrismaTechCarouselRepository implements TechCarouselRepository {
   constructor(private prismaService: PrismaService) {}
 
   async create({
-    icon,
+    image,
     name,
     is_selected,
     home_id,
   }: CreateTechCarouselDTO): Promise<TechCarousel> {
     const createTechCarousel = await this.prismaService.techCarousel.create({
       data: {
-        icon,
+        image,
         name,
         isSelected: is_selected,
         homeId: home_id,
@@ -34,7 +34,7 @@ export class PrismaTechCarouselRepository implements TechCarouselRepository {
   async update(id: string, data: UpdateTechCarouselDTO): Promise<TechCarousel> {
     return await this.prismaService.techCarousel.update({
       data: {
-        icon: data.icon,
+        image: data.image,
         name: data.name,
         isSelected: data.is_selected,
       },

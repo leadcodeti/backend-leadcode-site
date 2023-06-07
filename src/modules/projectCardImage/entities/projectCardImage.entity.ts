@@ -5,6 +5,7 @@ export class ProjectCardImageEntity implements ProjectCardImage {
   name: string;
   url: string;
   size: number;
+  isCover: boolean;
   projectCardId: string;
   createdAt: Date;
 }

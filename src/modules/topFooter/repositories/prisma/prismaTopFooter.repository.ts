@@ -9,10 +9,12 @@ import { UpdateTopFooterDTO } from '../../dtos/UpdateTopFooter.dto';
 export class PrismaTopFooterRepository implements TopFooterRepository {
   constructor(private prismaService: PrismaService) {}
 
-  async create({ logo }: CreateTopFooterDTO): Promise<TopFooter> {
+  async create({ logo, phone, email }: CreateTopFooterDTO): Promise<TopFooter> {
     const createTopFooter = await this.prismaService.topFooter.create({
       data: {
         logo,
+        phone,
+        email,
         createdAt: new Date(),
       },
     });
@@ -27,6 +29,8 @@ export class PrismaTopFooterRepository implements TopFooterRepository {
     return await this.prismaService.topFooter.update({
       data: {
         logo: data.logo,
+        phone: data.phone,
+        email: data.email,
       },
       where: {
         id,

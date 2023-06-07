@@ -16,6 +16,7 @@ export class PrismaProjectCardImageRepository
     url,
     projectCardId,
     size,
+    isCover,
   }: CreateProjectCardImageDTO): Promise<ProjectCardImage> {
     const createHero = await this.prismaService.projectCardImage.create({
       data: {
@@ -24,6 +25,7 @@ export class PrismaProjectCardImageRepository
         name,
         url,
         size,
+        isCover,
         createdAt: new Date(),
       },
     });
@@ -45,6 +47,7 @@ export class PrismaProjectCardImageRepository
         name: data.name,
         url: data.url,
         size: data.size,
+        isCover: data.isCover,
       },
       where: {
         key,

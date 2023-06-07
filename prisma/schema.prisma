@@ -31,6 +31,7 @@ model Site {
 
 model Home {
   id            String         @id @default(uuid())
+  heroImage     String         @map("hero_image")
   headline      String
   subheadline   String
   ctaButtonText String         @map("cta_button_text")
@@ -84,15 +85,29 @@ model HeaderLink {
 
 model TechCarousel {
   id         String   @id @default(uuid())
-  icon       String
+  image      String
   name       String
   isSelected Boolean  @map("is_selected")
   createdAt  DateTime @map("created_at")
   homeId     String   @map("home_id")
 
-  home Home @relation(fields: [homeId], references: [id])
+  home              Home                @relation(fields: [homeId], references: [id])
+  TechCarouselImage TechCarouselImage[]
 
   @@map("techs_carousel")
+}
+
+model TechCarouselImage {
+  key            String   @id
+  name           String
+  url            String
+  size           Int
+  techCarouselId String   @map("tech_carousel_id")
+  createdAt      DateTime @map("created_at")
+
+  techCarousel TechCarousel @relation(fields: [techCarouselId], references: [id])
+
+  @@map("tech_carousel_images")
 }
 
 model ServiceSection {
@@ -148,13 +163,16 @@ model ProjectSection {
 }
 
 model ProjectCard {
-  id               String   @id @default(uuid())
-  image            String
-  name             String
-  description      String
-  isSelected       Boolean  @map("is_selected")
-  createdAt        DateTime @map("created_at")
-  projectSectionId String   @map("project_section_id")
+  id                 String   @id @default(uuid())
+  name               String
+  slug               String
+  summaryDescription String   @map("summary_description")
+  description        String
+  productionUrl      String?  @map("production_url")
+  behanceUrl         String?  @map("behance_url")
+  isSelected         Boolean  @map("is_selected")
+  createdAt          DateTime @map("created_at")
+  projectSectionId   String   @map("project_section_id")
 
   projectSection    ProjectSection      @relation(fields: [projectSectionId], references: [id])
   appliedTechnology AppliedTechnology[]
@@ -169,6 +187,7 @@ model ProjectCardImage {
   name          String
   url           String
   size          Int
+  isCover       Boolean  @map("is_cover")
   projectCardId String   @map("project_card_id")
   createdAt     DateTime @map("created_at")
 
@@ -219,8 +238,22 @@ model Testemonial {
   testemonialSectionId String   @map("testemonial_section_id")
 
   testemonialSection TestemonialSection @relation(fields: [testemonialSectionId], references: [id])
+  ClientAvatar       ClientAvatar[]
 
   @@map("testemonials")
+}
+
+model ClientAvatar {
+  key           String   @id
+  name          String
+  url           String
+  size          Int
+  testemonialId String   @map("testemonial_id")
+  createdAt     DateTime @map("created_at")
+
+  testemonial Testemonial @relation(fields: [testemonialId], references: [id])
+
+  @@map("client_avatar")
 }
 
 model FormSection {
@@ -252,7 +285,9 @@ model FormRegister {
 
 model TopFooter {
   id        String   @id @default(uuid())
-  logo      String?
+  logo      String
+  phone     String
+  email     String
   createdAt DateTime @map("created_at")
 
   sites          Site[]
