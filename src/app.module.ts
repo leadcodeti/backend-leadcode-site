@@ -26,6 +26,8 @@ import { ProjectCardImageModule } from './modules/projectCardImage/projectCardIm
 import { ServiceCardImageModule } from './modules/serviceCardImage/serviceCardImage.module';
 import { TechCarouselImageModule } from './modules/techCarouselImage/techCarouselImage.module';
 import { ClientAvatarModule } from './modules/clientAvatar/clientAvatar.module';
+import { AppliedTechnologyModule } from './modules/appliedTechnology/appliedTechnology.module';
+import { FunctionalityModule } from './modules/functionality/functionality.module';
 
 @Module({
   imports: [
@@ -58,6 +60,8 @@ import { ClientAvatarModule } from './modules/clientAvatar/clientAvatar.module';
     SocialMediaModule,
     SocialMediaIconModule,
     ClientAvatarModule,
+    AppliedTechnologyModule,
+    FunctionalityModule,
   ],
 })
 export class AppModule {}

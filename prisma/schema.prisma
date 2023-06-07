@@ -197,9 +197,10 @@ model ProjectCardImage {
 }
 
 model AppliedTechnology {
-  id            String @id @default(uuid())
+  id            String   @id @default(uuid())
   name          String
-  projectCardId String @map("project_card_id")
+  projectCardId String   @map("project_card_id")
+  createdAt     DateTime @map("created_at")
 
   projectCard ProjectCard @relation(fields: [projectCardId], references: [id])
 
@@ -207,9 +208,10 @@ model AppliedTechnology {
 }
 
 model Functionality {
-  id            String @id @default(uuid())
-  description   String
-  projectCardId String @map("project_card_id")
+  id            String   @id @default(uuid())
+  name          String
+  projectCardId String   @map("project_card_id")
+  createdAt     DateTime @map("created_at")
 
   projectCard ProjectCard @relation(fields: [projectCardId], references: [id])
 
