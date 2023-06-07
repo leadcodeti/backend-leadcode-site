@@ -3,17 +3,18 @@ import { PrismaService } from 'src/database/prisma.service';
 import { ClientAvatarRepository } from '../clientAvatar.repository';
 import { ClientAvatar } from '@prisma/client';
 import { UpdateClientAvatarDTO } from '../../dtos/UpdateClientAvatar.dto';
+import { CreateClientAvatarDTO } from '../../dtos/CreateClientAvatar.dto';
 
 @Injectable()
 export class PrismaClientAvatarRepository implements ClientAvatarRepository {
   constructor(private prismaService: PrismaService) {}
   async create({
+    testemonialId,
     key,
     name,
     url,
-    testemonialId,
     size,
-  }: ClientAvatarRepository): Promise<ClientAvatar> {
+  }: CreateClientAvatarDTO): Promise<ClientAvatar> {
     const clientAvatar = await this.prismaService.clientAvatar.create({
       data: {
         testemonialId,

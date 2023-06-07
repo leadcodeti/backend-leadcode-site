@@ -31,7 +31,7 @@ model Site {
 
 model Home {
   id            String         @id @default(uuid())
-  heroImage     String         @map("hero_image")
+  heroImage     String?        @map("hero_image")
   headline      String
   subheadline   String
   ctaButtonText String         @map("cta_button_text")
@@ -85,7 +85,7 @@ model HeaderLink {
 
 model TechCarousel {
   id         String   @id @default(uuid())
-  image      String
+  image      String?
   name       String
   isSelected Boolean  @map("is_selected")
   createdAt  DateTime @map("created_at")
@@ -165,6 +165,7 @@ model ProjectSection {
 model ProjectCard {
   id                 String   @id @default(uuid())
   name               String
+  image              String?
   slug               String
   summaryDescription String   @map("summary_description")
   description        String

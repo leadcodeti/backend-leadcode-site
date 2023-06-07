@@ -50,22 +50,22 @@ export class PrismaHeaderLinkRepository implements HeaderLinkRepository {
   }
 
   async findByName(name: string): Promise<HeaderLink> {
-    const headerExists = await this.prismaService.headerLink.findFirst({
+    const headerLinkExists = await this.prismaService.headerLink.findFirst({
       where: {
         name,
       },
     });
 
-    return headerExists;
+    return headerLinkExists;
   }
 
   async findById(id: string): Promise<HeaderLink> {
-    const headerExists = await this.prismaService.headerLink.findUnique({
+    const headerLinkExists = await this.prismaService.headerLink.findUnique({
       where: {
         id,
       },
     });
 
-    return headerExists;
+    return headerLinkExists;
   }
 }

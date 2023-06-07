@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { HeroRepository } from '../hero.repository';
 import { CreateHeroDTO } from '../../dtos/CreateHero.dto';
-import { UpdateHeroDTO } from '../../dtos/UpdateHero.dto';
 
 @Injectable()
 export class PrismaHeroRepository implements HeroRepository {
@@ -27,20 +26,6 @@ export class PrismaHeroRepository implements HeroRepository {
     return await this.prismaService.hero.findMany();
   }
 
-  async update(key: string, data: UpdateHeroDTO): Promise<Hero> {
-    return await this.prismaService.hero.update({
-      data: {
-        key: data.key,
-        name: data.name,
-        url: data.url,
-        size: data.size,
-      },
-      where: {
-        key,
-      },
-    });
-  }
-
   async delete(key: string): Promise<void> {
     await this.prismaService.hero.delete({
       where: {
@@ -49,7 +34,7 @@ export class PrismaHeroRepository implements HeroRepository {
     });
   }
 
-  async findById(key: string): Promise<Hero> {
+  async findByKey(key: string): Promise<Hero> {
     const heroExists = await this.prismaService.hero.findUnique({
       where: {
         key,

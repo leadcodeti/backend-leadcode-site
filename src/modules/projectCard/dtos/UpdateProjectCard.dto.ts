@@ -1,5 +1,6 @@
 export class UpdateProjectCardDTO {
   id: string;
+  image: string;
   name: string;
   slug: string;
   summary_description: string;

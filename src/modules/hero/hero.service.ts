@@ -2,19 +2,27 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateHeroDTO } from './dtos/CreateHero.dto';
 import { HeroRepository } from './repositories/hero.repository';
 import { Hero } from '@prisma/client';
-import { UpdateHeroDTO } from './dtos/UpdateHero.dto';
 import { FileService } from 'src/utils/file';
+import { HomeRepository } from '../home/repositories/home.repository';
 
 @Injectable()
 export class HeroService {
   constructor(
     @Inject('HeroRepository')
     private readonly heroRepository: HeroRepository,
+    @Inject('HomeRepository')
+    private readonly homeRepository: HomeRepository,
     private readonly fileService: FileService,
   ) {}
 
   async create(data: CreateHeroDTO): Promise<Hero> {
-    const hero = await this.heroRepository.findById(data.homeId);
+    const home = await this.homeRepository.findById(data.homeId);
+
+    if (!home) {
+      throw new Error('This home does not exist.');
+    }
+
+    const hero = await this.heroRepository.findByKey(data.homeId);
 
     if (hero) {
       await this.fileService.deleteFile(`./tmp/heros/${hero.key}`);
@@ -22,6 +30,17 @@ export class HeroService {
     }
 
     data.url = `${process.env.HERO_URL}/${data.key}`;
+
+    const homeToUpdateImage = {
+      id: data.homeId,
+      hero_image: data.url,
+      headline: home.headline,
+      subheadline: home.subheadline,
+      cta_button_text: home.ctaButtonText,
+    };
+
+    await this.homeRepository.update(data.homeId, homeToUpdateImage);
+
     return await this.heroRepository.create(data);
   }
 
@@ -29,22 +48,30 @@ export class HeroService {
     return await this.heroRepository.findAll();
   }
 
-  async update(id: string, data: UpdateHeroDTO): Promise<Hero> {
-    const heroExists = await this.heroRepository.findById(id);
+  async delete(key: string, home_id: string): Promise<void> {
+    const heroExists = await this.heroRepository.findByKey(key);
+    const home = await this.homeRepository.findById(home_id);
+
+    if (!home) {
+      throw new Error('This home does not exist.');
+    }
 
     if (!heroExists) {
       throw new Error('This hero does not exists.');
     }
 
-    return await this.heroRepository.update(id, data);
-  }
+    await this.fileService.deleteFile(`./tmp/heros/${key}`);
 
-  async delete(id: string): Promise<void> {
-    const heroExists = await this.heroRepository.findById(id);
+    const homeImageToDelete = {
+      id: home.id,
+      hero_image: null,
+      headline: home.headline,
+      subheadline: home.subheadline,
+      cta_button_text: home.ctaButtonText,
+    };
 
-    if (!heroExists) {
-      throw new Error('This hero does not exists.');
-    }
-    return await this.heroRepository.delete(id);
+    await this.homeRepository.update(home_id, homeImageToDelete);
+
+    return await this.heroRepository.delete(key);
   }
 }

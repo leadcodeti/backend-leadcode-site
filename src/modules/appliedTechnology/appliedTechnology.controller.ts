@@ -14,10 +14,10 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { AppliedTechnologyService } from './appliedTechnology.service';
-import { AppliedTechnologyEntity } from './entities/projectCard.entity';
 import { CreateAppliedTechnologyDTO } from './dtos/CreateAppliedTechnology.dto';
 import { AppliedTechnology } from '@prisma/client';
 import { UpdateAppliedTechnologyDTO } from './dtos/UpdateAppliedTechnology.dto';
+import { AppliedTechnologyEntity } from './entities/applieTechnology.entity';
 
 @ApiTags('Seção de projetos')
 @Controller('/applied_technologies')

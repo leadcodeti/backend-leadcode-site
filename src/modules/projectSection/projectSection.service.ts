@@ -12,12 +12,11 @@ export class ProjectSectionService {
   ) {}
 
   async create(data: CreateProjectSectionDTO): Promise<ProjectSection> {
-    const projectExists = await this.projectSectionRepository.findByTitle(
-      data.title,
-    );
+    const projectSectionExists =
+      await this.projectSectionRepository.findByTitle(data.title);
 
-    if (projectExists) {
-      throw new Error('This Project Service already exists.');
+    if (projectSectionExists) {
+      throw new Error('This Project Section already exists.');
     }
 
     return await this.projectSectionRepository.create(data);
@@ -36,12 +35,19 @@ export class ProjectSectionService {
     );
 
     if (!projectSectionExists) {
-      throw new Error('This Project Service does not exists.');
+      throw new Error('This Project Section does not exist.');
     }
     return this.projectSectionRepository.update(id, data);
   }
 
   async delete(id: string): Promise<void> {
+    const projectSectionExists = await this.projectSectionRepository.findById(
+      id,
+    );
+
+    if (!projectSectionExists) {
+      throw new Error('This Project Section does not exist.');
+    }
     return this.projectSectionRepository.delete(id);
   }
 }

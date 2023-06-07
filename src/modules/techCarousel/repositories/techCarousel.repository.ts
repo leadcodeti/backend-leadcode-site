@@ -6,7 +6,7 @@ export interface TechCarouselRepository {
   create(data: CreateTechCarouselDTO): Promise<TechCarousel>;
   findAll(): Promise<TechCarousel[]>;
   update(id: string, data: UpdateTechCarouselDTO): Promise<TechCarousel>;
-  delete(id: string): Promise<void>;
-  findById(id: string): Promise<void>;
+  delete(name: string): Promise<void>;
+  findById(id: string): Promise<TechCarousel>;
   findByName(name: string): Promise<TechCarousel>;
 }

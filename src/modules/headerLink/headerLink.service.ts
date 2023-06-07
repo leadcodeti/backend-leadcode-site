@@ -33,7 +33,7 @@ export class HeaderLinkService {
     const headerLinkExists = await this.headerLinkRepository.findById(id);
 
     if (!headerLinkExists) {
-      throw new Error('This header does not exist.');
+      throw new Error('This link does not exist.');
     }
 
     return await this.headerLinkRepository.update(id, data);
@@ -43,7 +43,7 @@ export class HeaderLinkService {
     const headerLinkExists = await this.headerLinkRepository.findById(id);
 
     if (!headerLinkExists) {
-      throw new Error('This header does not exist.');
+      throw new Error('This link does not exist.');
     }
 
     return this.headerLinkRepository.delete(id);

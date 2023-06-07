@@ -3,7 +3,6 @@ import { PrismaService } from 'src/database/prisma.service';
 import { ProjectCardImageRepository } from '../projectCardImage.repository';
 import { CreateProjectCardImageDTO } from '../../dtos/CreateProjectCardImage.dto';
 import { ProjectCardImage } from '@prisma/client';
-import { UpdateProjectCardImageDTO } from '../../dtos/UpdateProjectCardImage.dto';
 
 @Injectable()
 export class PrismaProjectCardImageRepository
@@ -35,24 +34,6 @@ export class PrismaProjectCardImageRepository
 
   async findAll(): Promise<ProjectCardImage[]> {
     return await this.prismaService.projectCardImage.findMany();
-  }
-
-  async update(
-    key: string,
-    data: UpdateProjectCardImageDTO,
-  ): Promise<ProjectCardImage> {
-    return await this.prismaService.projectCardImage.update({
-      data: {
-        key: data.key,
-        name: data.name,
-        url: data.url,
-        size: data.size,
-        isCover: data.isCover,
-      },
-      where: {
-        key,
-      },
-    });
   }
 
   async delete(key: string): Promise<void> {

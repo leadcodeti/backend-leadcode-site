@@ -3,5 +3,4 @@ export class CreateHeaderLinkDTO {
   link: string;
   isSelected: boolean;
   headerId: string;
-  createdAt: Date;
 }

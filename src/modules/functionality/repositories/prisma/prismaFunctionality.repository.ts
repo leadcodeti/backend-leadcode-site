@@ -2,7 +2,7 @@ import { PrismaService } from 'src/database/prisma.service';
 import { FunctionalityRepository } from '../funcionality.repository';
 import { CreateFunctionalityDTO } from '../../dtos/CreateFunctionality.dto';
 import { Functionality } from '@prisma/client';
-import { UpdateFuncionalityDTO } from '../../dtos/UpdateFunctionality.dto';
+import { UpdateFunctionalityDTO } from '../../dtos/UpdateFunctionality.dto';
 
 export class PrismaFunctionalityRepository implements FunctionalityRepository {
   constructor(private prismaService: PrismaService) {}
@@ -26,7 +26,7 @@ export class PrismaFunctionalityRepository implements FunctionalityRepository {
 
   async update(
     id: string,
-    data: UpdateFuncionalityDTO,
+    data: UpdateFunctionalityDTO,
   ): Promise<Functionality> {
     return await this.prismaService.functionality.update({
       data: {

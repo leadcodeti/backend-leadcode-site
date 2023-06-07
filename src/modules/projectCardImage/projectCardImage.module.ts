@@ -4,6 +4,7 @@ import { FileService } from 'src/utils/file';
 import { ProjectCardImageController } from './projectCardImage.controller';
 import { ProjectCardImageService } from './projectCardImage.service';
 import { PrismaProjectCardImageRepository } from './repositories/prisma/prismaProjectCardImage.repository';
+import { PrismaHomeRepository } from '../home/repositories/prisma/prismaHome.repository';
 
 @Module({
   controllers: [ProjectCardImageController],
@@ -15,6 +16,7 @@ import { PrismaProjectCardImageRepository } from './repositories/prisma/prismaPr
       provide: 'ProjectCardImageRepository',
       useClass: PrismaProjectCardImageRepository,
     },
+    { provide: 'HomeRepository', useClass: PrismaHomeRepository },
   ],
 })
 export class ProjectCardImageModule {}

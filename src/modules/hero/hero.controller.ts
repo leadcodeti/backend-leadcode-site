@@ -1,11 +1,9 @@
 import {
-  Body,
   Controller,
   Delete,
   Get,
   Param,
   Post,
-  Put,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -21,7 +19,6 @@ import { extname } from 'path';
 import { HeroService } from './hero.service';
 import { HeroEntity } from './entities/hero.entity';
 import { Hero } from '@prisma/client';
-import { UpdateHeroDTO } from './dtos/UpdateHero.dto';
 
 type ParamProps = {
   home_id: string;
@@ -85,19 +82,14 @@ export class HeroController {
     return await this.heroService.list();
   }
 
-  @Put('/:id')
-  async update(
-    @Param('id') id: string,
-    @Body() data: UpdateHeroDTO,
-  ): Promise<Hero> {
-    return await this.heroService.update(id, data);
-  }
-
   @ApiNoContentResponse({
     description: 'Deleção realizada com sucesso.',
   })
-  @Delete('/:id')
-  async delete(@Param('id') id: string): Promise<void> {
-    return await this.heroService.delete(id);
+  @Delete('/:key/:home_id')
+  async delete(
+    @Param('key') key: string,
+    @Param('home_id') home_id: string,
+  ): Promise<void> {
+    return await this.heroService.delete(key, home_id);
   }
 }

@@ -1,6 +1,5 @@
 export class UpdateTechCarouselDTO {
-  id?: string;
-  image: string;
+  id: string;
   name: string;
   is_selected: boolean;
 }

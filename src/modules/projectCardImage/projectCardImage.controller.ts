@@ -21,7 +21,6 @@ import { extname } from 'path';
 import { ProjectCardImageService } from './projectCardImage.service';
 import { ProjectCardImageEntity } from './entities/projectCardImage.entity';
 import { ProjectCardImage } from '@prisma/client';
-import { UpdateProjectCardImageDTO } from './dtos/UpdateProjectCardImage.dto';
 
 type ParamProps = {
   project_card_id: string;
@@ -86,19 +85,14 @@ export class ProjectCardImageController {
     return await this.projectCardImageService.list();
   }
 
-  @Put('/:id')
-  async update(
-    @Param('id') id: string,
-    @Body() data: UpdateProjectCardImageDTO,
-  ): Promise<ProjectCardImage> {
-    return await this.projectCardImageService.update(id, data);
-  }
-
   @ApiNoContentResponse({
     description: 'Deleção realizada com sucesso.',
   })
-  @Delete('/:id')
-  async delete(@Param('id') id: string): Promise<void> {
-    return await this.projectCardImageService.delete(id);
+  @Delete('/:key/:project_card_id')
+  async delete(
+    @Param('key') key: string,
+    @Param('project_card_id') project_card_id: string,
+  ): Promise<void> {
+    return await this.projectCardImageService.delete(key, project_card_id);
   }
 }

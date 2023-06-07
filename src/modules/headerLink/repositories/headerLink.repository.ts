@@ -7,6 +7,6 @@ export interface HeaderLinkRepository {
   findAll(): Promise<HeaderLink[]>;
   update(id: string, data: UpdateHeaderLinkDTO): Promise<HeaderLink>;
   delete(id: string): Promise<void>;
-  findByName(logo: string): Promise<HeaderLink>;
+  findByName(name: string): Promise<HeaderLink>;
   findById(id: string): Promise<HeaderLink>;
 }

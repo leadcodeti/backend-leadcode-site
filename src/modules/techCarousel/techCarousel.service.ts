@@ -30,10 +30,22 @@ export class TechCarouselService {
   }
 
   async update(id: string, data: UpdateTechCarouselDTO): Promise<TechCarousel> {
+    const techCarouselExists = await this.techCarouselRepository.findById(id);
+
+    if (!techCarouselExists) {
+      throw new Error('This Tech Carousel does not exist.');
+    }
+
     return await this.techCarouselRepository.update(id, data);
   }
 
   async delete(id: string): Promise<void> {
+    const techCarouselExists = await this.techCarouselRepository.findById(id);
+
+    if (!techCarouselExists) {
+      throw new Error('This Tech Carousel does not exist.');
+    }
+
     return await this.techCarouselRepository.delete(id);
   }
 }
