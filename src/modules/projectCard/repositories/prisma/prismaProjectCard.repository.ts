@@ -4,6 +4,7 @@ import { ProjectCardRepository } from '../projectCard.repository';
 import { ProjectCard } from '@prisma/client';
 import { CreateProjectCardDTO } from '../../dtos/CreateProjectCard.dto';
 import { UpdateProjectCardDTO } from '../../dtos/UpdateProjectCard.dto';
+import { ListProjectCardsDTO } from '../../dtos/ListProjectCards.dto';
 
 @Injectable()
 export class PrismaProjectCardRepository implements ProjectCardRepository {
@@ -36,6 +37,36 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
 
   async findAll(): Promise<ProjectCard[]> {
     return await this.prismaService.projectCard.findMany();
+  }
+
+  async listProjectCardsFullData(): Promise<ListProjectCardsDTO[]> {
+    const fullData = await this.prismaService.projectCard.findMany({
+      include: {
+        ProjectCardImage: true,
+        functionality: true,
+        appliedTechnology: true,
+      },
+    });
+
+    const projectCards: ListProjectCardsDTO[] = fullData.map((data) => {
+      const images = data.ProjectCardImage.map((image) => image.url);
+      return {
+        id: data.id,
+        images: images,
+        name: data.name,
+        slug: data.slug,
+        summary_description: data.summaryDescription,
+        description: data.description,
+        production_url: data.productionUrl,
+        behance_url: data.behanceUrl,
+        applied_technologies: data.appliedTechnology.map((tech) => tech.name),
+        functionalities: data.functionality.map((func) => func.name),
+        is_selected: data.isSelected,
+        project_section_id: data.projectSectionId,
+      };
+    });
+
+    return projectCards;
   }
 
   async update(id: string, data: UpdateProjectCardDTO): Promise<ProjectCard> {

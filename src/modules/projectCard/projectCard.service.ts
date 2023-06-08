@@ -3,6 +3,7 @@ import { ProjectCardRepository } from './repositories/projectCard.repository';
 import { CreateProjectCardDTO } from './dtos/CreateProjectCard.dto';
 import { ProjectCard } from '@prisma/client';
 import { UpdateProjectCardDTO } from './dtos/UpdateProjectCard.dto';
+import { ListProjectCardsDTO } from './dtos/ListProjectCards.dto';
 
 @Injectable()
 export class ProjectCardService {
@@ -25,6 +26,10 @@ export class ProjectCardService {
 
   async list(): Promise<ProjectCard[]> {
     return await this.projectCardRepository.findAll();
+  }
+
+  async listFullData(): Promise<ListProjectCardsDTO[]> {
+    return await this.projectCardRepository.listProjectCardsFullData();
   }
 
   async update(id: string, data: UpdateProjectCardDTO): Promise<ProjectCard> {

@@ -18,6 +18,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ProjectCardEntity } from './entities/projectCard.entity';
+import { ListProjectCardsDTO } from './dtos/ListProjectCards.dto';
+import { ProjectCardToListEntity } from './entities/projectCardToList.entity';
 
 @ApiTags('Seção de projetos')
 @Controller('/project_cards')
@@ -33,14 +35,24 @@ export class ProjectCardController {
     return this.projectCardService.create(data);
   }
 
+  // @ApiOkResponse({
+  //   description: 'Listagem realizada com sucesso.',
+  //   type: ProjectCardEntity,
+  //   isArray: true,
+  // })
+  // @Get()
+  // async list(): Promise<ProjectCard[]> {
+  //   return this.projectCardService.list();
+  // }
+
   @ApiOkResponse({
     description: 'Listagem realizada com sucesso.',
-    type: ProjectCardEntity,
+    type: ProjectCardToListEntity,
     isArray: true,
   })
   @Get()
-  async list(): Promise<ProjectCard[]> {
-    return this.projectCardService.list();
+  async listFullData(): Promise<ListProjectCardsDTO[]> {
+    return this.projectCardService.listFullData();
   }
 
   @ApiOkResponse({
