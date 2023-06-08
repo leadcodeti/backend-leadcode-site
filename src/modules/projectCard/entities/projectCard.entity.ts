@@ -1,6 +1,7 @@
 import { ProjectCard } from '@prisma/client';
 
 export class ProjectCardEntity implements ProjectCard {
+  image: string;
   id: string;
   name: string;
   slug: string;

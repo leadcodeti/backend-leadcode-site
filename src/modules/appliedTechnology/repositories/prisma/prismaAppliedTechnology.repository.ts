@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { AppliedTechnologyRepository } from '../appliedTechnology.repository';
 import { CreateAppliedTechnologyDTO } from '../../dtos/CreateAppliedTechnology.dto';
 import { AppliedTechnology } from '@prisma/client';
 import { UpdateAppliedTechnologyDTO } from '../../dtos/UpdateAppliedTechnology.dto';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaAppliedTechnologyRepository
   implements AppliedTechnologyRepository
 {

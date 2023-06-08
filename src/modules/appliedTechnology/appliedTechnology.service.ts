@@ -42,6 +42,14 @@ export class AppliedTechnologyService {
   }
 
   async delete(id: string): Promise<void> {
+    const technologyExists = await this.appliedTechnologyRepository.findById(
+      id,
+    );
+
+    if (!technologyExists) {
+      throw new Error('This Technology does not exists.');
+    }
+
     return this.appliedTechnologyRepository.delete(id);
   }
 }

@@ -4,13 +4,13 @@ import { ProjectCardImageRepository } from './repositories/projectCardImage.repo
 import { ProjectCardImage } from '@prisma/client';
 import { CreateProjectCardImageDTO } from './dtos/CreateProjectCardImage.dto';
 import { ProjectCardRepository } from '../projectCard/repositories/projectCard.repository';
-import { profileEnd } from 'console';
 
 @Injectable()
 export class ProjectCardImageService {
   constructor(
     @Inject('ProjectCardImageRepository')
     private readonly projectCardImageRepository: ProjectCardImageRepository,
+    @Inject('ProjectCardRepository')
     private readonly projectCardRepository: ProjectCardRepository,
     private readonly fileService: FileService,
   ) {}
@@ -21,10 +21,10 @@ export class ProjectCardImageService {
     );
 
     if (!projectCard) {
-      throw new Error('This card me does not exist.');
+      throw new Error('This card does not exist.');
     }
 
-    const projectCardImage = await this.projectCardImageRepository.findById(
+    const projectCardImage = await this.projectCardImageRepository.findByKey(
       data.projectCardId,
     );
 
@@ -63,7 +63,7 @@ export class ProjectCardImageService {
 
   async delete(key: string, project_card_id: string): Promise<void> {
     const projectCardImageExists =
-      await this.projectCardImageRepository.findById(key);
+      await this.projectCardImageRepository.findByKey(key);
     const projectCard = await this.projectCardRepository.findById(
       project_card_id,
     );
@@ -76,11 +76,11 @@ export class ProjectCardImageService {
       throw new Error('This image does not exist.');
     }
 
-    await this.fileService.deleteFile(`./tmp/heros/${key}`);
+    await this.fileService.deleteFile(`./tmp/projectCardImages/${key}`);
 
     const cardToUpdateImage = {
       id: projectCard.id,
-      image: projectCard.image,
+      image: null,
       name: projectCard.name,
       slug: projectCard.slug,
       summary_description: projectCard.summaryDescription,

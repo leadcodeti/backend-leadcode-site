@@ -1,11 +1,9 @@
 import {
-  Body,
   Controller,
   Delete,
   Get,
   Param,
   Post,
-  Put,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -93,6 +91,7 @@ export class ProjectCardImageController {
     @Param('key') key: string,
     @Param('project_card_id') project_card_id: string,
   ): Promise<void> {
+    console.log(key, project_card_id);
     return await this.projectCardImageService.delete(key, project_card_id);
   }
 }

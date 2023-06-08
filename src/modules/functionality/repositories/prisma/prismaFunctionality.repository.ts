@@ -3,7 +3,9 @@ import { FunctionalityRepository } from '../funcionality.repository';
 import { CreateFunctionalityDTO } from '../../dtos/CreateFunctionality.dto';
 import { Functionality } from '@prisma/client';
 import { UpdateFunctionalityDTO } from '../../dtos/UpdateFunctionality.dto';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaFunctionalityRepository implements FunctionalityRepository {
   constructor(private prismaService: PrismaService) {}
 

@@ -44,7 +44,7 @@ export class PrismaProjectCardImageRepository
     });
   }
 
-  async findById(key: string): Promise<ProjectCardImage> {
+  async findByKey(key: string): Promise<ProjectCardImage> {
     const heroExists = await this.prismaService.projectCardImage.findUnique({
       where: {
         key,
