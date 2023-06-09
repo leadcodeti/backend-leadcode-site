@@ -80,6 +80,7 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
         description: data.description,
         productionUrl: data.production_url,
         behanceUrl: data.behance_url,
+        category: data.category,
         isSelected: data.is_selected,
       },
       where: {
