@@ -28,13 +28,11 @@ import { TechCarouselImageModule } from './modules/techCarouselImage/techCarouse
 import { ClientAvatarModule } from './modules/clientAvatar/clientAvatar.module';
 import { AppliedTechnologyModule } from './modules/appliedTechnology/appliedTechnology.module';
 import { FunctionalityModule } from './modules/functionality/functionality.module';
-import { cwd } from 'process';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `${process.cwd()}/config/env/.production.env`,
       load: [config],
     }),
     UserModule,
