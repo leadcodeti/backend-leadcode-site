@@ -9,6 +9,7 @@ export class ProjectCardEntity implements ProjectCard {
   description: string;
   productionUrl: string;
   behanceUrl: string;
+  category: string;
   isSelected: boolean;
   createdAt: Date;
   projectSectionId: string;

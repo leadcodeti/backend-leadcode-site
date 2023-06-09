@@ -17,6 +17,7 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
     description,
     production_url,
     behance_url,
+    category,
     is_selected,
     project_section_id,
   }: CreateProjectCardDTO): Promise<ProjectCard> {
@@ -28,6 +29,7 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
         description,
         productionUrl: production_url,
         behanceUrl: behance_url,
+        category,
         isSelected: is_selected,
         projectSectionId: project_section_id,
         createdAt: new Date(),
@@ -59,6 +61,7 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
         description: data.description,
         production_url: data.productionUrl,
         behance_url: data.behanceUrl,
+        category: data.category,
         applied_technologies: data.appliedTechnology.map((tech) => tech.name),
         functionalities: data.functionality.map((func) => func.name),
         is_selected: data.isSelected,

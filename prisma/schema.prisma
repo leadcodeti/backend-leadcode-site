@@ -171,6 +171,7 @@ model ProjectCard {
   description        String
   productionUrl      String?  @map("production_url")
   behanceUrl         String?  @map("behance_url")
+  category           String
   isSelected         Boolean  @map("is_selected")
   createdAt          DateTime @map("created_at")
   projectSectionId   String   @map("project_section_id")

@@ -5,6 +5,7 @@ export class CreateProjectCardDTO {
   description: string;
   production_url: string;
   behance_url: string;
+  category: string;
   is_selected: boolean;
   project_section_id: string;
 }

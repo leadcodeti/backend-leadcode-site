@@ -46,6 +46,7 @@ export class ProjectCardImageService {
       description: projectCard.description,
       production_url: projectCard.productionUrl,
       behance_url: projectCard.behanceUrl,
+      category: projectCard.category,
       is_selected: projectCard.isSelected,
     };
 
@@ -87,6 +88,7 @@ export class ProjectCardImageService {
       description: projectCard.description,
       production_url: projectCard.productionUrl,
       behance_url: projectCard.behanceUrl,
+      category: projectCard.category,
       is_selected: projectCard.isSelected,
     };
 

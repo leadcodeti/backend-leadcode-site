@@ -7,5 +7,6 @@ export class UpdateProjectCardDTO {
   description: string;
   production_url: string;
   behance_url: string;
+  category: string;
   is_selected: boolean;
 }

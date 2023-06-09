@@ -9,6 +9,7 @@ export class ProjectCardToListEntity implements ListProjectCardsDTO {
   description: string;
   production_url: string;
   behance_url: string;
+  category: string;
   applied_technologies: string[];
   functionalities: string[];
   is_selected: boolean;
