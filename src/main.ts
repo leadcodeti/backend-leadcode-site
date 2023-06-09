@@ -45,6 +45,8 @@ async function bootstrap() {
     prefix: '/tech_carousel_images',
   });
 
+  console.log(process.env.NODE_ENV);
+
   await app.listen(3334 || process.env.PORT);
 }
 bootstrap();
