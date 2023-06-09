@@ -12,14 +12,6 @@ export class AppliedTechnologyService {
   ) {}
 
   async create(data: CreateAppliedTechnologyDTO): Promise<AppliedTechnology> {
-    const technologyExists = await this.appliedTechnologyRepository.findByName(
-      data.name,
-    );
-
-    if (technologyExists) {
-      throw new Error('This Technology already exists.');
-    }
-
     return await this.appliedTechnologyRepository.create(data);
   }
 
