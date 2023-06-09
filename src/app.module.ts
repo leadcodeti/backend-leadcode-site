@@ -33,6 +33,7 @@ import { FunctionalityModule } from './modules/functionality/functionality.modul
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: `${process.cwd()}/config/env/.production.env`,
       load: [config],
     }),
     UserModule,
