@@ -15,7 +15,7 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
     slug,
     summary_description,
     description,
-    production_url,
+    project_url,
     behance_url,
     category,
     is_selected,
@@ -27,7 +27,7 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
         slug,
         summaryDescription: summary_description,
         description,
-        productionUrl: production_url,
+        projectUrl: project_url,
         behanceUrl: behance_url,
         category,
         isSelected: is_selected,
@@ -51,15 +51,16 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
     });
 
     const projectCards: ListProjectCardsDTO[] = fullData.map((data) => {
-      const images = data.ProjectCardImage.map((image) => image.url);
+      const images = data.ProjectCardImage.map((image) => image);
       return {
         id: data.id,
-        images: images,
+        galery_images: images.filter((e) => !e.isCover).map((e) => e.url),
+        cover_image: images.find((e) => e.isCover)?.url || null,
         name: data.name,
         slug: data.slug,
         summary_description: data.summaryDescription,
         description: data.description,
-        production_url: data.productionUrl,
+        project_url: data.projectUrl,
         behance_url: data.behanceUrl,
         category: data.category,
         applied_technologies: data.appliedTechnology.map((tech) => tech.name),
@@ -78,7 +79,7 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
         name: data.name,
         slug: data.slug,
         description: data.description,
-        productionUrl: data.production_url,
+        projectUrl: data.project_url,
         behanceUrl: data.behance_url,
         category: data.category,
         isSelected: data.is_selected,

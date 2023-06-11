@@ -37,23 +37,25 @@ export class ProjectCardImageService {
 
     data.url = `${process.env.PROJECT_CARD_IMAGE_URL}/${data.key}`;
 
-    const cardToUpdateImage = {
-      id: data.projectCardId,
-      image: projectCard.image,
-      name: projectCard.name,
-      slug: projectCard.slug,
-      summary_description: projectCard.summaryDescription,
-      description: projectCard.description,
-      production_url: projectCard.productionUrl,
-      behance_url: projectCard.behanceUrl,
-      category: projectCard.category,
-      is_selected: projectCard.isSelected,
-    };
+    if (data.isCover) {
+      const cardToUpdateImage = {
+        id: data.projectCardId,
+        image: projectCard.cover_image,
+        name: projectCard.name,
+        slug: projectCard.slug,
+        summary_description: projectCard.summaryDescription,
+        description: projectCard.description,
+        project_url: projectCard.projectUrl,
+        behance_url: projectCard.behanceUrl,
+        category: projectCard.category,
+        is_selected: projectCard.isSelected,
+      };
 
-    await this.projectCardRepository.update(
-      data.projectCardId,
-      cardToUpdateImage,
-    );
+      await this.projectCardRepository.update(
+        data.projectCardId,
+        cardToUpdateImage,
+      );
+    }
 
     return await this.projectCardImageRepository.create(data);
   }
@@ -79,20 +81,25 @@ export class ProjectCardImageService {
 
     await this.fileService.deleteFile(`./tmp/projectCardImages/${key}`);
 
-    const cardToUpdateImage = {
-      id: projectCard.id,
-      image: null,
-      name: projectCard.name,
-      slug: projectCard.slug,
-      summary_description: projectCard.summaryDescription,
-      description: projectCard.description,
-      production_url: projectCard.productionUrl,
-      behance_url: projectCard.behanceUrl,
-      category: projectCard.category,
-      is_selected: projectCard.isSelected,
-    };
+    if (projectCardImageExists.isCover) {
+      const cardToUpdateImage = {
+        id: projectCard.id,
+        image: null,
+        name: projectCard.name,
+        slug: projectCard.slug,
+        summary_description: projectCard.summaryDescription,
+        description: projectCard.description,
+        project_url: projectCard.projectUrl,
+        behance_url: projectCard.behanceUrl,
+        category: projectCard.category,
+        is_selected: projectCard.isSelected,
+      };
 
-    await this.projectCardRepository.update(project_card_id, cardToUpdateImage);
+      await this.projectCardRepository.update(
+        project_card_id,
+        cardToUpdateImage,
+      );
+    }
 
     return await this.projectCardImageRepository.delete(key);
   }
