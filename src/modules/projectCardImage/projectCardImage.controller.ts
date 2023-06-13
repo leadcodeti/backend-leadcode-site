@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -22,6 +23,10 @@ import { ProjectCardImage } from '@prisma/client';
 
 type ParamProps = {
   project_card_id: string;
+};
+
+type QueryProps = {
+  is_cover: boolean;
 };
 
 @ApiTags('Seção de projetos')
@@ -54,6 +59,7 @@ export class ProjectCardImageController {
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
     @Param() params: ParamProps,
+    @Query() queries: QueryProps,
   ): Promise<ProjectCardImage> {
     if (!file) {
       throw new Error('You must upload a file.');
@@ -63,13 +69,15 @@ export class ProjectCardImageController {
 
     const { project_card_id } = params;
 
+    const { is_cover } = queries;
+
     return await this.projectCardImageService.create({
       projectCardId: project_card_id,
       name,
       size,
       key,
       url: '',
-      isCover: false,
+      isCover: Boolean(is_cover),
     });
   }
 
