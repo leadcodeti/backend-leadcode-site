@@ -26,7 +26,7 @@ type ParamProps = {
 };
 
 type QueryProps = {
-  is_cover: boolean;
+  is_cover: string;
 };
 
 @ApiTags('Seção de projetos')
@@ -77,7 +77,7 @@ export class ProjectCardImageController {
       size,
       key,
       url: '',
-      isCover: Boolean(is_cover),
+      isCover: is_cover === 'true',
     });
   }
 
