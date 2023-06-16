@@ -46,7 +46,7 @@ export class ProjectCardImageController {
         filename: (req, file, callback) => {
           const uniqueSuffix =
             Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = extname(file.originalname);
+          const ext = '.webp';
           const filename = `${file.originalname}-${uniqueSuffix}${ext}`;
           const filenameWithNoSpacesToLower = filename
             .replace(/[^a-zA-Z0-9-_.]/g, '-')

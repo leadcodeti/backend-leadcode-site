@@ -4,6 +4,7 @@ import { ProjectCardImageRepository } from './repositories/projectCardImage.repo
 import { ProjectCardImage } from '@prisma/client';
 import { CreateProjectCardImageDTO } from './dtos/CreateProjectCardImage.dto';
 import { ProjectCardRepository } from '../projectCard/repositories/projectCard.repository';
+import { SharpService } from 'config/sharpConfig';
 
 @Injectable()
 export class ProjectCardImageService {
@@ -13,9 +14,14 @@ export class ProjectCardImageService {
     @Inject('ProjectCardRepository')
     private readonly projectCardRepository: ProjectCardRepository,
     private readonly fileService: FileService,
+    private readonly sharpService: SharpService,
   ) {}
 
   async create(data: CreateProjectCardImageDTO): Promise<ProjectCardImage> {
+    data.name = data.name.replace(/(.png)|(.jpeg)|(.jpg)|(.gif)|(.webp)/, '');
+    const multerNewImagePath = `./tmp/projectCardImages/${data.key}`;
+    this.sharpService.sharpConfig(multerNewImagePath);
+
     const projectCard = await this.projectCardRepository.findById(
       data.projectCardId,
     );
@@ -35,6 +41,10 @@ export class ProjectCardImageService {
       await this.projectCardImageRepository.delete(data.key);
     }
 
+    data.key = data.key.replace(
+      /(.png)|(.jpeg)|(.jpg)|(.gif)|(.webp)/,
+      '-compressed',
+    );
     data.url = `${process.env.PROJECT_CARD_IMAGE_URL}/${data.key}`;
 
     if (data.isCover) {
