@@ -43,7 +43,7 @@ export class ProjectCardImageService {
 
     data.key = data.key.replace(
       /(.png)|(.jpeg)|(.jpg)|(.gif)|(.webp)/,
-      '-compressed',
+      '-compressed.webp',
     );
     data.url = `${process.env.PROJECT_CARD_IMAGE_URL}/${data.key}`;
 
