@@ -20,7 +20,7 @@ export class SharpService {
       .resize({
         width: isCover ? 600 : 750,
         height: isCover ? 450 : 400,
-        fit: sharp.fit.fill,
+        fit: sharp.fit.inside,
       })
       .webp({ quality: 100 })
       .toFile(path.resolve(webpPath));
