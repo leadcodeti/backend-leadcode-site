@@ -23,45 +23,45 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
-      - name: Set up environment variables
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          PORT: ${{ secrets.PORT }}
-          NODE_ENV: ${{ secrets.NODE_ENV }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          LEADCODE_GMAIL_CLIENT_ID: ${{ secrets.LEADCODE_GMAIL_CLIENT_ID }}
-          LEADCODE_GMAIL_CLIENT_SECRET: ${{ secrets.LEADCODE_GMAIL_CLIENT_SECRET }}
-          LEADCODE_GMAIL_ACCESS_TOKEN: ${{ secrets.LEADCODE_GMAIL_ACCESS_TOKEN }}
-          LEADCODE_GMAIL_REFRESH_TOKEN: ${{ secrets.LEADCODE_GMAIL_REFRESH_TOKEN }}
-          LEADCODE_EMAIL: ${{ secrets.LEADCODE_EMAIL }}
-          HERO_URL: ${{ secrets.HERO_URL }}
-          TOP_FOOTER_LOGO_URL: ${{ secrets.TOP_FOOTER_LOGO_URL }}
-          SOCIAL_MEDIA_ICON_URL: ${{ secrets.SOCIAL_MEDIA_ICON_URL }}
-          PROJECT_CARD_IMAGE_URL: ${{ secrets.PROJECT_CARD_IMAGE_URL }}
-          SERVICE_CARD_IMAGE_URL: ${{ secrets.SERVICE_CARD_IMAGE_URL }}
-          TECH_CAROUSEL_IMAGE_URL: ${{ secrets.TECH_CAROUSEL_IMAGE_URL }}
-          CLIENT_AVATAR_URL: ${{ secrets.CLIENT_AVATAR_URL }}
-        run: |
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
-          echo "PORT=${{ secrets.PORT }}" >> .env
-          echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> .env
-          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
-          echo "POSTGRES_DB=${POSTGRES_DB}" >> .env
-          echo "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" >> .env
-          echo "LEADCODE_GMAIL_CLIENT_ID=${LEADCODE_GMAIL_CLIENT_ID}" >> .env
-          echo "LEADCODE_GMAIL_CLIENT_SECRET=${LEADCODE_GMAIL_CLIENT_SECRET}" >> .env
-          echo "LEADCODE_GMAIL_ACCESS_TOKEN=${LEADCODE_GMAIL_ACCESS_TOKEN}" >> .env
-          echo "LEADCODE_GMAIL_REFRESH_TOKEN=${LEADCODE_GMAIL_REFRESH_TOKEN}" >> .env
-          echo "LEADCODE_EMAIL=${LEADCODE_EMAIL}" >> .env
-          echo "HERO_URL=${HERO_URL}" >> .env
-          echo "TOP_FOOTER_LOGO_URL=${TOP_FOOTER_LOGO_URL}" >> .env
-          echo "SOCIAL_MEDIA_ICON_URL=${SOCIAL_MEDIA_ICON_URL}" >> .env
-          echo "PROJECT_CARD_IMAGE_URL=${PROJECT_CARD_IMAGE_URL}" >> .env
-          echo "SERVICE_CARD_IMAGE_URL=${SERVICE_CARD_IMAGE_URL}" >> .env
-          echo "TECH_CAROUSEL_IMAGE_URL=${TECH_CAROUSEL_IMAGE_URL}" >> .env
-          echo "CLIENT_AVATAR_URL=${CLIENT_AVATAR_URL}" >> .env
+      # - name: Set up environment variables
+      #   env:
+      #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      #     PORT: ${{ secrets.PORT }}
+      #     NODE_ENV: ${{ secrets.NODE_ENV }}
+      #     POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      #     POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      #     POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      #     LEADCODE_GMAIL_CLIENT_ID: ${{ secrets.LEADCODE_GMAIL_CLIENT_ID }}
+      #     LEADCODE_GMAIL_CLIENT_SECRET: ${{ secrets.LEADCODE_GMAIL_CLIENT_SECRET }}
+      #     LEADCODE_GMAIL_ACCESS_TOKEN: ${{ secrets.LEADCODE_GMAIL_ACCESS_TOKEN }}
+      #     LEADCODE_GMAIL_REFRESH_TOKEN: ${{ secrets.LEADCODE_GMAIL_REFRESH_TOKEN }}
+      #     LEADCODE_EMAIL: ${{ secrets.LEADCODE_EMAIL }}
+      #     HERO_URL: ${{ secrets.HERO_URL }}
+      #     TOP_FOOTER_LOGO_URL: ${{ secrets.TOP_FOOTER_LOGO_URL }}
+      #     SOCIAL_MEDIA_ICON_URL: ${{ secrets.SOCIAL_MEDIA_ICON_URL }}
+      #     PROJECT_CARD_IMAGE_URL: ${{ secrets.PROJECT_CARD_IMAGE_URL }}
+      #     SERVICE_CARD_IMAGE_URL: ${{ secrets.SERVICE_CARD_IMAGE_URL }}
+      #     TECH_CAROUSEL_IMAGE_URL: ${{ secrets.TECH_CAROUSEL_IMAGE_URL }}
+      #     CLIENT_AVATAR_URL: ${{ secrets.CLIENT_AVATAR_URL }}
+      #   run: |
+      #     echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+      #     echo "PORT=${{ secrets.PORT }}" >> .env
+      #     echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> .env
+      #     echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+      #     echo "POSTGRES_DB=${POSTGRES_DB}" >> .env
+      #     echo "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" >> .env
+      #     echo "LEADCODE_GMAIL_CLIENT_ID=${LEADCODE_GMAIL_CLIENT_ID}" >> .env
+      #     echo "LEADCODE_GMAIL_CLIENT_SECRET=${LEADCODE_GMAIL_CLIENT_SECRET}" >> .env
+      #     echo "LEADCODE_GMAIL_ACCESS_TOKEN=${LEADCODE_GMAIL_ACCESS_TOKEN}" >> .env
+      #     echo "LEADCODE_GMAIL_REFRESH_TOKEN=${LEADCODE_GMAIL_REFRESH_TOKEN}" >> .env
+      #     echo "LEADCODE_EMAIL=${LEADCODE_EMAIL}" >> .env
+      #     echo "HERO_URL=${HERO_URL}" >> .env
+      #     echo "TOP_FOOTER_LOGO_URL=${TOP_FOOTER_LOGO_URL}" >> .env
+      #     echo "SOCIAL_MEDIA_ICON_URL=${SOCIAL_MEDIA_ICON_URL}" >> .env
+      #     echo "PROJECT_CARD_IMAGE_URL=${PROJECT_CARD_IMAGE_URL}" >> .env
+      #     echo "SERVICE_CARD_IMAGE_URL=${SERVICE_CARD_IMAGE_URL}" >> .env
+      #     echo "TECH_CAROUSEL_IMAGE_URL=${TECH_CAROUSEL_IMAGE_URL}" >> .env
+      #     echo "CLIENT_AVATAR_URL=${CLIENT_AVATAR_URL}" >> .env
 
       # - name: Create tmp folder if it dosnt`t exist
       #   run: |
