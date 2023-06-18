@@ -34,7 +34,7 @@ import { envConfiguration } from 'config/envConfiguration';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `${process.cwd()}/config/env/${process.env.NODE_ENV}.env`,
+      envFilePath: `${process.cwd()}/.env`,
       load: [envConfiguration],
     }),
     UserModule,
