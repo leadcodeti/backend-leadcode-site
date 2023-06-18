@@ -7,7 +7,7 @@ import { FileService } from '../src/utils/file';
 export class SharpService {
   constructor(private readonly fileService: FileService) {}
 
-  async sharpConfig(imagePath: string): Promise<void> {
+  async sharpConfig(imagePath: string, isCover: boolean): Promise<void> {
     const isGifOrAnimatedWebp =
       path.extname(imagePath) === '.gif' || path.extname(imagePath) === '.webp';
     const suffix = '-compressed.webp';
@@ -18,6 +18,11 @@ export class SharpService {
 
     await sharp(imagePath, { animated: isGifOrAnimatedWebp })
       .webp({ quality: 100 })
+      .resize({
+        width: isCover ? 600 : 750,
+        height: isCover ? 450 : 400,
+        fit: sharp.fit.fill,
+      })
       .toFile(path.resolve(webpPath));
 
     await this.fileService.deleteFile(imagePath);

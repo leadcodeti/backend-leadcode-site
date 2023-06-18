@@ -20,7 +20,7 @@ export class ProjectCardImageService {
   async create(data: CreateProjectCardImageDTO): Promise<ProjectCardImage> {
     data.name = data.name.replace(/(.png)|(.jpeg)|(.jpg)|(.gif)|(.webp)/, '');
     const multerNewImagePath = `./tmp/projectCardImages/${data.key}`;
-    this.sharpService.sharpConfig(multerNewImagePath);
+    this.sharpService.sharpConfig(multerNewImagePath, data.isCover);
 
     const projectCard = await this.projectCardRepository.findById(
       data.projectCardId,
