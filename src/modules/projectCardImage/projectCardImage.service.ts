@@ -4,7 +4,7 @@ import { ProjectCardImageRepository } from './repositories/projectCardImage.repo
 import { ProjectCardImage } from '@prisma/client';
 import { CreateProjectCardImageDTO } from './dtos/CreateProjectCardImage.dto';
 import { ProjectCardRepository } from '../projectCard/repositories/projectCard.repository';
-import { SharpService } from 'config/sharpConfig';
+import { SharpService } from 'config/sharpConfiguration';
 
 @Injectable()
 export class ProjectCardImageService {

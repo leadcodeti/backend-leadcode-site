@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -45,8 +46,9 @@ async function bootstrap() {
     prefix: '/tech_carousel_images',
   });
 
-  console.log(process.env.NODE_ENV);
+  const configService = app.get(ConfigService);
+  const port = configService.get<number>('port');
 
-  await app.listen(3334 || process.env.PORT);
+  await app.listen(port);
 }
 bootstrap();
