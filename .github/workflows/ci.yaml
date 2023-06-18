@@ -28,9 +28,9 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           PORT: ${{ secrets.PORT }}
           NODE_ENV: ${{ secrets.NODE_ENV }}
-          POSTGRES_USER: ${{ secrets.POSTGRE_USER }}
-          POSTGRES_DB: ${{ secrets.POSTGRE_DB }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRE_PASSWORD }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           LEADCODE_GMAIL_CLIENT_ID: ${{ secrets.LEADCODE_GMAIL_CLIENT_ID }}
           LEADCODE_GMAIL_CLIENT_SECRET: ${{ secrets.LEADCODE_GMAIL_CLIENT_SECRET }}
           LEADCODE_GMAIL_ACCESS_TOKEN: ${{ secrets.LEADCODE_GMAIL_ACCESS_TOKEN }}
@@ -44,10 +44,10 @@ jobs:
           TECH_CAROUSEL_IMAGE_URL: ${{ secrets.TECH_CAROUSEL_IMAGE_URL }}
           CLIENT_AVATAR_URL: ${{ secrets.CLIENT_AVATAR_URL }}
         run: |
-          echo "DATABASE_URL=${DATABASE_URL}" >> .env
-          echo "PORT=${PORT}" >> .env
-          echo "NODE_ENV=${NODE_ENV}" >> .env
-          echo "POSTGRES_USER=${POSTGRES_USER}" >> .env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+          echo "PORT=${{ secrets.PORT }}" >> .env
+          echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> .env
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
           echo "POSTGRES_DB=${POSTGRES_DB}" >> .env
           echo "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" >> .env
           echo "LEADCODE_GMAIL_CLIENT_ID=${LEADCODE_GMAIL_CLIENT_ID}" >> .env
@@ -63,11 +63,11 @@ jobs:
           echo "TECH_CAROUSEL_IMAGE_URL=${TECH_CAROUSEL_IMAGE_URL}" >> .env
           echo "CLIENT_AVATAR_URL=${CLIENT_AVATAR_URL}" >> .env
 
-      - name: Create tmp folder if it dosnt`t exist
-        run: |
-          if [ ! -d "./tmp" ]; then
-            mkdir tmp
-          fi
+      # - name: Create tmp folder if it dosnt`t exist
+      #   run: |
+      #     if [ ! -d "./tmp" ]; then
+      #       mkdir tmp
+      #     fi
 
       - name: Install dependencies
         run: npm install
