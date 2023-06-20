@@ -36,7 +36,7 @@ async function bootstrap() {
   app.useStaticAssets('tmp/socialMediaIcons', {
     prefix: '/social_media_icons',
   });
-  app.useStaticAssets('tmp/projectCardImages', {
+  app.useStaticAssets(`${process.env.TMP_BASE}/projectCardImages`, {
     prefix: '/project_card_images',
   });
   app.useStaticAssets('tmp/serviceCardImages', {
