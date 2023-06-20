@@ -20,7 +20,7 @@ export class ServiceCardImageService {
 
     if (serviceCardImage) {
       await this.fileService.deleteFile(
-        `./tmp/serviceCardImages/${serviceCardImage.key}`,
+        `${process.env.TMP_BASE}/serviceCardImages/${serviceCardImage.key}`,
       );
       await this.serviceCardImageRepository.delete(data.key);
     }

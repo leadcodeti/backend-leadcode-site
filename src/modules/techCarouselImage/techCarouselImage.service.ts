@@ -20,7 +20,7 @@ export class TechCarouselImageService {
 
     if (techCarouselImage) {
       await this.fileService.deleteFile(
-        `./tmp/techCarouselImages/${techCarouselImage.key}`,
+        `${process.env.TMP_BASE}/techCarouselImages/${techCarouselImage.key}`,
       );
       await this.techCarouselImageRepository.delete(data.techCarouselId);
     }

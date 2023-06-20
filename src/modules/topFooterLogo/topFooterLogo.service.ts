@@ -20,7 +20,7 @@ export class TopFooterLogoService {
 
     if (topFooterLogo) {
       await this.fileService.deleteFile(
-        `./tmp/topFooterLogo/${topFooterLogo.key}`,
+        `${process.env.TMP_BASE}/topFooterLogo/${topFooterLogo.key}`,
       );
       await this.topFooterLogoRepository.delete(data.key);
     }

@@ -20,7 +20,7 @@ export class ClientAvatarService {
 
     if (clientAvatar) {
       await this.fileService.deleteFile(
-        `./tmp/clientAvatars/${clientAvatar.key}`,
+        `${process.env.TMP_BASE}/clientAvatars/${clientAvatar.key}`,
       );
       await this.clientAvatarRepository.delete(data.testemonialId);
     }

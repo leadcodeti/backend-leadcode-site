@@ -28,8 +28,8 @@ export class ProjectCardService {
     return await this.projectCardRepository.findAll();
   }
 
-  async listFullData(): Promise<ListProjectCardsDTO[]> {
-    return await this.projectCardRepository.listProjectCardsFullData();
+  async listFullData(category: string): Promise<ListProjectCardsDTO[]> {
+    return await this.projectCardRepository.listProjectCardsFullData(category);
   }
 
   async update(id: string, data: UpdateProjectCardDTO): Promise<ProjectCard> {

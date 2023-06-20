@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ProjectCardService } from './projectCard.service';
 import { ProjectCard } from '@prisma/client';
@@ -20,6 +21,10 @@ import {
 import { ProjectCardEntity } from './entities/projectCard.entity';
 import { ListProjectCardsDTO } from './dtos/ListProjectCards.dto';
 import { ProjectCardToListEntity } from './entities/projectCardToList.entity';
+
+type QueryProps = {
+  category: string;
+};
 
 @ApiTags('Seção de projetos')
 @Controller('/project_cards')
@@ -51,8 +56,10 @@ export class ProjectCardController {
     isArray: true,
   })
   @Get()
-  async listFullData(): Promise<ListProjectCardsDTO[]> {
-    return this.projectCardService.listFullData();
+  async listFullData(
+    @Query() queries: QueryProps,
+  ): Promise<ListProjectCardsDTO[]> {
+    return this.projectCardService.listFullData(queries.category);
   }
 
   @ApiOkResponse({

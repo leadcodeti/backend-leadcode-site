@@ -41,8 +41,13 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
     return await this.prismaService.projectCard.findMany();
   }
 
-  async listProjectCardsFullData(): Promise<ListProjectCardsDTO[]> {
+  async listProjectCardsFullData(
+    category: string,
+  ): Promise<ListProjectCardsDTO[]> {
     const fullData = await this.prismaService.projectCard.findMany({
+      where: {
+        category,
+      },
       include: {
         ProjectCardImage: true,
         functionality: true,

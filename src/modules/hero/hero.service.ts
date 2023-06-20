@@ -25,7 +25,9 @@ export class HeroService {
     const hero = await this.heroRepository.findByKey(data.homeId);
 
     if (hero) {
-      await this.fileService.deleteFile(`./tmp/heros/${hero.key}`);
+      await this.fileService.deleteFile(
+        `${process.env.TMP_BASE}/heros/${hero.key}`,
+      );
       await this.heroRepository.delete(data.homeId);
     }
 
@@ -60,7 +62,7 @@ export class HeroService {
       throw new Error('This hero does not exists.');
     }
 
-    await this.fileService.deleteFile(`./tmp/heros/${key}`);
+    await this.fileService.deleteFile(`${process.env.TMP_BASE}/heros/${key}`);
 
     const homeImageToDelete = {
       id: home.id,

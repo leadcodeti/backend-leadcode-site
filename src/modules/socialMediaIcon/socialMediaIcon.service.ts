@@ -20,7 +20,7 @@ export class SocialMediaIconService {
 
     if (socialMediaIcon) {
       await this.fileService.deleteFile(
-        `./tmp/socialMediaIcons/${socialMediaIcon.key}`,
+        `${process.env.TMP_BASE}/socialMediaIcons/${socialMediaIcon.key}`,
       );
       await this.socialMediaIconRepository.delete(data.key);
     }
