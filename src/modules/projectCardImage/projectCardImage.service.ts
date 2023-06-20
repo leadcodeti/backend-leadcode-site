@@ -19,7 +19,7 @@ export class ProjectCardImageService {
 
   async create(data: CreateProjectCardImageDTO): Promise<ProjectCardImage> {
     data.name = data.name.replace(/(.png)|(.jpeg)|(.jpg)|(.gif)|(.webp)/, '');
-    const multerNewImagePath = `./tmp/projectCardImages/${data.key}`;
+    const multerNewImagePath = `${process.env.TMP_BASE}/projectCardImages/${data.key}`;
     this.sharpService.sharpConfig(multerNewImagePath, data.isCover);
 
     const projectCard = await this.projectCardRepository.findById(
@@ -36,7 +36,7 @@ export class ProjectCardImageService {
 
     if (projectCardImage) {
       await this.fileService.deleteFile(
-        `./tmp/projectCardImages/${projectCardImage.key}`,
+        `${process.env.TMP_BASE}/projectCardImages/${projectCardImage.key}`,
       );
       await this.projectCardImageRepository.delete(data.key);
     }
@@ -89,7 +89,9 @@ export class ProjectCardImageService {
       throw new Error('This image does not exist.');
     }
 
-    await this.fileService.deleteFile(`./tmp/projectCardImages/${key}`);
+    await this.fileService.deleteFile(
+      `${process.env.TMP_BASE}/projectCardImages/${key}`,
+    );
 
     if (projectCardImageExists.isCover) {
       const cardToUpdateImage = {
