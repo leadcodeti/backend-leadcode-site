@@ -9,19 +9,17 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import { TopFooterLogoService } from './topFooterLogo.service';
 import { TopFooterLogoEntity } from './entities/topFooterLogo.entity';
 import { TopFooterLogo } from '@prisma/client';
 import { UpdateTopFooterLogoDTO } from './dtos/UpdateTopFooterLogo.dto';
+import { fileInterceptor } from 'config/fileInterceptorConfiguration';
 
 type ParamProps = {
   top_footer_id: string;
@@ -38,20 +36,9 @@ export class TopFooterLogoController {
   })
   @Post('/:top_footer_id')
   @UseInterceptors(
-    FileInterceptor('top_footer_logo', {
-      storage: diskStorage({
-        destination: './tmp/topFooterLogos',
-        filename: (req, file, callback) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = extname(file.originalname);
-          const filename = `${file.originalname}-${uniqueSuffix}${ext}`;
-          const filenameWithNoSpacesToLower = filename
-            .replace(/[^a-zA-Z0-9-_.]/g, '-')
-            .toLowerCase();
-          callback(null, filenameWithNoSpacesToLower);
-        },
-      }),
+    fileInterceptor({
+      filename: 'top_footer_logo',
+      destination: './tmp/topFooterLogos',
     }),
   )
   async uploadFile(

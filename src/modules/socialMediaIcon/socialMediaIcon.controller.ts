@@ -9,19 +9,17 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import { SocialMediaIconEntity } from './entities/socialMediaIcon.entity';
 import { SocialMediaIcon } from '@prisma/client';
 import { UpdateSocialMediaIconDTO } from './dtos/UpdateSocialMediaIcon.dto';
 import { SocialMediaIconService } from './socialMediaIcon.service';
+import { fileInterceptor } from 'config/fileInterceptorConfiguration';
 
 type ParamProps = {
   social_media_id: string;
@@ -38,20 +36,9 @@ export class SocialMediaIconController {
   })
   @Post('/:social_media_id')
   @UseInterceptors(
-    FileInterceptor('social_media_icon', {
-      storage: diskStorage({
-        destination: './tmp/socialMediaIcons',
-        filename: (req, file, callback) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = extname(file.originalname);
-          const filename = `${file.originalname}-${uniqueSuffix}${ext}`;
-          const filenameWithNoSpacesToLower = filename
-            .replace(/[^a-zA-Z0-9-_.]/g, '-')
-            .toLowerCase();
-          callback(null, filenameWithNoSpacesToLower);
-        },
-      }),
+    fileInterceptor({
+      filename: 'social_media_icon',
+      destination: './tmp/socialMediaIcons',
     }),
   )
   async uploadFile(

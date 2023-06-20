@@ -8,15 +8,13 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { fileInterceptor } from '../../../config/fileInterceptorConfiguration';
 import {
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import { ProjectCardImageService } from './projectCardImage.service';
 import { ProjectCardImageEntity } from './entities/projectCardImage.entity';
 import { ProjectCardImage } from '@prisma/client';
@@ -40,20 +38,9 @@ export class ProjectCardImageController {
   })
   @Post('/:project_card_id')
   @UseInterceptors(
-    FileInterceptor('project_card_image', {
-      storage: diskStorage({
-        destination: './tmp/projectCardImages',
-        filename: (req, file, callback) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = '.webp';
-          const filename = `${file.originalname}-${uniqueSuffix}${ext}`;
-          const filenameWithNoSpacesToLower = filename
-            .replace(/[^a-zA-Z0-9-_.]/g, '-')
-            .toLowerCase();
-          callback(null, filenameWithNoSpacesToLower);
-        },
-      }),
+    fileInterceptor({
+      filename: 'project_card_image',
+      destination: './tmp/projectCardImages',
     }),
   )
   async uploadFile(

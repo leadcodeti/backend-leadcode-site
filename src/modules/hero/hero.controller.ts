@@ -7,18 +7,16 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import { HeroService } from './hero.service';
 import { HeroEntity } from './entities/hero.entity';
 import { Hero } from '@prisma/client';
+import { fileInterceptor } from 'config/fileInterceptorConfiguration';
 
 type ParamProps = {
   home_id: string;
@@ -35,20 +33,9 @@ export class HeroController {
   })
   @Post('/:home_id')
   @UseInterceptors(
-    FileInterceptor('hero', {
-      storage: diskStorage({
-        destination: './tmp/heros',
-        filename: (req, file, callback) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = extname(file.originalname);
-          const filename = `${file.originalname}-${uniqueSuffix}${ext}`;
-          const filenameWithNoSpacesToLower = filename
-            .replace(/[^a-zA-Z0-9-_.]/g, '-')
-            .toLowerCase();
-          callback(null, filenameWithNoSpacesToLower);
-        },
-      }),
+    fileInterceptor({
+      filename: 'hero',
+      destination: './tmp/heros',
     }),
   )
   async uploadFile(

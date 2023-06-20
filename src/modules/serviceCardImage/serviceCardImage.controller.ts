@@ -9,19 +9,17 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import { ServiceCardImageEntity } from './entities/serviceCardImage.entity';
 import { ServiceCardImage } from '@prisma/client';
 import { UpdateServiceCardImageDTO } from './dtos/UpdateServiceCardImage.dto';
 import { ServiceCardImageService } from './serviceCardImage.service';
+import { fileInterceptor } from 'config/fileInterceptorConfiguration';
 
 type ParamProps = {
   service_card_id: string;
@@ -38,20 +36,9 @@ export class ServiceCardImageController {
   })
   @Post('/:service_card_id')
   @UseInterceptors(
-    FileInterceptor('service_card_image', {
-      storage: diskStorage({
-        destination: './tmp/serviceCardImages',
-        filename: (req, file, callback) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = extname(file.originalname);
-          const filename = `${file.originalname}-${uniqueSuffix}${ext}`;
-          const filenameWithNoSpacesToLower = filename
-            .replace(/[^a-zA-Z0-9-_.]/g, '-')
-            .toLowerCase();
-          callback(null, filenameWithNoSpacesToLower);
-        },
-      }),
+    fileInterceptor({
+      filename: 'service_card_image',
+      destination: './tmp/serviceCardImages',
     }),
   )
   async uploadFile(

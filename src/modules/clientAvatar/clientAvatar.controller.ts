@@ -9,19 +9,17 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import { ClientAvatarService } from './clientAvatar.service';
 import { ClientAvatarEntity } from './entities/clientAvatar.entity';
 import { ClientAvatar } from '@prisma/client';
 import { UpdateClientAvatarDTO } from './dtos/UpdateClientAvatar.dto';
+import { fileInterceptor } from 'config/fileInterceptorConfiguration';
 
 type ParamProps = {
   testemonial_id: string;
@@ -38,20 +36,9 @@ export class ClientAvatarController {
   })
   @Post('/:testemonial_id')
   @UseInterceptors(
-    FileInterceptor('client_avatar', {
-      storage: diskStorage({
-        destination: './tmp/clientAvatars',
-        filename: (req, file, callback) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = extname(file.originalname);
-          const filename = `${file.originalname}-${uniqueSuffix}${ext}`;
-          const filenameWithNoSpacesToLower = filename
-            .replace(/[^a-zA-Z0-9-_.]/g, '-')
-            .toLowerCase();
-          callback(null, filenameWithNoSpacesToLower);
-        },
-      }),
+    fileInterceptor({
+      filename: 'client_avatar',
+      destination: './tmp/clientAvatars',
     }),
   )
   async uploadFile(

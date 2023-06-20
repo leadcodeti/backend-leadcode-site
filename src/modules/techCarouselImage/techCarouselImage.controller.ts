@@ -9,19 +9,17 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import { TechCarouselImageService } from './techCarouselImage.service';
 import { TechCarouselImageEntity } from './entities/techCarouselImage.entity';
 import { TechCarouselImage } from '@prisma/client';
 import { UpdateTechCarouselImageDTO } from './dtos/UpdateTechCarouselImage.dto';
+import { fileInterceptor } from 'config/fileInterceptorConfiguration';
 
 type ParamProps = {
   tech_carousel_id: string;
@@ -38,20 +36,9 @@ export class TechCarouselImageController {
   })
   @Post('/:tech_carousel_id')
   @UseInterceptors(
-    FileInterceptor('tech_carousel_image', {
-      storage: diskStorage({
-        destination: './tmp/techCarouselImages',
-        filename: (req, file, callback) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = extname(file.originalname);
-          const filename = `${file.originalname}-${uniqueSuffix}${ext}`;
-          const filenameWithNoSpacesToLower = filename
-            .replace(/[^a-zA-Z0-9-_.]/g, '-')
-            .toLowerCase();
-          callback(null, filenameWithNoSpacesToLower);
-        },
-      }),
+    fileInterceptor({
+      filename: 'tech_carousel_image',
+      destination: './tmp/techCarouselImages',
     }),
   )
   async uploadFile(

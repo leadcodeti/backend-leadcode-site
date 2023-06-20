@@ -63,12 +63,6 @@ jobs:
           echo "TECH_CAROUSEL_IMAGE_URL=${TECH_CAROUSEL_IMAGE_URL}" >> .env
           echo "CLIENT_AVATAR_URL=${CLIENT_AVATAR_URL}" >> .env
 
-      - name: Create tmp folder if it dosnt`t exist
-        run: |
-          if [ ! -d "./tmp" ]; then
-            mkdir tmp
-          fi
-
       - name: Install dependencies
         run: npm install
 
