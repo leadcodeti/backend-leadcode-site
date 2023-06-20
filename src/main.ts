@@ -27,24 +27,24 @@ async function bootstrap() {
   );
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   app.enableCors();
-  app.useStaticAssets('tmp/heros', {
-    prefix: '/heros',
-  });
-  app.useStaticAssets('tmp/topFooterLogos', {
-    prefix: '/top_footer_logos',
-  });
-  app.useStaticAssets('tmp/socialMediaIcons', {
-    prefix: '/social_media_icons',
-  });
-  app.useStaticAssets('tmp/projectCardImages', {
-    prefix: '/project_card_images',
-  });
-  app.useStaticAssets('tmp/serviceCardImages', {
-    prefix: '/service_card_images',
-  });
-  app.useStaticAssets('tmp/techCarouselImages', {
-    prefix: '/tech_carousel_images',
-  });
+  // app.useStaticAssets('tmp/heros', {
+  //   prefix: '/heros',
+  // });
+  // app.useStaticAssets('tmp/topFooterLogos', {
+  //   prefix: '/top_footer_logos',
+  // });
+  // app.useStaticAssets('tmp/socialMediaIcons', {
+  //   prefix: '/social_media_icons',
+  // });
+  // app.useStaticAssets('tmp/projectCardImages', {
+  //   prefix: '/project_card_images',
+  // });
+  // app.useStaticAssets('tmp/serviceCardImages', {
+  //   prefix: '/service_card_images',
+  // });
+  // app.useStaticAssets('tmp/techCarouselImages', {
+  //   prefix: '/tech_carousel_images',
+  // });
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>('port');
