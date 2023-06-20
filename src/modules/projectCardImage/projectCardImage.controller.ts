@@ -40,7 +40,7 @@ export class ProjectCardImageController {
   @UseInterceptors(
     fileInterceptor({
       filename: 'project_card_image',
-      destination: './tmp/projectCardImages',
+      destination: `${process.env.TMP_BASE}/projectCardImages`,
     }),
   )
   async uploadFile(

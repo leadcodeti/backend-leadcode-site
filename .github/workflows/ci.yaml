@@ -26,6 +26,7 @@ jobs:
       - name: Set up environment variables
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          TMP_BASE: ${{ secrets.TMP_BASE }}
           PORT: ${{ secrets.PORT }}
           NODE_ENV: ${{ secrets.NODE_ENV }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
@@ -45,6 +46,7 @@ jobs:
           CLIENT_AVATAR_URL: ${{ secrets.CLIENT_AVATAR_URL }}
         run: |
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+          echo "TMP_BASE=${{ secrets.TMP_BASE }}" >> .env
           echo "PORT=${{ secrets.PORT }}" >> .env
           echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> .env
           echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
