@@ -83,6 +83,7 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
       data: {
         name: data.name,
         slug: data.slug,
+        summaryDescription: data.summary_description,
         description: data.description,
         projectUrl: data.project_url,
         behanceUrl: data.behance_url,
