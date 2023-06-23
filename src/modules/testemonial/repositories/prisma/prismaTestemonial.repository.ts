@@ -4,6 +4,7 @@ import { TestemonialRepository } from '../testemonial.repository';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateTestemonialDTO } from '../../dtos/CreateTestemonial.dto';
 import { UpdateTestemonialDTO } from '../../dtos/UpdateTestemonial.dto';
+import { ListTestemonialsDTO } from '../../dtos/ListTestemonials.dto';
 
 @Injectable()
 export class PrismaTestemoniallRepository implements TestemonialRepository {
@@ -31,8 +32,19 @@ export class PrismaTestemoniallRepository implements TestemonialRepository {
     return createTestemonial;
   }
 
-  async findAll(): Promise<Testemonial[]> {
-    return await this.prismaService.testemonial.findMany();
+  async findAll(): Promise<ListTestemonialsDTO[]> {
+    const response = await this.prismaService.testemonial.findMany();
+
+    return response.map((e) => ({
+      id: e.id,
+      content: e.content,
+      client_avatar: e.clientAvatar,
+      client_name: e.clientName,
+      job_position: e.jobPosition,
+      is_selected: e.isSelected,
+      created_at: e.createdAt,
+      testemonial_section_id: e.testemonialSectionId,
+    }));
   }
 
   async update(id: string, data: UpdateTestemonialDTO): Promise<Testemonial> {
