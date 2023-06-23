@@ -3,6 +3,7 @@ import { TestemonialRepository } from './repositories/testemonial.repository';
 import { Testemonial } from '@prisma/client';
 import { CreateTestemonialDTO } from './dtos/CreateTestemonial.dto';
 import { UpdateTestemonialDTO } from './dtos/UpdateTestemonial.dto';
+import { ListTestemonialsDTO } from './dtos/ListTestemonials.dto';
 
 @Injectable()
 export class TestemonialService {
@@ -25,7 +26,7 @@ export class TestemonialService {
     return testemonial;
   }
 
-  async list(): Promise<Testemonial[]> {
+  async list(): Promise<ListTestemonialsDTO[]> {
     return await this.testemonialRepository.findAll();
   }
 

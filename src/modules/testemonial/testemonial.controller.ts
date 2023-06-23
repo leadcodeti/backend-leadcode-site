@@ -18,6 +18,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { TestemonialEntity } from './entities/testemonial.entity';
+import { ListTestemonialsDTO } from './dtos/ListTestemonials.dto';
 
 @ApiTags('Seção dos testemunhos')
 @Controller('/testemonials')
@@ -39,7 +40,7 @@ export class TestemonialController {
     isArray: true,
   })
   @Get()
-  async list(): Promise<Testemonial[]> {
+  async list(): Promise<ListTestemonialsDTO[]> {
     return await this.testemonialService.list();
   }
 
