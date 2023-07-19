@@ -46,7 +46,10 @@ export class PrismaProjectCardRepository implements ProjectCardRepository {
   ): Promise<ListProjectCardsDTO[]> {
     const fullData = await this.prismaService.projectCard.findMany({
       where: {
-        category,
+        category: {
+          equals: category,
+          mode: 'insensitive',
+        },
       },
       include: {
         ProjectCardImage: true,
