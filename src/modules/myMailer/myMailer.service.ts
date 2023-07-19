@@ -14,13 +14,13 @@ export class MyMailerService {
   private async setTransport() {
     const OAuth2 = google.auth.OAuth2;
     const oauth2Client = new OAuth2(
-      this.configService.get<string>('client_id'),
-      this.configService.get<string>('client_secret'),
+      this.configService.get<string>('gmail.client_id'),
+      this.configService.get<string>('gmail.client_secret'),
       'https://developers.google.com/oauthplayground',
     );
 
     oauth2Client.setCredentials({
-      refresh_token: this.configService.get<string>('refresh_token'),
+      refresh_token: this.configService.get<string>('gmail.refresh_token'),
     });
 
     const accessToken: string = await new Promise((resolve, reject) => {
@@ -37,9 +37,9 @@ export class MyMailerService {
       service: 'gmail',
       auth: {
         type: 'OAuth2',
-        user: this.configService.get<string>('leadcode_email'),
-        clientId: this.configService.get<string>('client_id'),
-        clientSecret: this.configService.get<string>('client_secret'),
+        user: this.configService.get<string>('gmail.leadcode_email'),
+        clientId: this.configService.get<string>('gmail.client_id'),
+        clientSecret: this.configService.get<string>('gmail.client_secret'),
         accessToken,
       },
     };
@@ -56,8 +56,8 @@ export class MyMailerService {
     this.mailerService
       .sendMail({
         transporterName: 'gmail',
-        to: this.configService.get<string>('leadcode_email'), // list of receivers
-        from: this.configService.get<string>('leadcode_email'), // sender address
+        to: this.configService.get<string>('gmail.leadcode_email'), // list of receivers
+        from: this.configService.get<string>('gmail.leadcode_email'), // sender address
         subject: `${userName} - descrição de projeto`, // Subject line
         template: 'confirmation.hbs',
         context: {

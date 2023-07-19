@@ -18,7 +18,6 @@ import { TopFooterModule } from './modules/topFooter/topFooter.module';
 import { TopFooterLinkModule } from './modules/topFooterLink/topFooterLink.module';
 import { BottomFooterModule } from './modules/bottomFooter/bottomFooter.module';
 import { SocialMediaModule } from './modules/socialMedia/socialMedia.module';
-import config from '../config/gmailConfiguration';
 import { HeroModule } from './modules/hero/hero.module';
 import { TopFooterLogoModule } from './modules/topFooterLogo/topFooterLogo.module';
 import { SocialMediaIconModule } from './modules/socialMediaIcon/socialMediaIcon.module';
