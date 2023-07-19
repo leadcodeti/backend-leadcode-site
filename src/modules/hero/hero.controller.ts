@@ -16,7 +16,7 @@ import {
 import { HeroService } from './hero.service';
 import { HeroEntity } from './entities/hero.entity';
 import { Hero } from '@prisma/client';
-import { fileInterceptor } from 'config/fileInterceptorConfiguration';
+import { videoInterceptor } from 'config/fileInterceptorConfiguration';
 
 type ParamProps = {
   home_id: string;
@@ -33,7 +33,7 @@ export class HeroController {
   })
   @Post('/:home_id')
   @UseInterceptors(
-    fileInterceptor({
+    videoInterceptor({
       filename: 'hero',
       destination: './tmp/heros',
     }),
