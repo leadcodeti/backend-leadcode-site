@@ -87,16 +87,13 @@ jobs:
 
       # Construção e execução dos containers Docker
       - name: Build and run containers
-        run: | 
-            docker compose up -d
-            echo "Aguardando o banco de dados..."
-            sleep 10
+        run: docker compose up -d
 
       # Execução das migrações do Prisma
       - name: Run Prisma Migration
         run: | 
           npx prisma migrate deploy
-          docker ps  # Verifique se o container está rodando
+          docker ps
 
       # Limpeza de recursos: parada e remoção dos containers Docker
       - name: Clean up Docker containers
@@ -122,6 +119,8 @@ jobs:
             cd /home/user/app
             git pull origin main
             npm ci
+            docker compose up -d
+            npx prisma migrate deploy
             pm2 restart leadcode_backend_site
 
       # Notificação no Slack em caso de sucesso
