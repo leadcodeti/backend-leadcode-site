@@ -90,7 +90,7 @@ jobs:
       - name: Clean up Docker containers
         if: always()
         run: |
-          docker-compose down
+          docker compose down
           docker system prune -f
 
   CD:
