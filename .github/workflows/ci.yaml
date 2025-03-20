@@ -124,20 +124,20 @@ jobs:
             npx prisma migrate deploy
             pm2 restart leadcode_backend_site
 
-      # Notificação no Slack em caso de sucesso
-      - name: Notify Slack on success
-        if: success()
-        uses: drilonrecica/action-slack-notify@0.0.3
-        env:
-         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-         SLACK_TITLE: Success Title
-         SLACK_MESSAGE: 'Deployment successful! 🚀'
+      # # Notificação no Slack em caso de sucesso
+      # - name: Notify Slack on success
+      #   if: success()
+      #   uses: drilonrecica/action-slack-notify@0.0.3
+      #   env:
+      #    SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #    SLACK_TITLE: Success Title
+      #    SLACK_MESSAGE: 'Deployment successful! 🚀'
 
-      # Notificação no Slack em caso de falha
-      - name: Notify Slack on failure
-        if: failure()
-        uses: drilonrecica/action-slack-notify@0.0.3
-        env:
-           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-           SLACK_TITLE: Failure Title
-           SLACK_MESSAGE: 'Deployment failed! 🔴'
+      # # Notificação no Slack em caso de falha
+      # - name: Notify Slack on failure
+      #   if: failure()
+      #   uses: drilonrecica/action-slack-notify@0.0.3
+      #   env:
+      #      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #      SLACK_TITLE: Failure Title
+      #      SLACK_MESSAGE: 'Deployment failed! 🔴'
