@@ -72,7 +72,12 @@ jobs:
 
       # Execução de verificações de segurança
       - name: Run security checks
-        run: npm audit --audit-leval=critical || true && npx snyk test
+        run: npm audit --audit-leval=critical || true 
+        
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       # Construção do projeto
       - name: Build project
