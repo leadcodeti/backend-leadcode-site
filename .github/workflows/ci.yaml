@@ -68,7 +68,7 @@ jobs:
 
       # Instalação das dependências do projeto
       - name: Install dependencies
-        run: npm ci
+        run: npm i
 
       # Execução de verificações de segurança
       - name: Run security checks
