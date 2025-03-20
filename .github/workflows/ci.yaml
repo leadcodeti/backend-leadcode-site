@@ -73,7 +73,8 @@ jobs:
       # Execução de verificações de segurança
       - name: Run security checks
         run: npm audit --audit-leval=critical || true 
-        
+      
+       # Verificação de segurança com Snyk
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         env:
