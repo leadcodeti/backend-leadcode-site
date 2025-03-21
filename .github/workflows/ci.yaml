@@ -120,6 +120,7 @@ jobs:
           script: |
             cd user/app/backend-leadcode-site
             git pull origin main
+            rm .env
 
             echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
             echo "TMP_BASE=${{ secrets.TMP_BASE }}" >> .env
@@ -144,14 +145,14 @@ jobs:
             npm ci
             docker compose up -d
             echo "Aguardando o banco de dados..."
-            sleep 3
+            sleep 2
            
             npx prisma migrate deploy
            
-            if pm2 list | grep -q backend_leadcode_site; then
-            echo "A aplicação backend_leadcode_site já está em execução. Reiniciando..."
-            pm2 restart backend-leadcode-site
+            if pm2 list | grep -q leadcode_backend_site; then
+            echo "A aplicação leadcode_backend_site já está em execução. Reiniciando..."
+            pm2 restart leadcode_backend_site
             else
-            echo "A aplicação backend_leadcode_site não está em execução. Iniciando..."
-            pm2 start npm --name leadcode_site_backend -- start
+            echo "A aplicação leadcode_backend_site não está em execução. Iniciando..."
+            pm2 start npm --name leadcode_backend_site -- start
             fi
