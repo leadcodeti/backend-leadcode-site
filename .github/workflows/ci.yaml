@@ -118,7 +118,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd /home/user/app
+            cd user/app
             git pull origin main
             npm ci
             docker compose up -d
