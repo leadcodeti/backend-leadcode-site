@@ -120,6 +120,7 @@ jobs:
           script: |
             cd user/app
             git pull origin main
+            cd backend-leadcode-site
             npm ci
             docker compose up -d
             npx prisma migrate deploy
