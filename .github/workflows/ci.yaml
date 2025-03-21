@@ -140,14 +140,21 @@ jobs:
             echo "SERVICE_CARD_IMAGE_URL=${SERVICE_CARD_IMAGE_URL}" >> .env
             echo "TECH_CAROUSEL_IMAGE_URL=${TECH_CAROUSEL_IMAGE_URL}" >> .env
             echo "CLIENT_AVATAR_URL=${CLIENT_AVATAR_URL}" >> .env
-            
+
             npm ci
             docker compose up -d
             echo "Aguardando o banco de dados..."
-            sleep 2
+            sleep 3
            
             npx prisma migrate deploy
-            pm2 restart leadcode_backend_site
+           
+            if pm2 list | grep -q "$APP_NAME"; then
+            echo "A aplicação backend-leadcode-site já está em execução. Reiniciando..."
+            pm2 restart backend-leadcode-site
+            else
+            echo "A aplicação backend-leadcode-site não está em execução. Iniciando..."
+            pm2 start npm --name leadcode_site_backend -- start
+            fi
 
       # # Notificação no Slack em caso de sucesso
       # - name: Notify Slack on success
