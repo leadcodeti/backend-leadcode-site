@@ -146,12 +146,12 @@ jobs:
             echo "Aguardando o banco de dados..."
             sleep 3
            
-            /home/leadcode-backend-site/.nvm/versions/node/v22.14.0/bin/npx prisma migrate deploy
+            npx prisma migrate deploy
            
-            if /home/leadcode-backend-site/.nvm/versions/node/v22.14.0/bin/pm2 list | grep -q backend_leadcode_site; then
+            if pm2 list | grep -q backend_leadcode_site; then
             echo "A aplicação backend_leadcode_site já está em execução. Reiniciando..."
-            /home/leadcode-backend-site/.nvm/versions/node/v22.14.0/bin/pm2 restart backend-leadcode-site
+            pm2 restart backend-leadcode-site
             else
             echo "A aplicação backend_leadcode_site não está em execução. Iniciando..."
-            /home/leadcode-backend-site/.nvm/versions/node/v22.14.0/bin/pm2 start npm --name leadcode_site_backend -- start
+            pm2 start npm --name leadcode_site_backend -- start
             fi
