@@ -118,9 +118,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd user/app
+            cd user/app/backend-leadcode-site
             git pull origin main
-            cd backend-leadcode-site
             npm ci
             docker compose up -d
             npx prisma migrate deploy
