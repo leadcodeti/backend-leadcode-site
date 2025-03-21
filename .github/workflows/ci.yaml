@@ -124,6 +124,7 @@ jobs:
             docker compose up -d
             echo "Aguardando o banco de dados..."
             sleep 2
+            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
             npx prisma migrate deploy
             pm2 restart leadcode_backend_site
 
