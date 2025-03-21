@@ -109,16 +109,6 @@ jobs:
     if: github.ref == 'refs/heads/main' && success()
 
     steps:
-     # Instalar Node.js
-      - name: Install Node.js
-        run: |
-          curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-          sudo apt-get install -y nodejs
-      
-      # Instalar PM2 globalmente
-      - name: Install PM2
-        run: sudo npm install -g pm2
-        
       # Implantação no servidor via SSH
       - name: Server Deploy
         uses: appleboy/ssh-action@v1
@@ -156,30 +146,12 @@ jobs:
             echo "Aguardando o banco de dados..."
             sleep 3
            
-            npx prisma migrate deploy
+            /home/leadcode-backend-site/.nvm/versions/node/v22.14.0/bin/npx prisma migrate deploy
            
-            if pm2 list | grep -q backend_leadcode_site; then
+            if /home/leadcode-backend-site/.nvm/versions/node/v22.14.0/bin/pm2 list | grep -q backend_leadcode_site; then
             echo "A aplicação backend_leadcode_site já está em execução. Reiniciando..."
-            pm2 restart backend-leadcode-site
+            /home/leadcode-backend-site/.nvm/versions/node/v22.14.0/bin/pm2 restart backend-leadcode-site
             else
             echo "A aplicação backend_leadcode_site não está em execução. Iniciando..."
-            pm2 start npm --name leadcode_site_backend -- start
+            /home/leadcode-backend-site/.nvm/versions/node/v22.14.0/bin/pm2 start npm --name leadcode_site_backend -- start
             fi
-
-      # # Notificação no Slack em caso de sucesso
-      # - name: Notify Slack on success
-      #   if: success()
-      #   uses: drilonrecica/action-slack-notify@0.0.3
-      #   env:
-      #    SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      #    SLACK_TITLE: Success Title
-      #    SLACK_MESSAGE: 'Deployment successful! 🚀'
-
-      # # Notificação no Slack em caso de falha
-      # - name: Notify Slack on failure
-      #   if: failure()
-      #   uses: drilonrecica/action-slack-notify@0.0.3
-      #   env:
-      #      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      #      SLACK_TITLE: Failure Title
-      #      SLACK_MESSAGE: 'Deployment failed! 🔴'
