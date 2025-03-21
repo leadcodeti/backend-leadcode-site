@@ -122,6 +122,8 @@ jobs:
             git pull origin main
             npm ci
             docker compose up -d
+            echo "Aguardando o banco de dados..."
+            sleep 2
             npx prisma migrate deploy
             pm2 restart leadcode_backend_site
 
