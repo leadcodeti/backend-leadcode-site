@@ -10,9 +10,6 @@ COPY package*.json ./
 # Instala as dependências sem salvar arquivos desnecessários
 RUN npm ci
 
-# Instala OpenSSL no container
-RUN apt-get update && apt-get install -y openssl libssl-dev
-
 # Copia o restante do código da aplicação
 COPY . .
 
@@ -22,11 +19,11 @@ RUN npx prisma generate
 # Compila o projeto
 RUN npm run build
 
-# Verifica os arquivos no diretório dist após o build
-RUN ls -alh /usr/src/app/dist
-
 # Imagem final enxuta para produção
 FROM node:22.14.0-alpine
+
+# Instala OpenSSL 1.1 compatível na imagem final
+RUN apk add --no-cache openssl1.1-compat
 
 WORKDIR /usr/src/app
 
