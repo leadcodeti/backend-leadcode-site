@@ -10,6 +10,8 @@ COPY package*.json ./
 # Instala as dependências sem salvar arquivos desnecessários
 RUN npm ci
 
+RUN npm install pm2 -g
+
 # Copia o restante do código da aplicação
 COPY . .
 
