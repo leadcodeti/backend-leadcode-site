@@ -10,8 +10,6 @@ COPY package*.json ./
 # Instala as dependências sem salvar arquivos desnecessários
 RUN npm ci
 
-RUN npm install pm2 -g
-
 # Copia o restante do código da aplicação
 COPY . .
 
@@ -34,7 +32,6 @@ COPY --from=build /usr/src/app/package.json ./package.json
 COPY --from=build /usr/src/app/dist ./dist
 COPY --from=build /usr/src/app/prisma ./dist/prisma
 COPY --from=build /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/ecosystem.config.js ./ecosystem.config.js
 
 # Expõe a porta do container
 EXPOSE 3334

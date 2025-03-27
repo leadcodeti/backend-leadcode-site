@@ -35,7 +35,6 @@ services:
     build:
       context: .
     container_name: backend-site
-    command: npm i -g pm2
     environment:
       DATABASE_URL: ${DATABASE_URL}
       NODE_ENV: ${NODE_ENV}
