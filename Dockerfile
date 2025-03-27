@@ -10,6 +10,9 @@ COPY package*.json ./
 # Instala as dependências sem salvar arquivos desnecessários
 RUN npm ci
 
+# Instala OpenSSL no container
+RUN apk add --no-cache openssl1.1-compat
+
 # Copia o restante do código da aplicação
 COPY . .
 
