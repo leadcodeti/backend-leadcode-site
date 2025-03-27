@@ -1,5 +1,5 @@
 # Usa uma imagem do Node.js leve e atribui o alias build
-FROM node:22.14.0-alpine AS build
+FROM node:22.14.0-alpine3.17 AS build
 
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /usr/src/app
@@ -20,10 +20,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # Imagem final enxuta para produção
-FROM node:22.14.0-alpine
-
-# Instala OpenSSL e a biblioteca libssl1.1 na imagem final
-RUN apk add --no-cache openssl libssl1.1
+FROM node:22.14.0-alpine3.17
 
 WORKDIR /usr/src/app
 
