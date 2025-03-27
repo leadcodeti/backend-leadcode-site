@@ -146,13 +146,10 @@ jobs:
             echo "MINIO_ROOT_USER=${{ secrets.MINIO_ROOT_USER }}" >> .env
             echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_ROOT_PASSWORD }}" >> .env
 
-            npm ci
             docker compose up -d
             echo "Aguardando o banco de dados..."
             sleep 2
-           
-            npx prisma migrate deploy
-           
+                      
             if pm2 list | grep -q leadcode_backend_site; then
             echo "A aplicação leadcode_backend_site já está em execução. Reiniciando..."
             pm2 restart leadcode_backend_site
