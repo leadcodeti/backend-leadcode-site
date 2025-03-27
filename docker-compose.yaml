@@ -38,6 +38,7 @@ services:
     command: npm i -g pm2
     environment:
       DATABASE_URL: ${DATABASE_URL}
+      NODE_ENV: ${NODE_ENV}
     ports:
       - 3334:3334
     depends_on:

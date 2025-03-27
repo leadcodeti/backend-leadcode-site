@@ -147,13 +147,3 @@ jobs:
 
             docker compose up -d
                       
-            if pm2 list | grep -q leadcode_backend_site; then
-            echo "Atualizando aplicação existente no PM2..."
-            pm2 reload ecosystem.config.js
-            pm2 save
-            else
-            echo "Iniciando nova instância no PM2..."
-            pm2 start ecosystem.config.js
-            pm2 save
-            pm2 startup || true
-            fi
