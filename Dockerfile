@@ -24,8 +24,6 @@ FROM node:22.14.0-alpine
 
 WORKDIR /usr/src/app
 
-RUN apk add --no-cache openssl
-
 # Copia apenas os arquivos necessários da fase de build
 COPY --from=build /usr/src/app/package.json ./package.json
 COPY --from=build /usr/src/app/dist ./dist
