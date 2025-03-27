@@ -16,11 +16,12 @@ module.exports = {
       // Env Specific Config
       env_production: {
         NODE_ENV: 'production',
+        PORT: 3334,
         exec_mode: 'cluster_mode',
       },
       env_development: {
         NODE_ENV: 'development',
-        PORT: 8080,
+        PORT: 3334,
         watch: true,
         watch_delay: 3000,
         ignore_watch: [
