@@ -65,6 +65,8 @@ jobs:
           echo "SERVICE_CARD_IMAGE_URL=${{ secrets.SERVICE_CARD_IMAGE_URL }}" >> .env
           echo "TECH_CAROUSEL_IMAGE_URL=${{ secrets.TECH_CAROUSEL_IMAGE_URL }}" >> .env
           echo "CLIENT_AVATAR_URL=${{ secrets.CLIENT_AVATAR_URL }}" >> .env
+          echo "MINIO_ROOT_USER=${{ secrets.MINIO_ROOT_USER }}" >> .env
+          echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_ROOT_PASSWORD }}" >> .env
 
       # Instalação das dependências do projeto
       - name: Install dependencies
@@ -92,9 +94,9 @@ jobs:
             echo "Aguardando o banco de dados..."
             sleep 2
 
-      # Execução das migrações do Prisma
-      - name: Run Prisma Migration
-        run: npx prisma migrate deploy
+      # # Execução das migrações do Prisma
+      # - name: Run Prisma Migration
+      #   run: npx prisma migrate deploy
 
       # Limpeza de recursos: parada e remoção dos containers Docker
       - name: Clean up Docker containers
@@ -141,6 +143,8 @@ jobs:
             echo "SERVICE_CARD_IMAGE_URL=${{ secrets.SERVICE_CARD_IMAGE_URL }}" >> .env
             echo "TECH_CAROUSEL_IMAGE_URL=${{ secrets.TECH_CAROUSEL_IMAGE_URL }}" >> .env
             echo "CLIENT_AVATAR_URL=${{ secrets.CLIENT_AVATAR_URL }}" >> .env
+            echo "MINIO_ROOT_USER=${{ secrets.MINIO_ROOT_USER }}" >> .env
+            echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_ROOT_PASSWORD }}" >> .env
 
             npm ci
             docker compose up -d
