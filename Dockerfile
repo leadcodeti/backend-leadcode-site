@@ -22,8 +22,8 @@ RUN npm run build
 # Imagem final enxuta para produção
 FROM node:22.14.0-alpine
 
-# Instala OpenSSL 1.1 compatível na imagem final
-RUN apk add --no-cache openssl1.1-compat
+# Instala OpenSSL e a biblioteca libssl1.1 na imagem final
+RUN apk add --no-cache openssl libssl1.1
 
 WORKDIR /usr/src/app
 
