@@ -122,7 +122,6 @@ jobs:
           script: |
             cd user/app/backend-leadcode-site
             git pull origin main
-            rm .env ecosystem.config.js
 
             echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
             echo "TMP_BASE=${{ secrets.TMP_BASE }}" >> .env
@@ -145,22 +144,6 @@ jobs:
             echo "CLIENT_AVATAR_URL=${{ secrets.CLIENT_AVATAR_URL }}" >> .env
             echo "MINIO_ROOT_USER=${{ secrets.MINIO_ROOT_USER }}" >> .env
             echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_ROOT_PASSWORD }}" >> .env
-
-            cat > ecosystem.config.js <<EOL
-            module.exports = {
-              apps: [{
-                name: 'leadcode_backend_site',
-                script: 'npm start',
-                cwd: '/home/${{ secrets.SSH_USER }}/user/app/backend-leadcode-site',
-                autorestart: true,
-                watch: false,
-                env: {
-                  NODE_ENV: '${{ secrets.NODE_ENV || 'production' }',
-                  PORT: '${{ secrets.PORT }}'
-                }
-              }]
-            }
-            EOL
 
             docker compose up -d
                       
