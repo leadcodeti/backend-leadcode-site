@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm ci
 
 # Instala OpenSSL no container
-RUN apk add --no-cache openssl1.1-compat
+RUN apt-get update && apt-get install -y openssl libssl-dev
 
 # Copia o restante do código da aplicação
 COPY . .
