@@ -31,10 +31,10 @@ services:
     networks:
       - api-backend-network
 
-  backend-site-api:
+  api:
     build:
       context: .
-    container_name: backend-site-api
+    container_name: backend-site
     environment:
       DATABASE_URL: ${DATABASE_URL}
     ports:
