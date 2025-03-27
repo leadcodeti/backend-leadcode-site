@@ -12,7 +12,44 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PGDATA: /data/postgres
+    networks:
+      - api-backend-network
+
+  minio:
+    image: quay.io/minio/minio
+    restart: always
+    container_name: leadcode-minio
+    command: server --console-address ":9001" /data
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    ports:
+      - '9000:9000' # API S3
+      - '9001:9001' # Console Web
+    volumes:
+      - minio-data:/data
+    networks:
+      - api-backend-network
+
+  backend-site-api:
+    build:
+      context: .
+    container_name: backend-site-api
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - 3334:3334
+    depends_on:
+      - postgres
+    networks:
+      - api-backend-network
 
 volumes:
   postgres-db:
     driver: local
+  minio-data:
+    driver: local
+
+networks:
+  api-backend-network:
+    driver: bridge
