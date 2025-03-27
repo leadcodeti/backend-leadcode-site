@@ -67,6 +67,7 @@ jobs:
           echo "CLIENT_AVATAR_URL=${{ secrets.CLIENT_AVATAR_URL }}" >> .env
           echo "MINIO_ROOT_USER=${{ secrets.MINIO_ROOT_USER }}" >> .env
           echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_ROOT_PASSWORD }}" >> .env
+          echo "PRISMA_CLI_ENGINE_BINARY=${{ secrets.PRISMA_CLI_ENGINE_BINARY }}" >> .env
 
       # Instalação das dependências do projeto
       - name: Install dependencies
@@ -144,6 +145,7 @@ jobs:
             echo "CLIENT_AVATAR_URL=${{ secrets.CLIENT_AVATAR_URL }}" >> .env
             echo "MINIO_ROOT_USER=${{ secrets.MINIO_ROOT_USER }}" >> .env
             echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_ROOT_PASSWORD }}" >> .env
+            echo "PRISMA_CLI_ENGINE_BINARY=${{ secrets.PRISMA_CLI_ENGINE_BINARY }}" >> .env
             
             docker compose up --build -d
                       
