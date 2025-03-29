@@ -32,12 +32,7 @@ export class HeroController {
     type: HeroEntity,
   })
   @Post('/:home_id')
-  @UseInterceptors(
-    videoInterceptor({
-      filename: 'hero',
-      destination: './tmp/heros',
-    }),
-  )
+  @UseInterceptors(videoInterceptor({ filename: 'hero' }))
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
     @Param() params: ParamProps,

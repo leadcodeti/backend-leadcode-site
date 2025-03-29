@@ -22,10 +22,7 @@ export const fileInterceptor = ({
   });
 };
 
-export const videoInterceptor = ({
-  filename,
-  destination,
-}: FileInterceptorProps) => {
+export const videoInterceptor = ({ filename }: FileInterceptorProps) => {
   return FileInterceptor(filename, {
     storage: memoryStorage(), // 🔥 Agora o arquivo fica em memória, permitindo o uso de file.buffer
     limits: { fileSize: 50 * 1024 * 1024 }, // Limite de 50MB (ajuste conforme necessário)
