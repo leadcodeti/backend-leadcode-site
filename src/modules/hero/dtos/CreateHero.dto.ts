@@ -4,4 +4,5 @@ export class CreateHeroDTO {
   name: string;
   url: string;
   size: number;
+  file: Express.Multer.File;
 }

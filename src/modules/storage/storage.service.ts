@@ -6,7 +6,6 @@ import { Readable } from 'stream';
 @Injectable()
 export class StorageService {
   private s3: AWS.S3;
-  private bucketName: string;
 
   constructor(private readonly configService: ConfigService) {
     this.s3 = new AWS.S3({
@@ -16,18 +15,18 @@ export class StorageService {
       s3ForcePathStyle: true, // Necessário para MinIO
       signatureVersion: 'v4',
     });
-
-    this.bucketName =
-      this.configService.get<string>('MINIO_BUCKET') || 'uploads';
   }
 
-  async uploadFile(file: Express.Multer.File): Promise<{ url: string }> {
+  async uploadFile(
+    file: Express.Multer.File,
+    bucketName: string,
+  ): Promise<{ url: string }> {
     const fileStream = Readable.from(file.buffer);
 
     try {
       await this.s3
         .upload({
-          Bucket: this.bucketName,
+          Bucket: bucketName,
           Key: file.originalname,
           Body: fileStream,
           ContentType: file.mimetype,
@@ -35,19 +34,20 @@ export class StorageService {
         .promise();
 
       return {
-        url: `${this.configService.get<string>('MINIO_PUBLIC_URL')}/${
-          file.originalname
-        }`,
+        url: `${this.configService.get<string>(
+          'MINIO_ENDPOINT',
+        )}/${bucketName}/${file.originalname}`,
       };
     } catch (error) {
+      console.log(error);
       throw new BadRequestException('Erro ao fazer upload do arquivo');
     }
   }
 
-  async getFile(fileKey: string): Promise<Buffer> {
+  async getFile(fileKey: string, bucketName: string): Promise<Buffer> {
     try {
       const data = await this.s3
-        .getObject({ Bucket: this.bucketName, Key: fileKey })
+        .getObject({ Bucket: bucketName, Key: fileKey })
         .promise();
       return data.Body as Buffer;
     } catch (error) {
@@ -55,20 +55,20 @@ export class StorageService {
     }
   }
 
-  async deleteFile(fileKey: string): Promise<void> {
+  async deleteFile(fileKey: string, bucketName: string): Promise<void> {
     try {
       await this.s3
-        .deleteObject({ Bucket: this.bucketName, Key: fileKey })
+        .deleteObject({ Bucket: bucketName, Key: fileKey })
         .promise();
     } catch (error) {
       throw new BadRequestException('Erro ao deletar arquivo');
     }
   }
 
-  async listFiles(): Promise<string[]> {
+  async listFiles(bucketName: string): Promise<string[]> {
     try {
       const response = await this.s3
-        .listObjectsV2({ Bucket: this.bucketName })
+        .listObjectsV2({ Bucket: bucketName })
         .promise();
       return response.Contents?.map((item) => item.Key) || [];
     } catch (error) {

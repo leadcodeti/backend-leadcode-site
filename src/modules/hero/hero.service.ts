@@ -4,6 +4,9 @@ import { HeroRepository } from './repositories/hero.repository';
 import { Hero } from '@prisma/client';
 import { FileService } from 'src/utils/file';
 import { HomeRepository } from '../home/repositories/home.repository';
+import { StorageService } from 'src/modules/storage/storage.service';
+
+const BUCKET_NAME = 'heros';
 
 @Injectable()
 export class HeroService {
@@ -13,6 +16,7 @@ export class HeroService {
     @Inject('HomeRepository')
     private readonly homeRepository: HomeRepository,
     private readonly fileService: FileService,
+    private readonly storageService: StorageService,
   ) {}
 
   async create(data: CreateHeroDTO): Promise<Hero> {
@@ -22,20 +26,18 @@ export class HeroService {
       throw new Error('This home does not exist.');
     }
 
-    const hero = await this.heroRepository.findByKey(data.homeId);
+    await this.heroRepository.findByKey(data.homeId);
 
-    if (hero) {
-      await this.fileService.deleteFile(
-        `${process.env.TMP_BASE}/heros/${hero.key}`,
-      );
-      await this.heroRepository.delete(data.homeId);
-    }
+    const uploadFile = await this.storageService.uploadFile(
+      data.file,
+      BUCKET_NAME,
+    );
 
-    data.url = `${process.env.HERO_URL}/${data.key}`;
+    data.url = uploadFile.url;
 
     const homeToUpdateImage = {
       id: data.homeId,
-      hero_image: data.url,
+      hero_image: uploadFile.url,
       headline: home.headline,
       subheadline: home.subheadline,
       cta_button_text: home.ctaButtonText,
@@ -62,7 +64,7 @@ export class HeroService {
       throw new Error('This hero does not exists.');
     }
 
-    await this.fileService.deleteFile(`${process.env.TMP_BASE}/heros/${key}`);
+    await this.storageService.deleteFile(key, BUCKET_NAME);
 
     const homeImageToDelete = {
       id: home.id,

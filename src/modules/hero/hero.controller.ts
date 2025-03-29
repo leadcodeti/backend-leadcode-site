@@ -46,7 +46,7 @@ export class HeroController {
       throw new Error('You must upload a file.');
     }
 
-    const { originalname: name, size, filename: key } = file;
+    const { originalname: name, size } = file;
 
     const { home_id } = params;
 
@@ -54,8 +54,9 @@ export class HeroController {
       homeId: home_id,
       name,
       size,
-      key,
+      key: name,
       url: '',
+      file,
     });
   }
 
