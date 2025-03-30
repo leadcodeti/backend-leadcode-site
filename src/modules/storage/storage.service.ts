@@ -8,11 +8,6 @@ export class StorageService {
   private s3: AWS.S3;
 
   constructor(private readonly configService: ConfigService) {
-    console.log(
-      this.configService.get<string>('MINIO_ENDPOINT'),
-      this.configService.get<string>('MINIO_ROOT_USER'),
-      this.configService.get<string>('MINIO_ROOT_PASSWORD'),
-    );
     this.s3 = new AWS.S3({
       endpoint: this.configService.get<string>('MINIO_ENDPOINT'),
       accessKeyId: this.configService.get<string>('MINIO_ROOT_USER'),
@@ -27,6 +22,11 @@ export class StorageService {
     bucketName: string,
   ): Promise<{ url: string }> {
     const fileStream = Readable.from(file.buffer);
+    console.log(
+      this.configService.get<string>('ENDPOINT', 'MINIO_ENDPOINT'),
+      this.configService.get<string>('ROOT_USER', 'MINIO_ROOT_USER'),
+      this.configService.get<string>('PASSWORD', 'MINIO_ROOT_PASSWORD'),
+    );
 
     try {
       await this.s3
