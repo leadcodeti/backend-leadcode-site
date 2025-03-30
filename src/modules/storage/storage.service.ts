@@ -8,11 +8,16 @@ export class StorageService {
   private s3: AWS.S3;
 
   constructor(private readonly configService: ConfigService) {
+    console.log(
+      this.configService.get<string>('MINIO_ENDPOINT'),
+      this.configService.get<string>('MINIO_ROOT_USER'),
+      this.configService.get<string>('MINIO_ROOT_PASSWORD'),
+    );
     this.s3 = new AWS.S3({
       endpoint: this.configService.get<string>('MINIO_ENDPOINT'),
       accessKeyId: this.configService.get<string>('MINIO_ROOT_USER'),
       secretAccessKey: this.configService.get<string>('MINIO_ROOT_PASSWORD'),
-      s3ForcePathStyle: true, // Necessário para MinIO
+      s3ForcePathStyle: true,
       signatureVersion: 'v4',
     });
   }
