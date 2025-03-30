@@ -123,6 +123,7 @@ jobs:
           script: |
             cd user/app/backend-leadcode-site
             git pull origin main
+            rm .env
 
             echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
             echo "TMP_BASE=${{ secrets.TMP_BASE }}" >> .env
