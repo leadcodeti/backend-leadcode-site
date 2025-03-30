@@ -9,23 +9,25 @@ export class StorageService {
 
   constructor(private readonly configService: ConfigService) {
     this.s3 = new AWS.S3({
-      endpoint: this.configService.get<string>('MINIO_ENDPOINT'),
-      accessKeyId: this.configService.get<string>('MINIO_ROOT_USER'),
-      secretAccessKey: this.configService.get<string>('MINIO_ROOT_PASSWORD'),
+      endpoint: this.configService.get<string>('minio.endpoint'),
+      accessKeyId: this.configService.get<string>('minio.root_user'),
+      secretAccessKey: this.configService.get<string>('minio.root_password'),
       s3ForcePathStyle: true,
       signatureVersion: 'v4',
     });
   }
-
   async uploadFile(
     file: Express.Multer.File,
     bucketName: string,
   ): Promise<{ url: string }> {
     const fileStream = Readable.from(file.buffer);
     console.log(
-      this.configService.get<string>('ENDPOINT', 'MINIO_ENDPOINT'),
-      this.configService.get<string>('ROOT_USER', 'MINIO_ROOT_USER'),
-      this.configService.get<string>('PASSWORD', 'MINIO_ROOT_PASSWORD'),
+      'ENDPOINT',
+      this.configService.get<string>('minio.endpoint'),
+      'ROOT_USER',
+      this.configService.get<string>('minio.root_user'),
+      'PASSWORD',
+      this.configService.get<string>('minio.root_password'),
     );
 
     try {

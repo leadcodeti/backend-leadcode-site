@@ -18,6 +18,6 @@ export const envConfiguration = () => ({
   minio: {
     root_user: process.env.MINIO_ROOT_USER,
     root_password: process.env.MINIO_ROOT_PASSWORD,
-    minio_endpoint: process.env.MINIO_ENDPOINT,
+    endpoint: process.env.MINIO_ENDPOINT,
   },
 });
