@@ -16,23 +16,29 @@ export class StorageService {
       signatureVersion: 'v4',
     });
   }
+
+  private async ensureBucketExists(bucketName: string): Promise<void> {
+    try {
+      await this.s3.headBucket({ Bucket: bucketName }).promise();
+    } catch (error) {
+      if (error.statusCode === 404) {
+        await this.s3.createBucket({ Bucket: bucketName }).promise();
+      } else {
+        console.error('Erro ao verificar/criar bucket:', error);
+        throw new BadRequestException('Erro ao verificar/criar bucket');
+      }
+    }
+  }
+
   async uploadFile(
     file: Express.Multer.File,
     bucketName: string,
   ): Promise<{ url: string }> {
     const fileStream = Readable.from(file.buffer);
-    console.log(
-      'ENDPOINT',
-      this.configService.get<string>('minio.endpoint'),
-      'ROOT_USER',
-      this.configService.get<string>('minio.root_user'),
-      'PASSWORD',
-      this.configService.get<string>('minio.root_password'),
-    );
-
-    await this.ensureBucketExists(bucketName);
+    const endpoint = this.configService.get<string>('minio.endpoint');
 
     try {
+      await this.ensureBucketExists(bucketName);
       await this.s3
         .upload({
           Bucket: bucketName,
@@ -42,25 +48,23 @@ export class StorageService {
         })
         .promise();
 
-      return {
-        url: `${this.configService.get<string>(
-          'minio.endpoint',
-        )}/${bucketName}/${file.originalname}`,
-      };
+      return { url: `${endpoint}/${bucketName}/${file.originalname}` };
     } catch (error) {
-      console.log(error);
+      console.error('Erro ao fazer upload:', error);
       throw new BadRequestException('Erro ao fazer upload do arquivo');
     }
   }
 
-  async getFile(fileKey: string, bucketName: string): Promise<Buffer> {
+  async getSignedUrl(fileKey: string, bucketName: string): Promise<string> {
     try {
-      const data = await this.s3
-        .getObject({ Bucket: bucketName, Key: fileKey })
-        .promise();
-      return data.Body as Buffer;
+      return await this.s3.getSignedUrlPromise('getObject', {
+        Bucket: bucketName,
+        Key: fileKey,
+        Expires: 60 * 60,
+      });
     } catch (error) {
-      throw new BadRequestException('Arquivo não encontrado');
+      console.error('Erro ao gerar URL assinada:', error);
+      throw new BadRequestException('Erro ao obter URL assinada');
     }
   }
 
@@ -70,6 +74,7 @@ export class StorageService {
         .deleteObject({ Bucket: bucketName, Key: fileKey })
         .promise();
     } catch (error) {
+      console.error('Erro ao deletar arquivo:', error);
       throw new BadRequestException('Erro ao deletar arquivo');
     }
   }
@@ -81,19 +86,8 @@ export class StorageService {
         .promise();
       return response.Contents?.map((item) => item.Key) || [];
     } catch (error) {
+      console.error('Erro ao listar arquivos:', error);
       throw new BadRequestException('Erro ao listar arquivos');
-    }
-  }
-
-  async ensureBucketExists(bucketName: string): Promise<void> {
-    try {
-      await this.s3.headBucket({ Bucket: bucketName }).promise();
-    } catch (error) {
-      if (error.statusCode === 404) {
-        await this.s3.createBucket({ Bucket: bucketName }).promise();
-      } else {
-        throw new BadRequestException('Erro ao verificar/criar bucket');
-      }
     }
   }
 }
