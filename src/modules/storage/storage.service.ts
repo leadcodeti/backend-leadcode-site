@@ -30,6 +30,8 @@ export class StorageService {
       this.configService.get<string>('minio.root_password'),
     );
 
+    await this.ensureBucketExists(bucketName);
+
     try {
       await this.s3
         .upload({
@@ -42,7 +44,7 @@ export class StorageService {
 
       return {
         url: `${this.configService.get<string>(
-          'MINIO_ENDPOINT',
+          'minio.endpoint',
         )}/${bucketName}/${file.originalname}`,
       };
     } catch (error) {
@@ -80,6 +82,18 @@ export class StorageService {
       return response.Contents?.map((item) => item.Key) || [];
     } catch (error) {
       throw new BadRequestException('Erro ao listar arquivos');
+    }
+  }
+
+  async ensureBucketExists(bucketName: string): Promise<void> {
+    try {
+      await this.s3.headBucket({ Bucket: bucketName }).promise();
+    } catch (error) {
+      if (error.statusCode === 404) {
+        await this.s3.createBucket({ Bucket: bucketName }).promise();
+      } else {
+        throw new BadRequestException('Erro ao verificar/criar bucket');
+      }
     }
   }
 }
