@@ -5,4 +5,5 @@ export class CreateProjectCardImageDTO {
   url: string;
   size: number;
   isCover: boolean;
+  file: Express.Multer.File;
 }

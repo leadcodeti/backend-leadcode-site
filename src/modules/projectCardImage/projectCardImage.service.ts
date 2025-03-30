@@ -5,6 +5,9 @@ import { ProjectCardImage } from '@prisma/client';
 import { CreateProjectCardImageDTO } from './dtos/CreateProjectCardImage.dto';
 import { ProjectCardRepository } from '../projectCard/repositories/projectCard.repository';
 import { SharpService } from 'config/sharpConfiguration';
+import { StorageService } from 'src/modules/storage/storage.service';
+
+const BUCKET_NAME = 'project-card-images';
 
 @Injectable()
 export class ProjectCardImageService {
@@ -15,12 +18,17 @@ export class ProjectCardImageService {
     private readonly projectCardRepository: ProjectCardRepository,
     private readonly fileService: FileService,
     private readonly sharpService: SharpService,
+    private readonly storageService: StorageService,
   ) {}
 
   async create(data: CreateProjectCardImageDTO): Promise<ProjectCardImage> {
-    data.name = data.name.replace(/(.png)|(.jpeg)|(.jpg)|(.gif)|(.webp)/, '');
-    const multerNewImagePath = `${process.env.TMP_BASE}/projectCardImages/${data.key}`;
-    this.sharpService.sharpConfig(multerNewImagePath, data.isCover);
+    const { buffer, newFilename } =
+      await this.sharpService.sharpProcessBeforeMinio(data.file, data.isCover);
+
+    data.name = newFilename;
+    data.key = newFilename;
+    data.file.buffer = buffer;
+    data.file.originalname = newFilename;
 
     const projectCard = await this.projectCardRepository.findById(
       data.projectCardId,
@@ -30,22 +38,14 @@ export class ProjectCardImageService {
       throw new Error('This card does not exist.');
     }
 
-    const projectCardImage = await this.projectCardImageRepository.findByKey(
-      data.projectCardId,
+    await this.projectCardImageRepository.findByKey(data.projectCardId);
+
+    const uploadFile = await this.storageService.uploadFile(
+      data.file,
+      BUCKET_NAME,
     );
 
-    if (projectCardImage) {
-      await this.fileService.deleteFile(
-        `${process.env.TMP_BASE}/projectCardImages/${projectCardImage.key}`,
-      );
-      await this.projectCardImageRepository.delete(data.key);
-    }
-
-    data.key = data.key.replace(
-      /(.png)|(.jpeg)|(.jpg)|(.gif)|(.webp)/,
-      '-compressed.webp',
-    );
-    data.url = `${process.env.PROJECT_CARD_IMAGE_URL}/${data.key}`;
+    data.url = uploadFile.url;
 
     if (data.isCover) {
       const cardToUpdateImage = {
@@ -89,9 +89,7 @@ export class ProjectCardImageService {
       throw new Error('This image does not exist.');
     }
 
-    await this.fileService.deleteFile(
-      `${process.env.TMP_BASE}/projectCardImages/${key}`,
-    );
+    await this.storageService.deleteFile(key, BUCKET_NAME);
 
     if (projectCardImageExists.isCover) {
       const cardToUpdateImage = {

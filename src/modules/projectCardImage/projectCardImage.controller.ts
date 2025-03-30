@@ -40,7 +40,6 @@ export class ProjectCardImageController {
   @UseInterceptors(
     fileInterceptor({
       filename: 'project_card_image',
-      destination: `${process.env.TMP_BASE}/projectCardImages`,
     }),
   )
   async uploadFile(
@@ -52,7 +51,7 @@ export class ProjectCardImageController {
       throw new Error('You must upload a file.');
     }
 
-    const { originalname: name, size, filename: key } = file;
+    const { originalname: name, size } = file;
 
     const { project_card_id } = params;
 
@@ -62,9 +61,10 @@ export class ProjectCardImageController {
       projectCardId: project_card_id,
       name,
       size,
-      key,
+      key: name,
       url: '',
       isCover: is_cover === 'true',
+      file,
     });
   }
 
@@ -86,7 +86,6 @@ export class ProjectCardImageController {
     @Param('key') key: string,
     @Param('project_card_id') project_card_id: string,
   ): Promise<void> {
-    console.log(key, project_card_id);
     return await this.projectCardImageService.delete(key, project_card_id);
   }
 }

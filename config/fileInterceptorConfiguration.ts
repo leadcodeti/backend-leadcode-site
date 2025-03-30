@@ -1,30 +1,28 @@
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage, memoryStorage } from 'multer';
+import { memoryStorage } from 'multer';
 import { FileInterceptorProps } from 'types/types';
 
-export const fileInterceptor = ({
-  filename,
-  destination,
-}: FileInterceptorProps) => {
+export const fileInterceptor = ({ filename }: FileInterceptorProps) => {
   return FileInterceptor(filename, {
-    storage: diskStorage({
-      destination,
-      filename: (req, file, callback) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-        const ext = '.webp';
-        const filename = `${file.originalname}-${uniqueSuffix}${ext}`;
-        const filenameWithNoSpacesToLower = filename
-          .replace(/[^a-zA-Z0-9-_.]/g, '-')
-          .toLowerCase();
-        callback(null, filenameWithNoSpacesToLower);
-      },
-    }),
+    storage: memoryStorage(),
+    limits: {
+      fileSize: 10 * 1024 * 1024,
+    },
+    fileFilter: (req, file, callback) => {
+      if (!file.mimetype.match(/image\/(jpeg|png|gif|webp)/)) {
+        return callback(
+          new Error('Apenas imagens JPEG, PNG, GIF e WEBP são permitidas'),
+          false,
+        );
+      }
+      callback(null, true);
+    },
   });
 };
 
 export const videoInterceptor = ({ filename }: FileInterceptorProps) => {
   return FileInterceptor(filename, {
-    storage: memoryStorage(), // 🔥 Agora o arquivo fica em memória, permitindo o uso de file.buffer
-    limits: { fileSize: 50 * 1024 * 1024 }, // Limite de 50MB (ajuste conforme necessário)
+    storage: memoryStorage(),
+    limits: { fileSize: 50 * 1024 * 1024 },
   });
 };

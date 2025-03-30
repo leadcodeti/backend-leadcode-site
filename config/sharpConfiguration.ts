@@ -27,4 +27,28 @@ export class SharpService {
 
     await this.fileService.deleteFile(imagePath);
   }
+
+  async sharpProcessBeforeMinio(
+    file: Express.Multer.File,
+    isCover: boolean,
+  ): Promise<{ buffer: Buffer; newFilename: string }> {
+    const isGifOrAnimatedWebp =
+      file.mimetype === 'image/gif' || file.mimetype === 'image/webp';
+
+    const newFilename =
+      file.originalname.replace(/\.[^/.]+$/, '') + '-compressed.webp';
+
+    const processedBuffer = await sharp(file.buffer, {
+      animated: isGifOrAnimatedWebp,
+    })
+      .webp({ quality: 85 })
+      .resize({
+        width: isCover ? 600 : 750,
+        height: isCover ? 450 : 400,
+        fit: sharp.fit.cover,
+      })
+      .toBuffer();
+
+    return { buffer: processedBuffer, newFilename };
+  }
 }
