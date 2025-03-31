@@ -28,7 +28,7 @@ import { ClientAvatarModule } from './modules/clientAvatar/clientAvatar.module';
 import { AppliedTechnologyModule } from './modules/appliedTechnology/appliedTechnology.module';
 import { FunctionalityModule } from './modules/functionality/functionality.module';
 import { envConfiguration } from 'config/envConfiguration';
-import { StorageModule } from 'src/modules/storage/storage.module';
+import { StorageModule } from 'src/storage/storage.module';
 
 @Module({
   imports: [

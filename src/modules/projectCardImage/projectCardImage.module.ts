@@ -6,7 +6,7 @@ import { ProjectCardImageService } from './projectCardImage.service';
 import { PrismaProjectCardImageRepository } from './repositories/prisma/prismaProjectCardImage.repository';
 import { PrismaProjectCardRepository } from '../projectCard/repositories/prisma/prismaProjectCard.repository';
 import { SharpService } from 'config/sharpConfiguration';
-import { StorageService } from 'src/modules/storage/storage.service';
+import { StorageService } from 'src/storage/storage.service';
 
 @Module({
   controllers: [ProjectCardImageController],

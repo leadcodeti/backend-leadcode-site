@@ -4,7 +4,7 @@ import { HeroRepository } from './repositories/hero.repository';
 import { Hero } from '@prisma/client';
 import { FileService } from 'src/utils/file';
 import { HomeRepository } from '../home/repositories/home.repository';
-import { StorageService } from 'src/modules/storage/storage.service';
+import { StorageService } from 'src/storage/storage.service';
 
 const BUCKET_NAME = 'heros';
 

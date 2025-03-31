@@ -5,7 +5,7 @@ import { ProjectCardImage } from '@prisma/client';
 import { CreateProjectCardImageDTO } from './dtos/CreateProjectCardImage.dto';
 import { ProjectCardRepository } from '../projectCard/repositories/projectCard.repository';
 import { SharpService } from 'config/sharpConfiguration';
-import { StorageService } from 'src/modules/storage/storage.service';
+import { StorageService } from 'src/storage/storage.service';
 
 const BUCKET_NAME = 'project-card-images';
 

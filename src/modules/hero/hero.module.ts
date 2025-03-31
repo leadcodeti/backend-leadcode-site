@@ -5,7 +5,7 @@ import { HeroService } from './hero.service';
 import { PrismaHeroRepository } from './repositories/prisma/prismaHero.repository';
 import { FileService } from 'src/utils/file';
 import { PrismaHomeRepository } from '../home/repositories/prisma/prismaHome.repository';
-import { StorageService } from 'src/modules/storage/storage.service';
+import { StorageService } from 'src/storage/storage.service';
 
 @Module({
   controllers: [HeroController],
