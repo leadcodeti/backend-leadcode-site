@@ -2,7 +2,7 @@ name: Leadcode backend CI-CD
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
 
 jobs:
   CI:
@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
 
       # Configuração das variáveis de ambiente
       - name: Set up environment variables
@@ -38,8 +38,10 @@ jobs:
           LEADCODE_GMAIL_ACCESS_TOKEN: ${{ secrets.LEADCODE_GMAIL_ACCESS_TOKEN }}
           LEADCODE_GMAIL_REFRESH_TOKEN: ${{ secrets.LEADCODE_GMAIL_REFRESH_TOKEN }}
           LEADCODE_EMAIL: ${{ secrets.LEADCODE_EMAIL }}
+          HERO_URL: ${{ secrets.HERO_URL }}
           TOP_FOOTER_LOGO_URL: ${{ secrets.TOP_FOOTER_LOGO_URL }}
           SOCIAL_MEDIA_ICON_URL: ${{ secrets.SOCIAL_MEDIA_ICON_URL }}
+          PROJECT_CARD_IMAGE_URL: ${{ secrets.PROJECT_CARD_IMAGE_URL }}
           SERVICE_CARD_IMAGE_URL: ${{ secrets.SERVICE_CARD_IMAGE_URL }}
           TECH_CAROUSEL_IMAGE_URL: ${{ secrets.TECH_CAROUSEL_IMAGE_URL }}
           CLIENT_AVATAR_URL: ${{ secrets.CLIENT_AVATAR_URL }}
@@ -56,8 +58,10 @@ jobs:
           echo "LEADCODE_GMAIL_ACCESS_TOKEN=${{ secrets.LEADCODE_GMAIL_ACCESS_TOKEN }}" >> .env
           echo "LEADCODE_GMAIL_REFRESH_TOKEN=${{ secrets.LEADCODE_GMAIL_REFRESH_TOKEN }}" >> .env
           echo "LEADCODE_EMAIL=${{ secrets.LEADCODE_EMAIL }}" >> .env
+          echo "HERO_URL=${{ secrets.HERO_URL }}" >> .env
           echo "TOP_FOOTER_LOGO_URL=${{ secrets.TOP_FOOTER_LOGO_URL }}" >> .env
           echo "SOCIAL_MEDIA_ICON_URL=${{ secrets.SOCIAL_MEDIA_ICON_URL }}" >> .env
+          echo "PROJECT_CARD_IMAGE_URL=${{ secrets.PROJECT_CARD_IMAGE_URL }}" >> .env
           echo "SERVICE_CARD_IMAGE_URL=${{ secrets.SERVICE_CARD_IMAGE_URL }}" >> .env
           echo "TECH_CAROUSEL_IMAGE_URL=${{ secrets.TECH_CAROUSEL_IMAGE_URL }}" >> .env
           echo "CLIENT_AVATAR_URL=${{ secrets.CLIENT_AVATAR_URL }}" >> .env
@@ -71,9 +75,9 @@ jobs:
 
       # Execução de verificações de segurança
       - name: Run security checks
-        run: npm audit --audit-leval=critical || true 
-      
-       # Verificação de segurança com Snyk
+        run: npm audit --audit-leval=critical || true
+
+        # Verificação de segurança com Snyk
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         env:
@@ -86,10 +90,10 @@ jobs:
 
       # Construção e execução dos containers Docker
       - name: Build and run containers
-        run: | 
-            docker compose up -d
-            echo "Aguardando o banco de dados..."
-            sleep 2
+        run: |
+          docker compose up -d
+          echo "Aguardando o banco de dados..."
+          sleep 2
 
       # # Execução das migrações do Prisma
       # - name: Run Prisma Migration
@@ -143,6 +147,6 @@ jobs:
             echo "MINIO_ROOT_USER=${{ secrets.MINIO_ROOT_USER }}" >> .env
             echo "MINIO_ROOT_PASSWORD=${{ secrets.MINIO_ROOT_PASSWORD }}" >> .env
             echo "MINIO_ENDPOINT=${{ secrets.MINIO_ENDPOINT }}" >> .env
-            
+
             docker compose up --build -d
-                      
+
